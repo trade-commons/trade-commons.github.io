@@ -75,14 +75,20 @@ can set the direction on its own:
 
 - **Technology corporates.** Software vendors, platform operators and supply-chain technology
   providers, including those that sell products competing with components the Commons holds.
-- **Government agencies.** Customs administrations, trade and industry departments, regulators and
-  the multilateral development banks that fund adoption in developing and emerging economies.
+- **Government agencies.** Customs administrations, trade and industry departments, and regulators.
 - **Industry membership organisations.** Sector bodies and responsible-sourcing schemes that set
   criteria their members report against, and whose conformity vocabularies the work depends on.
 - **Civil society.** Environmental and labour organisations with a direct interest in whether
   transparency claims can be checked.
 
 One elected implementation and community representative also sits on the Board.
+
+The Board may additionally offer liaison seats to intergovernmental organisations. A liaison seat
+carries no vote and no contribution, so an organisation that cannot pay a membership fee, or cannot
+be seen to vote on the direction of a body it also deals with as a counterpart, can still follow the
+work and be heard on it. The seats are optional in both directions: the Board is not obliged to offer
+one and no organisation is expected to take one. Which organisations hold them is left open until
+there is something concrete to invite them to.
 
 The Board elects a Chair, and a Vice-Chair for continuity, for a fixed term of twelve months
 renewable once, so the role rotates to another organisation after a maximum of two consecutive years.
@@ -151,9 +157,12 @@ commons and not as acquisition from a favoured supplier. Whether a particular
 contribution is permissible under a jurisdiction's public-finance rules is a matter for that
 contributor to confirm under its own rules, and the Commons asserts eligibility on nobody's behalf.
 
-Multilateral development banks and international organisations are explicitly welcome as funders and
-members, consistent with the priority given to lowering adoption barriers for developing and emerging
-economies.
+Multilateral development banks and other international organisations are welcome, consistent with
+the priority given to lowering adoption barriers for developing and emerging economies. Two routes
+are open to them and an organisation takes one or the other. It can contribute and hold membership on
+the same terms as any other funder, or it can take a liaison seat, which carries no contribution and
+no vote. Which route suits a given organisation depends on its own mandate and on whether voting on
+the direction of this body is compatible with how it deals with the Commons elsewhere.
 
 The Commons may make voluntary contributions, received by UNECE as the secretariat host, in support
 of the UN/CEFACT secretariat and its standards-maintenance function, because sustained implementation
