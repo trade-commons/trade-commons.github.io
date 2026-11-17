@@ -157,6 +157,17 @@ commons and not as acquisition from a favoured supplier. Whether a particular
 contribution is permissible under a jurisdiction's public-finance rules is a matter for that
 contributor to confirm under its own rules, and the Commons asserts eligibility on nobody's behalf.
 
+**Participation does not depend on paying.** Government agencies, academic institutions, non-profit
+organisations and civil society organisations participate at no cost. A customs administration that
+implements the work, or a civil society organisation that tests whether a transparency claim holds up,
+contributes something the Commons needs and cannot buy. The same applies to a sector body or
+responsible-sourcing scheme whose criteria the work depends on.
+
+Contribution levels for commercial participants are not published here. The Governing Board sets them
+once it is constituted, and until then they are a matter for direct conversation, because the amounts
+depend on the host arrangement and on what the first programme of work costs. Whatever they turn out
+to be, no level purchases a governance seat or a technical decision right.
+
 Multilateral development banks and other international organisations are welcome, consistent with
 the priority given to lowering adoption barriers for developing and emerging economies. Two routes
 are open to them and an organisation takes one or the other. It can contribute and hold membership on
