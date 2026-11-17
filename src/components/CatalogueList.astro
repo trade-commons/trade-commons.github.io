@@ -215,6 +215,11 @@ const groups = TIER_ORDER.map((tier) => ({
       font-size: var(--font-size-sm);
       line-height: var(--line-height-sm);
       border-left: 2px solid var(--color-ochre-500);
+
+      // A folded YAML scalar turns a blank line into a newline. Honour it, so a long disposition
+      // can be paragraphed instead of arriving as one block. Entries without newlines are
+      // unaffected, since pre-line still collapses ordinary wrapping whitespace.
+      white-space: pre-line;
     }
   }
 

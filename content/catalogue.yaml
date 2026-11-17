@@ -305,6 +305,40 @@
     vendor. That is the outcome the Commons wants, and the catalogue records which state each
     connector is in so that a reader can tell a community demonstration from a supported product.
 
+- id: facility-coc
+  name: Facility chain of custody
+  summary: >-
+    Facility-level volumetric accounting. A holder keeps its own append-only register of
+    entitlements, meaning quantities of material carrying one assessed attribute, records what it
+    allocates out and what it takes in, and proves that nothing is acquitted beyond what was
+    assessed. Quantities, counterparties and criteria stay private throughout.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNTP
+    - W3C Verifiable Credentials
+    - W3C Decentralised Identifiers
+    - Certificate Transparency
+  disposition: >-
+    No shared ledger, no operator and no party with a view across the chain. Each register is a
+    Merkle transparency log in the Certificate Transparency lineage, which keeps inclusion and
+    consistency proofs logarithmic as a register grows to millions of entries. A linear hash chain
+    offers no proof shorter than replaying it. The log publishes its signed tree heads as versions in
+    a did:webvh log, so key rotation and archival stay in the control layer while the Merkle log
+    carries the volume. The seller writes its allocation in its own register and the buyer writes its
+    inbound in its own, both citing one receipt, and nobody writes to anyone else's log.
+
+    A Merkle tree proves membership and adds nothing up, so showing a buyer that a supplier stayed
+    inside an assessed cap takes a sum-committing tree per assessment, whose root goes back into the
+    register as a public entry. Each holder checks that its own leaf folds to that root, which
+    spreads enforcement across the holders; what makes it work is the fraction of them that check,
+    and not the cryptography. The blind-witness service signs a register identifier, a tree size, a
+    root hash and a timestamp, and never sees a leaf.
+
+    Depends on the UNTP 1.0 changes that make a claim declare its custody model and carry a coverage
+    figure, and on the 1.1 bound that puts an assessed quantity on a conformity assessment. It
+    cannot be built ahead of the specification.
+
 # --- Operations and templates ------------------------------------------------------------------
 
 - id: infra
