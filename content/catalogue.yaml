@@ -7,8 +7,14 @@
 # donation has been agreed in principle but not carried out, that belongs in `disposition`, without
 # a date unless a date has actually been agreed.
 #
-# Nothing is listed at maturity `planned` until there is a repository behind it. A catalogue of
-# intentions is a roadmap, and a roadmap published from a draft is a commitment nobody made.
+# `maturity: proposed` means the component appears in the repository architecture and does not exist
+# yet: no repository, no code, and nobody committed to building it. A proposed entry carries no `home`
+# and no `maintainer`, because it has nowhere to point and nobody accountable, and the schema enforces
+# that distinction so a proposal cannot quietly read as a product. `planned` is the next step up: a
+# repository exists and work has not started.
+#
+# The proposed set is published so the shape of the whole is visible and can be argued with. It is
+# drawn from a draft architecture under discussion and is not a commitment, a roadmap or a schedule.
 
 - id: vckit
   name: VCkit
@@ -111,3 +117,254 @@
     implementation registers UN/CEFACT public goods. The Commons may hold code that serves a register
     and configuration that operates it under revocable, non-exclusive delegation, never the data as
     its own asset.
+
+# --- Organisation ------------------------------------------------------------------------------
+
+- id: site
+  name: Organisation site and catalogue
+  summary: >-
+    This site, and the component catalogue it builds its component page from. A registry with a
+    website attached rather than a website on its own.
+  tier: organisation
+  maturity: beta
+  home:
+    org: trade-commons
+    url: https://github.com/trade-commons/trade-commons.github.io
+  standards: []
+  licence: GPL-3.0
+  maintainer: Global Trade Commons
+  operated: true
+
+- id: org-defaults
+  name: Organisation defaults
+  summary: >-
+    The organisation profile, contribution guide, code of conduct, security policy and the default
+    issue and pull request templates that every repository inherits.
+  tier: organisation
+  maturity: beta
+  home:
+    org: trade-commons
+    url: https://github.com/trade-commons/.github
+  standards: []
+  licence: Apache-2.0
+  maintainer: Global Trade Commons
+  operated: false
+
+- id: governance
+  name: Governance record
+  summary: >-
+    Licence, contribution policy, decision-making record and the donation record.
+  tier: organisation
+  maturity: proposed
+  standards: []
+  disposition: >-
+    The site's governance page carries this content for now. A separate repository starts earning its
+    keep once there are decisions to minute and a donation record to keep, which is also the point at
+    which a donation of a component a vendor also sells needs to be dated, licensed and minuted
+    rather than performed quietly.
+
+# --- Libraries ---------------------------------------------------------------------------------
+
+- id: graph-validation
+  name: Graph validation
+  summary: >-
+    Assembles the graph from a credential and the links it carries, then evaluates SHACL against a
+    resolved profile and its overlays. The mechanism that lets a community add rules without anyone
+    changing software.
+  tier: library
+  maturity: proposed
+  standards:
+    - UNTP
+    - W3C Verifiable Credentials
+    - SHACL
+  disposition: >-
+    The verification side of the engine-and-declaration split, and the closest to existing: UNTP
+    already publishes SHACL shapes and the recommended profile unions several of them.
+
+- id: connector-sdk
+  name: Connector SDK
+  summary: >-
+    Shared scaffolding for source-system connectors: authentication, mapping, scheduling and error
+    handling, so a connector author writes the mapping and not the plumbing.
+  tier: library
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    Exists to stop each connector reimplementing the same plumbing. Its value depends on there being
+    several connectors, so it should follow the first two or three rather than precede them.
+
+# --- Services ----------------------------------------------------------------------------------
+
+- id: blind-witness
+  name: Blind witness
+  summary: >-
+    Witnessing for transferable records, and for chain of custody where the parties will not reveal
+    their counterparties to each other.
+  tier: service
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    New work rather than a move or a donation. Nothing comparable exists to adopt.
+
+- id: cvc
+  name: Conformity vocabulary catalogue
+  summary: >-
+    Lets a conformity scheme owner manage its criteria and vocabulary as published, machine-readable
+    artefacts, so a conformity credential can cite a criterion by identifier rather than by prose.
+  tier: service
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    Would build on existing conformity-schemes-as-code work done for an industry scheme owner, which
+    is not yet public. Scheme criteria are the scheme owner's content, so this manages a catalogue it
+    does not own.
+
+- id: conformance
+  name: Conformity testing service
+  summary: >-
+    Deployment, configuration and operational contract for a hosted conformity testing service.
+    Depends on the upstream test suites rather than reimplementing them.
+  tier: service
+  maturity: proposed
+  standards:
+    - UNTP
+  disposition: >-
+    Charter section 2 places cost-recovery conformity testing in scope, and establishing whether a
+    credential is genuine is the most load-bearing thing the Commons could operate. Depends on the
+    test suites moving first, so it doubles as the test of whether adoption from the existing
+    organisation works at all.
+
+# --- Applications ------------------------------------------------------------------------------
+
+- id: easy
+  name: Easy issuer
+  summary: >-
+    The spec-driven issuing application. Mobile-responsive, consumes published schemas, render
+    templates and community profiles, and issues any UNTP or UNVTD credential without being rebuilt
+    per sector.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    One application rather than one per credential type: identity setup, key handling, form
+    rendering, validation, signing, publishing and revocation are most of the code and are shared.
+    The axis of variation is the sector, not the credential type. Must produce a correct if
+    unpolished result with no community declaration present, or no community can use it until the
+    first one acts.
+
+- id: verifier
+  name: Verifier
+  summary: >-
+    Verification beyond the single credential: assembles the graph, resolves the applicable overlays
+    and reports against both core and community rules.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNTP
+    - W3C Verifiable Credentials
+  disposition: >-
+    An application over the graph validation library, and a test of the rule that an application
+    contains no protocol code. It fails the moment it reimplements what the library does.
+
+- id: grid-node
+  name: Registry node
+  summary: >-
+    The registry operator's application: issues identity anchors, manages hosted decentralised
+    identifiers, serves resolver queries and runs a witness.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNTP
+    - GRID
+    - W3C Decentralised Identifiers
+  disposition: >-
+    Named for what it is rather than for who runs it, because an application named after its operator
+    dates badly once the role is ordinary. Assembles capabilities currently spread across several
+    places.
+
+- id: customs
+  name: Customs front door
+  summary: >-
+    A credential front door for a customs administration: receives trade credentials, verifies the
+    graph and produces declaration data for whatever system the administration already runs.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNVTD
+    - WCO Data Model
+    - UNTP
+  disposition: >-
+    Depends on artefacts governed by UN/CEFACT and by the World Customs Organization and authored by
+    neither, which is why customs administrations, the WCO and UN/CEFACT are all constituencies of
+    the same organisation. A national tariff, procedure codes, valuation rules and above all risk
+    rules are its declarations rather than its code. Risk rules are sensitive and often classified,
+    so a private national configuration has to be the normal case rather than an afterthought: an
+    administration must be able to run this without the Commons seeing its configuration or its data.
+
+- id: connectors
+  name: Source-system connectors
+  summary: >-
+    Community-maintained connectors to source systems, one package per system, with independent
+    package versions.
+  tier: application
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    One repository rather than one per vendor or per specification. A finance-system connector emits
+    trade documents and may also emit passports for the goods on them, so splitting by specification
+    would put one integration in two repositories with its authentication and mapping duplicated.
+    When a vendor takes over maintenance the package is archived here and the catalogue repoints:
+    graduation is the intended outcome, and the catalogue records which state each connector is in
+    because a community demonstration and a vendor-supported integration are very different promises.
+
+# --- Operations and templates ------------------------------------------------------------------
+
+- id: infra
+  name: Infrastructure as code
+  summary: >-
+    Deployment and configuration for the services the Commons operates.
+  tier: operations
+  maturity: proposed
+  standards: []
+  disposition: >-
+    Constrained by the portability requirement: every service must stay deployable by a third party
+    from its own repository, so this configures hosted instances rather than becoming the only way to
+    run anything.
+
+- id: cap-template
+  name: Community profile template
+  summary: >-
+    The structure a community should adopt: profile, extension schema and context, overlay shapes,
+    and a workflow that serves the profile at the expected well-known location.
+  tier: template
+  maturity: proposed
+  standards:
+    - UNTP
+  disposition: >-
+    Higher priority than its tier suggests. The register already carries several programmes, each
+    declaring the extension it owns and the identifier schemes it uses, but the profile document the
+    register points at is largely not served yet. Every engine downstream reads what this produces,
+    and an engine built before any declaration exists has nothing to read. Should produce a working
+    example that validates rather than a blank page.
+
+- id: connector-template
+  name: Connector template
+  summary: >-
+    Starting point for a vendor building and maintaining its own connector.
+  tier: template
+  maturity: proposed
+  standards:
+    - UNTP
+    - UNVTD
+  disposition: >-
+    The graduation path out of the shared connectors repository.

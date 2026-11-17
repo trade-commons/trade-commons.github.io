@@ -1,21 +1,44 @@
 The arrangements on this page are drawn from the Global Trade Commons charter, which is a draft for
 circulation to prospective founding participants, UN/CEFACT and its UNECE secretariat, the Global
 Digital Collaboration and prospective multilateral development bank partners. It has not been
-executed. Where this page and the charter differ, the charter governs, and neither should be read as
-a commitment of a foundation that does not yet exist.
+executed, and nothing here should be read as a commitment of a foundation that does not yet exist.
+
+The institutional home described below has moved on from that draft. The charter contemplates
+constitution directly as a foundation under a permanent international host; the present intention is
+to begin with a lighter arrangement and decide the permanent home later. The charter is being revised
+to match, and until it is, this page is the current statement on that point and the charter remains
+the source of truth on everything else.
 
 ## Institutional home
 
-The Commons is to be constituted as a foundation under the International Jurisdiction of Digital
-Commons (IJDC), which the Global Digital Collaboration (GDC) establishes and which is expected to be
-established under Swiss foundation law. The IJDC provides shared central services to the foundations
-constituted under it: legal, banking, accounting and audit, employment and payroll, contracting,
-insurance and compliance. The full institutional machinery is created once, at the IJDC, rather than
-rebuilt by each foundation.
+Governance starts light and deliberately interim.
 
-Because a Swiss foundation has no members or shareholders and irrevocably dedicates its assets to its
-stated purpose under the supervision of the competent foundation authority, the constraint against
-distributing any surplus holds by the nature of the host rather than by undertaking alone.
+**Initially, a project hosted by the Linux Foundation.** This gives the Commons a neutral home for the
+code and the trademark, an established governance template, and the means to receive contributions
+and contract for work from the outset, without first standing up a foundation of its own. It is a
+starting position rather than a destination, chosen because the alternative is either to hold no funds
+at all or to wait a year for a permanent structure before any work can be funded.
+
+**The permanent home is not yet decided.** Two routes are under consideration:
+
+- A full Linux Foundation sub-foundation, in the manner of the established sectoral foundations
+  hosted there, with its own governing board and its own technical oversight.
+- A sub-foundation of the International Organisation for Digital Commons (IODC), which the Global
+  Digital Collaboration (GDC) establishes and which is expected to be established under Swiss
+  foundation law. The IODC provides shared central services to the entities constituted under it:
+  legal, banking, accounting and audit, employment and payroll, contracting, insurance and
+  compliance, so the full institutional machinery is created once rather than rebuilt by each one.
+
+The choice between them is deferred rather than open-ended, and it turns largely on which host can
+accept the kinds of funding the Commons expects. Membership dues from companies and grants from
+governments and development banks are different financial instruments with different requirements on
+the recipient's legal character, and a structure that suits one does not automatically suit the other.
+
+Two properties are required of whichever host is chosen. The constraint against distributing any
+surplus must hold by the nature of the host rather than by undertaking alone, which a Swiss
+foundation satisfies because it has no members or shareholders and irrevocably dedicates its assets to
+its stated purpose under the supervision of the competent foundation authority. And the arrangement
+must be one the Commons can leave, which is dealt with under continuity and portability below.
 
 ## Where normative authority rests
 
@@ -42,7 +65,7 @@ level. Its composition is:
 
 - UN/CEFACT, holding a liaison seat at no cost, with liaison seats open to other standards bodies on
   the same terms.
-- The GDC, as institutional partner establishing the IJDC.
+- The GDC, as institutional partner establishing the IODC.
 - Three to five founding organisations, which may include multilateral development banks.
 - One elected implementation and community representative.
 
@@ -83,6 +106,14 @@ gatekeeper.
 The work is structured so that it can always be forked and continued. Copyright stays distributed
 among contributors under irrevocable open licences, so no host holds a lock on the commons.
 
+Because the initial host is explicitly interim, portability has to cover the move itself and not only
+a hypothetical fork. Distributed copyright under the Developer Certificate of Origin protects the
+code whatever happens to the institution, but it does not protect the name or the accumulated funds,
+and a host that holds a project's trademark holds something the licences do not reach. The terms of
+departure, meaning trademark assignment and the treatment of unspent contributions, are therefore to
+be settled on entry rather than negotiated later. An interim arrangement entered without exit terms
+is the one that becomes permanent by inertia.
+
 That requirement has an architectural consequence, not merely a legal one. **No component may depend
 on infrastructure only the Commons can provide.** Every service must be deployable by a third party
 from its own repository, and a hosted instance must be one deployment of a thing anyone can run.
@@ -92,9 +123,10 @@ configuration or the data.
 
 ## Funding
 
-The Commons is funded by voluntary contributions into a ring-fenced fund held by the foundation. It
-operates on a not-for-profit basis, and no contributor acquires ownership of, or exclusive rights
-over, the infrastructure the fund produces.
+The Commons is funded by voluntary contributions into a ring-fenced fund, held during the interim
+arrangement by the host and thereafter by the permanent entity. It operates on a not-for-profit
+basis, and no contributor acquires ownership of, or exclusive rights over, the infrastructure the fund
+produces.
 
 Contributions are presented as voluntary support for shared public-good infrastructure rather than as
 procurement of deliverables. The pooled, no-single-owner structure is what makes that

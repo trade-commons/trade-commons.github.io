@@ -9,7 +9,16 @@ const { entries } = Astro.props;
 
 // Tier order is the dependency direction: an application calls a service or a library and never the
 // other way round, so reading the page top to bottom reads the stack bottom to top.
-const TIER_ORDER = ['library', 'service', 'application', 'tooling', 'template', 'register'] as const;
+const TIER_ORDER = [
+  'library',
+  'service',
+  'application',
+  'tooling',
+  'template',
+  'operations',
+  'register',
+  'organisation',
+] as const;
 
 const TIER_LABELS: Record<string, { title: string; note: string }> = {
   library: {
@@ -32,16 +41,30 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
     title: 'Templates',
     note: 'Starting points a community or a vendor copies and then owns.',
   },
+  operations: {
+    title: 'Operations',
+    note: 'Deployment and configuration for the services the Commons operates.',
+  },
   register: {
     title: 'Registers',
     note: 'Authoritative registers governed by a standards body. Listed so the catalogue is navigable; the Commons holds no authority over them.',
   },
+  organisation: {
+    title: 'Organisation',
+    note: 'The organisation itself: this site and the defaults every repository inherits.',
+  },
+};
+
+// Within a tier, what exists comes before what is only proposed.
+const byExistence = (a: CollectionEntry<'catalogue'>, b: CollectionEntry<'catalogue'>) => {
+  const rank = (entry: CollectionEntry<'catalogue'>) => (entry.data.maturity === 'proposed' ? 1 : 0);
+  return rank(a) - rank(b) || a.data.name.localeCompare(b.data.name);
 };
 
 const groups = TIER_ORDER.map((tier) => ({
   tier,
   ...TIER_LABELS[tier],
-  entries: entries.filter((entry) => entry.data.tier === tier),
+  entries: entries.filter((entry) => entry.data.tier === tier).sort(byExistence),
 })).filter((group) => group.entries.length > 0);
 ---
 
@@ -58,44 +81,53 @@ const groups = TIER_ORDER.map((tier) => ({
           <h2 id={group.tier}>{group.title}</h2>
           <p class="group_note">{group.note}</p>
           <ul class="components">
-            {group.entries.map(({ data }) => (
-              <li class="component">
-                <div class="component_head">
-                  <h3>{data.name}</h3>
-                  <span class:list={['badge', `maturity-${data.maturity}`]}>{data.maturity}</span>
-                  {data.operated && <span class="badge operated">operated by the Commons</span>}
-                </div>
-                <p class="component_summary">{data.summary}</p>
-                {data.standards.length > 0 && (
-                  <ul class="standards">
-                    {data.standards.map((standard) => (
-                      <li>{standard}</li>
-                    ))}
-                  </ul>
-                )}
-                <dl class="facts">
-                  <div>
-                    <dt>Home</dt>
-                    <dd>
-                      <a href={data.home.url} target="_blank" rel="noreferrer">
-                        {data.home.org}
-                      </a>
-                    </dd>
+            {group.entries.map(({ data }) => {
+              const proposed = data.maturity === 'proposed';
+              return (
+                <li class:list={['component', { proposed }]}>
+                  <div class="component_head">
+                    <h3>{data.name}</h3>
+                    <span class:list={['badge', `maturity-${data.maturity}`]}>{data.maturity}</span>
+                    {data.operated && <span class="badge operated">operated by the Commons</span>}
                   </div>
-                  <div>
-                    <dt>Maintainer</dt>
-                    <dd>{data.maintainer}</dd>
-                  </div>
-                  {data.licence && (
-                    <div>
-                      <dt>Licence</dt>
-                      <dd>{data.licence}</dd>
-                    </div>
+                  <p class="component_summary">{data.summary}</p>
+                  {data.standards.length > 0 && (
+                    <ul class="standards">
+                      {data.standards.map((standard) => (
+                        <li>{standard}</li>
+                      ))}
+                    </ul>
                   )}
-                </dl>
-                {data.disposition && <p class="component_disposition">{data.disposition}</p>}
-              </li>
-            ))}
+                  <dl class="facts">
+                    <div>
+                      <dt>Home</dt>
+                      <dd>
+                        {data.home ? (
+                          <a href={data.home.url} target="_blank" rel="noreferrer">
+                            {data.home.org}
+                          </a>
+                        ) : (
+                          <span class="facts_absent">No repository yet</span>
+                        )}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Maintainer</dt>
+                      <dd>
+                        {data.maintainer ?? <span class="facts_absent">Nobody yet</span>}
+                      </dd>
+                    </div>
+                    {data.licence && (
+                      <div>
+                        <dt>Licence</dt>
+                        <dd>{data.licence}</dd>
+                      </div>
+                    )}
+                  </dl>
+                  {data.disposition && <p class="component_disposition">{data.disposition}</p>}
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))}
@@ -148,6 +180,22 @@ const groups = TIER_ORDER.map((tier) => ({
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-gray-200);
 
+    // A proposed component does not exist. The card is deliberately quieter and outlined rather
+    // than filled, so it cannot be mistaken at a glance for something that can be used.
+    &.proposed {
+      background: transparent;
+      border-style: dashed;
+      border-color: var(--color-gray-300);
+
+      h3 {
+        color: var(--color-gray-700);
+      }
+
+      .component_summary {
+        color: var(--color-gray-600);
+      }
+    }
+
     &_head {
       gap: 0.5em;
       display: flex;
@@ -194,10 +242,23 @@ const groups = TIER_ORDER.map((tier) => ({
     border-color: rgb(from var(--color-petrol-400) r g b / 35%);
   }
 
+  .maturity-beta {
+    color: var(--color-petrol-600);
+    background: rgb(from var(--color-petrol-400) r g b / 8%);
+    border-color: rgb(from var(--color-petrol-400) r g b / 28%);
+  }
+
   .maturity-normative {
     color: var(--color-ochre-600);
     background: rgb(from var(--color-ochre-500) r g b / 10%);
     border-color: rgb(from var(--color-ochre-500) r g b / 32%);
+  }
+
+  .maturity-proposed {
+    color: var(--color-gray-600);
+    background: transparent;
+    border-style: dashed;
+    border-color: var(--color-gray-400);
   }
 
   .operated {
@@ -247,6 +308,11 @@ const groups = TIER_ORDER.map((tier) => ({
       margin-top: 0.15em;
       font-size: var(--font-size-sm);
       line-height: var(--line-height-sm);
+    }
+
+    &_absent {
+      color: var(--color-gray-500);
+      font-style: italic;
     }
   }
 </style>

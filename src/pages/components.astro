@@ -14,6 +14,9 @@ const entries = (await getCollection('catalogue')).sort((a, b) =>
 );
 
 const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
+
+const proposed = entries.filter((entry) => entry.data.maturity === 'proposed');
+const existing = entries.length - proposed.length;
 ---
 
 <Layout title={title} description={description}>
@@ -25,6 +28,15 @@ const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))]
       this organisation. Each records where the component is today rather than where it is expected
       to end up, and a pending move or donation is noted as such without implying a schedule that has
       not been agreed.
+    </p>
+
+    <p class="counts">
+      <strong>{existing}</strong> components exist. <strong>{proposed.length}</strong> are proposed
+      and do not: no repository, no code, and nobody committed to building them. A proposed entry is
+      drawn on a dashed outline and names neither a home nor a maintainer, because it has neither.
+      The whole set is published so the shape of the architecture is visible and can be argued with,
+      which is worth more than a short list that looks finished. It is not a roadmap and not a
+      schedule.
     </p>
     {
       standards.length > 0 && (
@@ -77,5 +89,12 @@ const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))]
     max-width: var(--measure);
     color: var(--color-gray-700);
     font-size: var(--font-size-sm);
+  }
+
+  .counts {
+    max-width: var(--measure);
+    padding-left: 1em;
+    color: var(--color-gray-700);
+    border-left: 3px solid var(--color-gray-300);
   }
 </style>

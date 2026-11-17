@@ -20,19 +20,34 @@ const catalogue = defineCollection({
     name: z.string(),
     summary: z.string(),
 
-    // The three tiers plus the kinds that are not components a person runs.
+    // The three tiers, plus the kinds that are not components a person runs.
     // An application contains no protocol code; it calls a library or a service.
-    tier: z.enum(['library', 'service', 'application', 'tooling', 'template', 'register']),
+    tier: z.enum([
+      'library',
+      'service',
+      'application',
+      'tooling',
+      'template',
+      'register',
+      'operations',
+      'organisation',
+    ]),
 
-    // `normative` marks a specification or register governed by a standards body. Such an entry is
-    // listed so the catalogue is navigable, never because the Commons holds authority over it.
-    maturity: z.enum(['production', 'beta', 'prototype', 'planned', 'normative']),
+    // `proposed` means it appears in the repository architecture and does not exist yet: no
+    // repository, no code, nobody committed to building it. `planned` means a repository exists and
+    // work has not started. `normative` marks a specification or register governed by a standards
+    // body, listed so the catalogue is navigable, never because the Commons holds authority over it.
+    maturity: z.enum(['production', 'beta', 'prototype', 'planned', 'proposed', 'normative']),
 
-    home: z.object({
-      // Where the code actually lives today, not where it is expected to end up.
-      org: z.string(),
-      url: z.url(),
-    }),
+    // Where the code actually lives today, not where it is expected to end up. Absent only for a
+    // proposed component, which by definition has nowhere to point; the refinement below enforces
+    // that, so a real component cannot be added without saying where it is.
+    home: z
+      .object({
+        org: z.string(),
+        url: z.url(),
+      })
+      .optional(),
 
     // Lets the site be read by standard: what exists for the WCO Data Model, what exists for UNTP,
     // and what exists whatever the standard.
@@ -40,16 +55,39 @@ const catalogue = defineCollection({
 
     licence: z.string().optional(),
 
-    // Who answers when it breaks. A component nobody is accountable for should not be listed.
-    maintainer: z.string(),
+    // Who answers when it breaks. A real component nobody is accountable for should not be listed.
+    // A proposed component has no maintainer yet, which is most of what makes it proposed.
+    maintainer: z.string().optional(),
 
     // True only where the Commons runs a hosted instance. Hosting creates obligations about data
     // handling, jurisdiction and liability, so it is recorded explicitly rather than inferred.
     operated: z.boolean().default(false),
 
-    // A pending move, donation or graduation. Dated where a date exists, absent where none does,
-    // rather than implying a schedule that has not been agreed.
+    // A pending move, donation or graduation, or for a proposed component the reasoning behind it.
+    // Dated where a date exists, absent where none does, rather than implying a schedule that has
+    // not been agreed.
     disposition: z.string().optional(),
+  })
+  .superRefine((entry, ctx) => {
+    // Anything that is not proposed is claimed to exist, and a claim that something exists has to
+    // say where it is and who answers for it.
+    if (entry.maturity === 'proposed') return;
+
+    if (!entry.home) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['home'],
+        message: `"${entry.id}" is not proposed, so it must record where it lives.`,
+      });
+    }
+
+    if (!entry.maintainer) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['maintainer'],
+        message: `"${entry.id}" is not proposed, so it must name a maintainer.`,
+      });
+    }
   }),
 });
 
