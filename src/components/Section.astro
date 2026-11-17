@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  variant?: 'white' | 'gray';
+}
+
+const { variant = 'white', class: className } = Astro.props;
+---
+
+<section class:list={['section', variant]}>
+  <div class:list={['section_content', className]}>
+    <slot />
+  </div>
+</section>
+
+<style lang="scss">
+  @use 'styles/mixins.scss';
+
+  .section {
+    &.gray {
+      background: var(--color-gray-100);
+    }
+
+    &_content {
+      @include mixins.wrapper();
+      padding-block: var(--content-padding-block);
+    }
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import Button from '@/components/Button.astro';
+import Wordmark from '@/components/Wordmark.astro';
+
+import config from '@/config';
+
+interface Props {
+  navigation: {
+    url: string;
+    name: string;
+  }[];
+}
+
+const { navigation } = Astro.props;
+---
+
+<footer class="footer">
+  <div class="footer_content">
+    <div class="footer_column">
+      <Wordmark class="footer_wordmark" />
+      <div class="footer_meta">
+        <p>
+          Implementation and adoption of open digital trade infrastructure. The Commons authors no
+          specifications and holds no normative authority over any it implements.
+        </p>
+        <p class="footer_copyright">
+          <span>© {new Date().getFullYear()} {config.name}.</span>
+          <span>Site content CC BY 4.0. Components Apache-2.0.</span>
+        </p>
+      </div>
+    </div>
+    <div class="footer_column">
+      <nav class="footer_nav" aria-label="Footer">
+        {navigation.map(({ url, name }) => <a href={url}>{name}</a>)}
+      </nav>
+      <nav class="footer_nav">
+        <Button href={config.github} title="GitHub" variant="outline" />
+        <Button href={config.mailingList} title="Mailing List" variant="outline" icon="mail" />
+        <Button href={config.chatChannel} title="Chat Channel" variant="outline" icon="chat" />
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use 'styles/mixins.scss';
+
+  .footer {
+    background: var(--color-petrol-800);
+    padding-block: var(--content-padding-block);
+    padding-block-end: calc(1.6 * var(--content-padding-block));
+    color: rgb(from var(--color-white) r g b / 78%);
+
+    a {
+      --color-link: currentColor;
+      --color-link-hover: var(--color-white);
+    }
+
+    &_content {
+      @include mixins.wrapper();
+      display: grid;
+      gap: var(--spacing-lg);
+      grid-template-columns: 1fr auto;
+    }
+
+    &_column {
+      gap: 1.25em;
+      display: flex;
+      flex-direction: column;
+
+      &:last-child {
+        align-items: flex-end;
+      }
+    }
+
+    &_wordmark {
+      color: var(--color-white);
+    }
+
+    &_meta {
+      max-width: 52ch;
+
+      p {
+        margin: 0;
+        font-size: var(--font-size-sm);
+        line-height: var(--line-height-sm);
+      }
+    }
+
+    &_copyright {
+      gap: 0 0.75em;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 0.9em !important;
+      color: rgb(from var(--color-white) r g b / 60%);
+    }
+
+    &_nav {
+      gap: 0.5em 1.25em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-weight: var(--font-weight-medium);
+      font-size: var(--font-size-sm);
+
+      :global(.button) {
+        --text-color: currentColor;
+        --border-color: rgb(from var(--color-white) r g b / 45%);
+        --background-color: transparent;
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      :global(.button:hover) {
+        --background-color: rgb(from var(--color-white) r g b / 12%);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      &_content {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &_column:last-child {
+        align-items: flex-start;
+      }
+
+      &_nav {
+        justify-content: flex-start;
+      }
+    }
+  }
+</style>

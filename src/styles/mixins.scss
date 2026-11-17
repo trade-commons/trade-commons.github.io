@@ -1,0 +1,65 @@
+@use 'sass:math';
+@use 'sass:string';
+
+// Display SVG as background image
+@function svg-uri($width, $height, $svg) {
+  $encoded: '';
+  $slice: 2000;
+  $index: 0;
+  $svg: '<svg xmlns="http://www.w3.org/2000/svg" width="#{$width}" height="#{$height}" viewBox="0 0 #{$width} #{$height}">#{$svg}</svg>';
+  $loops: math.ceil(calc(string.length($svg) / $slice));
+  @for $i from 1 through $loops {
+    $chunk: string.slice($svg, $index, $index + $slice - 1);
+    $chunk: str-replace($chunk, '"', "'");
+    $chunk: str-replace($chunk, '<', '%3C');
+    $chunk: str-replace($chunk, '>', '%3E');
+    $chunk: str-replace($chunk, '&', '%26');
+    $chunk: str-replace($chunk, '#', '%23');
+    $encoded: #{$encoded}#{$chunk};
+    $index: $index + $slice;
+  }
+  @return url("data:image/svg+xml;charset=utf8,#{$encoded}");
+}
+
+// Replace string
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+// Round a float number with precision
+@function round-to($number, $precision: 3) {
+  $factor: math.pow(10, $precision);
+  @return math.div(math.round($number * $factor), $factor);
+}
+
+// Generate linear scale with clamp()
+// From $min-size at $min-width to $max-size at $max-width
+// https://clamp.font-size.app
+@function clamp-builder($min-size, $max-size, $min-width, $max-width, $rem: 16px) {
+  $min-size-rem: math.div($min-size, $rem);
+  $max-size-rem: math.div($max-size, $rem);
+
+  $slope: math.div($max-size - $min-size, $max-width - $min-width);
+  $intersection: round-to(math.div(-$min-width * $slope + $min-size, $rem));
+  $slope-vw: round-to($slope * 100);
+
+  @return clamp(#{$min-size-rem}rem, #{$intersection}rem + #{$slope-vw}vw, #{$max-size-rem}rem);
+}
+
+@mixin focus-visible($color: var(--color-focus)) {
+  outline-width: 3px;
+  outline-offset: 2px;
+  outline-style: solid;
+  outline-color: $color;
+}
+
+@mixin wrapper($max-width: var(--max-width)) {
+  width: 100%;
+  margin: 0 auto;
+  max-width: $max-width;
+  padding-inline: var(--content-padding-inline);
+}

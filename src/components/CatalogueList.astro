@@ -1,0 +1,252 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'catalogue'>[];
+}
+
+const { entries } = Astro.props;
+
+// Tier order is the dependency direction: an application calls a service or a library and never the
+// other way round, so reading the page top to bottom reads the stack bottom to top.
+const TIER_ORDER = ['library', 'service', 'application', 'tooling', 'template', 'register'] as const;
+
+const TIER_LABELS: Record<string, { title: string; note: string }> = {
+  library: {
+    title: 'Libraries',
+    note: 'Imported by other components. Never deployed on their own.',
+  },
+  service: {
+    title: 'Services',
+    note: 'Deployed and operated. Each must be deployable by a third party from its own repository.',
+  },
+  application: {
+    title: 'Applications',
+    note: 'Used directly by a person. An application contains no protocol code; it calls a library or a service.',
+  },
+  tooling: {
+    title: 'Tooling',
+    note: 'Test suites, reference implementations and the harnesses an implementer runs against.',
+  },
+  template: {
+    title: 'Templates',
+    note: 'Starting points a community or a vendor copies and then owns.',
+  },
+  register: {
+    title: 'Registers',
+    note: 'Authoritative registers governed by a standards body. Listed so the catalogue is navigable; the Commons holds no authority over them.',
+  },
+};
+
+const groups = TIER_ORDER.map((tier) => ({
+  tier,
+  ...TIER_LABELS[tier],
+  entries: entries.filter((entry) => entry.data.tier === tier),
+})).filter((group) => group.entries.length > 0);
+---
+
+{
+  groups.length === 0 ? (
+    <p class="empty">
+      The catalogue is empty. A component is added by a pull request against
+      <code>content/catalogue.yaml</code>.
+    </p>
+  ) : (
+    <div class="catalogue">
+      {groups.map((group) => (
+        <section class="group">
+          <h2 id={group.tier}>{group.title}</h2>
+          <p class="group_note">{group.note}</p>
+          <ul class="components">
+            {group.entries.map(({ data }) => (
+              <li class="component">
+                <div class="component_head">
+                  <h3>{data.name}</h3>
+                  <span class:list={['badge', `maturity-${data.maturity}`]}>{data.maturity}</span>
+                  {data.operated && <span class="badge operated">operated by the Commons</span>}
+                </div>
+                <p class="component_summary">{data.summary}</p>
+                {data.standards.length > 0 && (
+                  <ul class="standards">
+                    {data.standards.map((standard) => (
+                      <li>{standard}</li>
+                    ))}
+                  </ul>
+                )}
+                <dl class="facts">
+                  <div>
+                    <dt>Home</dt>
+                    <dd>
+                      <a href={data.home.url} target="_blank" rel="noreferrer">
+                        {data.home.org}
+                      </a>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Maintainer</dt>
+                    <dd>{data.maintainer}</dd>
+                  </div>
+                  {data.licence && (
+                    <div>
+                      <dt>Licence</dt>
+                      <dd>{data.licence}</dd>
+                    </div>
+                  )}
+                </dl>
+                {data.disposition && <p class="component_disposition">{data.disposition}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  )
+}
+
+<style lang="scss">
+  .empty {
+    padding: var(--spacing-md);
+    color: var(--color-gray-700);
+    background: var(--color-gray-50);
+    border-radius: var(--border-radius-sm);
+    border: 1px dashed var(--color-gray-300);
+  }
+
+  .group {
+    & + & {
+      margin-top: var(--spacing-xl);
+    }
+
+    &_note {
+      margin: 0.4em 0 0 0;
+      max-width: var(--measure);
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+    }
+  }
+
+  .components {
+    margin: var(--spacing-sm) 0 0 0;
+    padding: 0;
+    display: grid;
+    list-style: none;
+    gap: var(--spacing-sm);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .component {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    background: var(--color-bg);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-gray-200);
+
+    &_head {
+      gap: 0.5em;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+
+      h3 {
+        margin: 0;
+        font-size: var(--font-size-h5);
+      }
+    }
+
+    &_summary {
+      margin: 0.8em 0 0 0;
+      color: var(--color-gray-800);
+    }
+
+    &_disposition {
+      margin: 1em 0 0 0;
+      padding-left: 0.9em;
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+      border-left: 2px solid var(--color-ochre-500);
+    }
+  }
+
+  .badge {
+    padding: 0.2em 0.5em;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border-radius: var(--border-radius-xs);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    white-space: nowrap;
+  }
+
+  .maturity-production {
+    color: var(--color-petrol-700);
+    background: rgb(from var(--color-petrol-400) r g b / 12%);
+    border-color: rgb(from var(--color-petrol-400) r g b / 35%);
+  }
+
+  .maturity-normative {
+    color: var(--color-ochre-600);
+    background: rgb(from var(--color-ochre-500) r g b / 10%);
+    border-color: rgb(from var(--color-ochre-500) r g b / 32%);
+  }
+
+  .operated {
+    color: var(--color-white);
+    background: var(--color-petrol-600);
+    border-color: var(--color-petrol-600);
+  }
+
+  .standards {
+    gap: 0.4em;
+    margin: 0.9em 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0.15em 0.5em;
+      color: var(--color-gray-700);
+      font-size: var(--font-size-xs);
+      background: var(--color-gray-100);
+      border-radius: var(--border-radius-xs);
+    }
+  }
+
+  .facts {
+    gap: 0.75em 1.5em;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 1.1em;
+
+    div {
+      min-width: 0;
+    }
+
+    dt {
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    dd {
+      margin-top: 0.15em;
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+    }
+  }
+</style>

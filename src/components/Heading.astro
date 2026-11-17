@@ -1,0 +1,45 @@
+---
+import type { Polymorphic } from 'astro/types';
+
+type Element = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+type Props<Tag extends Element = 'h2'> = Polymorphic<{
+  as: Tag;
+  size?: Tag;
+  title: string;
+}>;
+
+const { as: Tag = 'h2', size = Tag, title } = Astro.props;
+const slotContent = await Astro.slots.render('default');
+const slotEmpty = !slotContent || !slotContent.trim().length;
+const fontSize = `var(--font-size-${size})`;
+---
+
+{
+  !slotEmpty ? (
+    <header class="heading" style={{ fontSize }}>
+      <Tag class="heading_title">{title}</Tag>
+      <slot />
+    </header>
+  ) : (
+    <Tag style={size !== Tag ? { fontSize } : undefined}>{title}</Tag>
+  )
+}
+
+<style lang="scss">
+  .heading {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin: 1.5em 0 0.75em 0;
+    justify-content: space-between;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &_title {
+      margin: 0;
+    }
+  }
+</style>

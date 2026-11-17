@@ -1,0 +1,113 @@
+# The component catalogue.
+#
+# One entry per component, wherever it lives. Adding one is a pull request against this file, and the
+# entry is where somebody states who is accountable for the component.
+#
+# `home` records where the code is today, not where it is expected to end up. Where a move or a
+# donation has been agreed in principle but not carried out, that belongs in `disposition`, without
+# a date unless a date has actually been agreed.
+#
+# Nothing is listed at maturity `planned` until there is a repository behind it. A catalogue of
+# intentions is a roadmap, and a roadmap published from a draft is a commitment nobody made.
+
+- id: vckit
+  name: VCkit
+  summary: >-
+    Credential issuance and verification primitives. The toolkit the issuing and verifying
+    applications are built on, rather than an application itself.
+  tier: library
+  maturity: production
+  home:
+    org: uncefact
+    url: https://github.com/uncefact/project-vckit
+  standards:
+    - W3C Verifiable Credentials
+    - W3C Decentralised Identifiers
+    - UNTP
+  licence: Apache-2.0
+  maintainer: UN/CEFACT UNTP project team
+  operated: false
+  disposition: >-
+    Expected to move into trade-commons. The uncefact GitHub organisation was created informally
+    rather than as a UN/CEFACT asset, and the authoritative specification content has since moved to
+    UNICC GitLab, leaving adoption tooling that was only ever in the wrong place. Not yet scheduled.
+
+- id: storage
+  name: Storage Service
+  summary: >-
+    Credential storage, serving a credential at a stable, resolvable address so a verifier can fetch
+    what a link points at.
+  tier: service
+  maturity: production
+  home:
+    org: uncefact
+    url: https://github.com/uncefact/project-storage-service
+  standards:
+    - UNTP
+    - W3C Verifiable Credentials
+  licence: Apache-2.0
+  maintainer: UN/CEFACT UNTP project team
+  operated: false
+  disposition: Expected to move into trade-commons, with VCkit. Not yet scheduled.
+
+- id: idr
+  name: Identity Resolver
+  summary: >-
+    Resolves an identifier to the credentials and documents published against it, so a link on a
+    product resolves to whatever has been said about that product.
+  tier: service
+  maturity: production
+  home:
+    org: pyx-industries
+    url: https://github.com/pyx-industries/pyx-identity-resolver
+  standards:
+    - UNTP
+    - ISO 18975
+  licence: Apache-2.0
+  maintainer: Pyx Industries
+  operated: false
+  disposition: >-
+    Offered as a contribution from Pyx Industries. A donation of a component a vendor also sells is
+    what makes the commons credible to that vendor's competitors, so it is to be dated, licensed and
+    minuted rather than performed quietly. Not yet completed.
+
+- id: tests-untp
+  name: UNTP Test Suites and Playground
+  summary: >-
+    Conformance and interoperability test suites, the reference implementation they exercise, and the
+    playground that lets an implementer check a credential without installing anything.
+  tier: tooling
+  maturity: production
+  home:
+    org: uncefact
+    url: https://github.com/uncefact/tests-untp
+  standards:
+    - UNTP
+  licence: Apache-2.0
+  maintainer: UN/CEFACT UNTP project team
+  operated: false
+  disposition: >-
+    Expected to move into trade-commons, and the dependency for a hosted conformity testing service
+    the Commons would operate on a cost-recovery basis under charter section 2. Not yet scheduled.
+
+- id: grid
+  name: GRID, the Global Trust Registry
+  summary: >-
+    The authoritative register of who may attest to what: registration authorities, trust anchors and
+    the identifiers they vouch for. Listed here so the catalogue is navigable, not because the
+    Commons holds any authority over it.
+  tier: register
+  maturity: normative
+  home:
+    org: UN/CEFACT (UNICC GitLab)
+    url: https://opensource.unicc.org/un/unece/uncefact/gtr
+  standards:
+    - UNTP
+    - GRID
+  maintainer: UN/CEFACT, secretariat hosted by UNECE
+  operated: false
+  disposition: >-
+    Stays with UN/CEFACT. Charter section 3 makes the authoritative trust, identity, conformance and
+    implementation registers UN/CEFACT public goods. The Commons may hold code that serves a register
+    and configuration that operates it under revocable, non-exclusive delegation, never the data as
+    its own asset.

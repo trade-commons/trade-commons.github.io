@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import CatalogueList from '@/components/CatalogueList.astro';
+
+import config from '@/config';
+
+const { title, description } = config.pages.components;
+const entries = (await getCollection('catalogue')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
+---
+
+<Layout title={title} description={description}>
+  <Hero title={title} description={description} />
+
+  <Section>
+    <p class="lead">
+      Components live across four homes, so an entry below frequently points somewhere other than
+      this organisation. Each records where the component is today rather than where it is expected
+      to end up, and a pending move or donation is noted as such without implying a schedule that has
+      not been agreed.
+    </p>
+    {
+      standards.length > 0 && (
+        <p class="standards">
+          <span>Standards served</span>
+          {standards.join(' · ')}
+        </p>
+      )
+    }
+    <p class="add">
+      A component is added by a pull request against <code>content/catalogue.yaml</code> in
+      <a href="https://github.com/trade-commons/trade-commons.github.io" rel="noreferrer">
+        this site's repository
+      </a>. The entry is where somebody states who is accountable when it breaks, which is why a
+      maintainer is required.
+    </p>
+  </Section>
+
+  <Section variant="gray">
+    <CatalogueList entries={entries} />
+  </Section>
+</Layout>
+
+<style lang="scss">
+  .lead {
+    max-width: var(--measure);
+    font-size: var(--font-size-lg);
+  }
+
+  .standards {
+    max-width: var(--measure);
+    padding: var(--spacing-sm);
+    background: var(--color-gray-50);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-gray-200);
+    font-size: var(--font-size-sm);
+
+    span {
+      display: block;
+      margin-bottom: 0.3em;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  .add {
+    max-width: var(--measure);
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+  }
+</style>

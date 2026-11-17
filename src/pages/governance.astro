@@ -1,0 +1,34 @@
+---
+import { Content } from '../../content/blocks/governance.md';
+
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+
+import config from '@/config';
+
+const { title, description } = config.pages.governance;
+---
+
+<Layout title={title} description={description}>
+  <Hero title={title} description={description} />
+  <Section>
+    <div class="prose">
+      <Content />
+    </div>
+  </Section>
+</Layout>
+
+<style lang="scss">
+  .prose {
+    max-width: var(--measure);
+
+    :global(h2) {
+      margin-top: 2em;
+    }
+
+    :global(table) {
+      max-width: none;
+    }
+  }
+</style>

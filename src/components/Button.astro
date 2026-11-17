@@ -1,0 +1,86 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import Icon, { type Props as IconProps } from './Icon/Icon.astro';
+
+type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{
+  as: Tag;
+  title: string;
+  icon?: IconProps['name'];
+  iconPosition?: 'start' | 'end';
+  variant?: 'primary' | 'outline' | 'link';
+}>;
+
+const {
+  as: Tag = 'a',
+  title,
+  variant = 'primary',
+  icon,
+  iconPosition = 'start',
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<Tag class:list={['button', variant, className]} {...rest}>
+  {icon && iconPosition === 'start' && <Icon name={icon} />}
+  <span>{title || <slot />}</span>
+  {icon && iconPosition === 'end' && <Icon name={icon} />}
+</Tag>
+
+<style lang="scss">
+  .button {
+    gap: 0.5em;
+    font: inherit;
+    cursor: pointer;
+    padding: 0.75em 1em;
+    align-items: center;
+    display: inline-flex;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-sm);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--border-radius-sm);
+    background: var(--background-color, transparent);
+    border: 1px solid var(--border-color, transparent);
+    transition:
+      color 0.2s,
+      background-color 0.2s,
+      border-color 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  .primary {
+    --text-color: var(--color-white);
+    --background-color: var(--color-petrol-700);
+
+    &:hover {
+      --background-color: var(--color-petrol-500);
+    }
+  }
+
+  .outline {
+    --text-color: var(--color-petrol-700);
+    --border-color: var(--color-petrol-700);
+
+    &:hover {
+      --background-color: var(--color-gray-100);
+    }
+  }
+
+  .link {
+    --text-color: var(--color-link);
+
+    padding: 0;
+    border: none;
+    border-radius: 0;
+
+    &:hover {
+      --text-color: var(--color-link-hover);
+    }
+  }
+</style>

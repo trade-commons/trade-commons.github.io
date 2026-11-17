@@ -1,0 +1,225 @@
+@use './mixins' as *;
+
+@page {
+  margin: 0.7cm 1cm;
+}
+
+:root {
+  --min-width: 320px;
+  --max-width: 1200px;
+  --measure: 68ch;
+  --content-padding-block:  #{clamp-builder(28px, 56px, 400px, 1200px)};
+  --content-padding-inline: #{clamp-builder(16px, 64px, 400px, 1200px)};
+
+  --font-fallback: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-fallback-serif: Georgia, "Times New Roman", serif;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-em: 16px;
+  --font-size-xs: 0.750rem; // 12px
+  --font-size-sm: 0.875rem; // 14px
+  --font-size-md: 1.000rem; // 16px
+  --font-size-lg: #{clamp-builder(16px, 18px, 560px, 960px)};
+  --font-size-xl: #{clamp-builder(18px, 21px, 560px, 960px)};
+  --font-size-h6: #{clamp-builder(15px, 16px, 560px, 960px)};
+  --font-size-h5: #{clamp-builder(17px, 19px, 560px, 960px)};
+  --font-size-h4: #{clamp-builder(19px, 22px, 560px, 960px)};
+  --font-size-h3: #{clamp-builder(22px, 26px, 560px, 960px)};
+  --font-size-h2: #{clamp-builder(27px, 33px, 560px, 960px)};
+  --font-size-h1: #{clamp-builder(33px, 46px, 560px, 960px)};
+
+  --line-height-xs: 1.150;
+  --line-height-sm: 1.300;
+  --line-height-md: 1.600;
+  --line-height-lg: 1.750;
+
+  --border-radius-xs: 3px;
+  --border-radius-sm: 5px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  // Colours. A restrained placeholder palette, deliberately unlike UNECE cyan and UN blue so the
+  // Commons does not read as a standards body's own site. Replace wholesale when an identity exists.
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-fg: #16201F;
+  --color-bg: #FFFFFF;
+  --color-gray-50: #F8F9F9;
+  --color-gray-100: #F1F3F3;
+  --color-gray-200: #E4E7E7;
+  --color-gray-300: #CDD2D2;
+  --color-gray-400: #A7AFAF;
+  --color-gray-500: #848D8D;
+  --color-gray-600: #68716F;
+  --color-gray-700: #4E5654;
+  --color-gray-800: #343A39;
+  --color-petrol-400: #3C8E9E;
+  --color-petrol-500: #2E7483;
+  --color-petrol-600: #225B68;
+  --color-petrol-700: #18444F;
+  --color-petrol-800: #102E36;
+  --color-ochre-500: #A1612A;
+  --color-ochre-600: #834E20;
+
+  --color-focus: var(--color-petrol-400);
+  --color-link: var(--color-petrol-600);
+  --color-link-hover: var(--color-petrol-400);
+
+  --spacing-2xs: #{clamp-builder(08px, 10px, 560px, 960px)};
+  --spacing-xs:  #{clamp-builder(12px, 14px, 560px, 960px)};
+  --spacing-sm:  #{clamp-builder(16px, 20px, 560px, 960px)};
+  --spacing-md:  #{clamp-builder(22px, 28px, 560px, 960px)};
+  --spacing-lg:  #{clamp-builder(30px, 38px, 560px, 960px)};
+  --spacing-xl:  #{clamp-builder(40px, 50px, 560px, 960px)};
+  --spacing-2xl: #{clamp-builder(52px, 64px, 560px, 960px)};
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  color: var(--color-fg);
+  background: var(--color-bg);
+  font-size: var(--font-size-em);
+  line-height: var(--line-height-md);
+  font-weight: var(--font-weight-normal);
+  font-family: var(--font-sans, var(--font-fallback));
+  scroll-padding-top: var(--header-height);
+  -webkit-tap-highlight-color: transparent;
+
+  @media print {
+    --font-size-em: 10pt;
+    print-color-adjust: exact;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  @include focus-visible();
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  overflow-x: hidden;
+  min-height: 100dvh;
+  min-width: var(--min-width);
+  grid-template-rows: auto 1fr auto;
+}
+
+main {
+  min-width: 0;
+}
+
+@each $tag in h1, h2, h3, h4, h5, h6 {
+  #{$tag} {
+    margin: 1.75em 0 0.6em 0;
+    color: var(--color-petrol-700);
+    font-family: var(--font-serif, var(--font-fallback-serif));
+    font-size: var(--font-size-#{$tag});
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-xs);
+    text-wrap: balance;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+h5, h6 {
+  font-family: var(--font-sans, var(--font-fallback));
+  letter-spacing: 0.02em;
+}
+
+a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--c, var(--color-link));
+
+  &:hover {
+    --c: var(--color-link-hover);
+  }
+}
+
+p, ul, ol, dl {
+  margin-block: 1.25em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul, ol {
+  padding-left: 1.4em;
+}
+
+li {
+  margin-block: 0.4em;
+}
+
+dt, dd, figure {
+  margin: 0;
+}
+
+blockquote {
+  margin: 1.5em 0;
+  padding-left: 1.25em;
+  color: var(--color-gray-700);
+  border-left: 3px solid var(--color-gray-300);
+}
+
+code {
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+  border-radius: var(--border-radius-xs);
+  background: var(--color-gray-100);
+}
+
+small {
+  font-size: var(--font-size-sm);
+}
+
+strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+svg, img {
+  vertical-align: top;
+}
+
+table {
+  width: 100%;
+  margin-block: 1.5em;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+
+  th, td {
+    text-align: left;
+    padding: 0.6em 0.75em;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  th {
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 1px solid var(--color-gray-300);
+  }
+}

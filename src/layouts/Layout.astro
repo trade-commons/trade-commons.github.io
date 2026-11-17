@@ -1,0 +1,54 @@
+---
+import { Font } from 'astro:assets';
+
+import { getAbsoluteUrl } from '@/utils/helpers';
+import '@/styles/global.scss';
+
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+import config from '@/config';
+
+const navigation = [
+  { url: '/', name: 'Home' },
+  { url: '/about', name: 'About' },
+  { url: '/governance', name: 'Governance' },
+  { url: '/components', name: 'Components' },
+  { url: '/get-involved', name: 'Get Involved' },
+];
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalUrl = getAbsoluteUrl(Astro.url.pathname);
+const isHome = Astro.url.pathname.replace(/\/$/, '') === '';
+const pageTitle = isHome ? config.name : `${title} | ${config.shortName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{pageTitle}</title>
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={config.name} />
+    {description && <meta name="description" property="og:description" content={description} />}
+    <Font preload cssVariable="--font-serif" />
+    <Font preload cssVariable="--font-sans" />
+  </head>
+  <body>
+    <Header navigation={navigation} />
+    <main class="main">
+      <slot />
+    </main>
+    <Footer navigation={navigation} />
+  </body>
+</html>

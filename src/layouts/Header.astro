@@ -1,0 +1,150 @@
+---
+import Icon from '@/components/Icon/Icon.astro';
+import Wordmark from '@/components/Wordmark.astro';
+
+interface Props {
+  navigation: {
+    url: string;
+    name: string;
+  }[];
+}
+
+const { navigation } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="header">
+  <div class="header_content">
+    <a class="header_logo" href="/" aria-label="Global Trade Commons, home">
+      <Wordmark />
+    </a>
+    <button
+      id="mobile-menu"
+      class="mobile-menu"
+      aria-label="navigation menu"
+      aria-expanded="false"
+      aria-controls="navigation"
+    >
+      <Icon name="menu" class="mobile-menu_open" />
+      <Icon name="cross" class="mobile-menu_close" />
+    </button>
+    <nav id="navigation" class="nav">
+      {
+        navigation.map(({ url, name }) => (
+          <a href={url} aria-current={url === current ? 'page' : undefined}>
+            {name}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const navigation = document.getElementById('navigation') as HTMLElement;
+  const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
+
+  function toggleMobileMenu(force?: boolean) {
+    const open = navigation.classList.toggle('open', force);
+    mobileMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  mobileMenu.addEventListener('click', () => {
+    toggleMobileMenu();
+  });
+</script>
+
+<style lang="scss">
+  @use 'styles/mixins.scss';
+
+  :root {
+    --header-height: 76px;
+
+    @media screen and (max-width: 768px) {
+      --header-height: 64px;
+    }
+  }
+
+  .header {
+    top: 0;
+    z-index: 99;
+    position: sticky;
+    background: var(--color-bg);
+    box-shadow: 0 1px 0 rgba(0 0 0 / 10%);
+
+    &_content {
+      @include mixins.wrapper();
+      display: flex;
+      align-items: center;
+      height: var(--header-height);
+      justify-content: space-between;
+    }
+
+    &_logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--color-petrol-700);
+    }
+  }
+
+  .nav {
+    gap: 1.5em;
+    display: flex;
+
+    a {
+      text-decoration: none;
+      color: var(--color-gray-800);
+      font-size: var(--font-size-h6);
+      font-weight: var(--font-weight-medium);
+
+      &:hover {
+        color: var(--color-link-hover);
+      }
+
+      &[aria-current='page'] {
+        color: var(--color-petrol-700);
+        font-weight: var(--font-weight-semibold);
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+    }
+  }
+
+  .mobile-menu {
+    padding: 0;
+    border: none;
+    display: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .mobile-menu {
+      display: block;
+
+      &[aria-expanded='true'] &_open,
+      &[aria-expanded='false'] &_close {
+        display: none;
+      }
+    }
+
+    .nav {
+      gap: 1em;
+      position: absolute;
+      flex-direction: column;
+      align-items: flex-start;
+      top: var(--header-height);
+      background: var(--color-bg);
+      padding: 1.5em 3em 1.5em 1.5em;
+      box-shadow: 0 1px 0 1px rgba(0 0 0 / 10%);
+      right: calc(var(--content-padding-inline) / 2);
+
+      &:not(.open) {
+        display: none;
+      }
+    }
+  }
+</style>

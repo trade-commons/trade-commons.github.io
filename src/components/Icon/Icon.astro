@@ -1,0 +1,21 @@
+---
+import { icons } from './icons';
+
+export interface Props {
+  name: keyof typeof icons;
+  size?: string;
+  label?: string;
+  class?: string;
+}
+
+const { name, size = '1.5em', label, class: className, ...rest } = Astro.props;
+const Svg = (await icons[name]()).default;
+const props = {
+  ...rest,
+  class: className,
+  'aria-label': label,
+  'aria-hidden': label ? undefined : true,
+};
+---
+
+<Svg height={size} {...props} />

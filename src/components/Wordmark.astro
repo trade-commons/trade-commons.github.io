@@ -1,0 +1,37 @@
+---
+// A typographic lockup rather than a logo. The foundation has no visual identity yet, and inventing
+// one here would have to be undone. The mark in public/favicon.svg is a placeholder on the same
+// footing.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={['wordmark', className]}>
+  <span class="wordmark_line">Global</span>
+  <span class="wordmark_line">Trade Commons</span>
+</span>
+
+<style lang="scss">
+  .wordmark {
+    display: grid;
+    line-height: 1.05;
+    font-family: var(--font-serif, var(--font-fallback-serif));
+
+    &_line {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+
+      &:first-child {
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-family: var(--font-sans, var(--font-fallback));
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+        opacity: 0.75;
+      }
+    }
+  }
+</style>
