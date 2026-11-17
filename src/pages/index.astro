@@ -13,6 +13,9 @@ import config from '@/config';
 
 const { title, description } = config.pages.home;
 const catalogue = await getCollection('catalogue');
+const specifications = (await getCollection('specifications')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 
 const homes = [
   {
@@ -46,13 +49,37 @@ const homes = [
   </Hero>
 
   <Section>
+    <Heading title="The specifications this work supports" />
+    <p class="lead">
+      The Commons builds tooling for these and governs none of them. UN/CEFACT owns and governs all
+      three, with its secretariat hosted by UNECE. Each link goes to the specification itself.
+    </p>
+    <ul class="specs">
+      {
+        specifications.map(({ data }) => (
+          <li>
+            <h3>
+              <a href={data.url} target="_blank" rel="noreferrer">
+                {data.name}
+              </a>
+            </h3>
+            <p class="specs_abbr">{data.abbreviation}</p>
+            <p>{data.summary}</p>
+            {data.note && <p class="specs_note">{data.note}</p>}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section variant="gray">
     <Heading title="The organising principle" />
     <div class="prose">
       <Principle />
     </div>
   </Section>
 
-  <Section variant="gray">
+  <Section>
     <Heading title="Where things live">
       <Button
         href="/components"
@@ -83,7 +110,7 @@ const homes = [
     </ul>
   </Section>
 
-  <Section>
+  <Section variant="gray">
     <Heading title="What the Commons does not do" />
     <p class="lead">
       The Commons implements standards governed by others. It holds no normative authority over any of
@@ -96,6 +123,65 @@ const homes = [
 </Layout>
 
 <style lang="scss">
+  .specs {
+    margin: var(--spacing-md) 0 0 0;
+    padding: 0;
+    display: grid;
+    list-style: none;
+    gap: var(--spacing-sm);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    li {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-md);
+      background: var(--color-gray-50);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--color-gray-200);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: var(--font-size-h5);
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    p {
+      margin: 0.75em 0 0 0;
+      color: var(--color-gray-800);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-md);
+    }
+
+    &_abbr {
+      margin-top: 0.3em !important;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      font-size: var(--font-size-xs) !important;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    &_note {
+      margin-top: auto !important;
+      padding-top: 1em;
+      color: var(--color-gray-600);
+      font-size: var(--font-size-xs) !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .prose {
     max-width: var(--measure);
 

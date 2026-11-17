@@ -24,6 +24,7 @@ it.
 content/
   catalogue.yaml          one entry per component, wherever it lives
   registers.yaml          one entry per register; none of them are ours
+  specifications.yaml     the normative specifications this work supports
   blocks/*.md             page prose, kept as Markdown so translation stays prose
 src/
   content.config.ts       both schemas; the governance gate

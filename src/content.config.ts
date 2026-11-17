@@ -148,4 +148,28 @@ const registers = defineCollection({
     }),
 });
 
-export const collections = { catalogue, registers };
+/**
+ * The normative specifications the Commons provides tooling for.
+ *
+ * Listed so a visitor can reach the specification itself in one click. Like the registers, none of
+ * these belong to the Commons, which is why `authority` is required and there is no field for a
+ * maintainer or a version: the owning body states both, on its own site.
+ */
+const specifications = defineCollection({
+  loader: file('./content/specifications.yaml'),
+  schema: z.object({
+    id: z.string(),
+
+    // A file-loaded collection comes back sorted by id, so the sequence has to be stated.
+    order: z.number().int().positive(),
+
+    name: z.string(),
+    abbreviation: z.string(),
+    summary: z.string(),
+    authority: z.string(),
+    url: z.url(),
+    note: z.string().optional(),
+  }),
+});
+
+export const collections = { catalogue, registers, specifications };

@@ -1,0 +1,39 @@
+# The normative specifications this work provides tooling for.
+#
+# The Commons implements these and governs none of them. Each entry links to the specification on the
+# site of the body that owns it. `order` sets the sequence on the home page, because a collection
+# loaded from a file comes back sorted by id.
+
+- id: untp
+  order: 1
+  name: UN Transparency Protocol
+  abbreviation: UNTP
+  summary: >-
+    Verifiable credentials for supply chain transparency: product passports, traceability events,
+    conformity credentials, identity anchors and facility records. Lets a claim about a product carry
+    the evidence for itself, so a buyer can check it without asking the seller.
+  authority: UN/CEFACT
+  url: https://untp.unece.org
+
+- id: unvtd
+  order: 2
+  name: UN Verifiable Trade Documents
+  abbreviation: UNVTD
+  summary: >-
+    Verifiable, machine-readable forms of the documents that move with a consignment, including
+    transferable records where possession carries legal effect. Replaces a scanned certificate with
+    something a customs system can check on receipt.
+  authority: UN/CEFACT
+  url: https://unvtd.unece.org
+
+- id: grid
+  order: 3
+  name: Global Registry Information Directory
+  abbreviation: GRID
+  summary: >-
+    A directory of authoritative government-run registers, such as business, land, asset and
+    trademark registers, and the registration authorities that operate them. It is how a verifier
+    establishes that the registrar behind an identity anchor is the authority it claims to be.
+  authority: UN/CEFACT
+  url: https://grid.unece.org
+  note: The register itself is listed under Registers.
