@@ -1,0 +1,122 @@
+# Registers the ecosystem relies on.
+#
+# None of these belong to the Global Trade Commons and none are hosted here. They are UN/CEFACT
+# public goods whose legal and administrative home is the UNECE secretariat, and they reside on
+# UNECE sites. This catalogue points at them and nothing more.
+#
+# `status: operational` means the register is published and resolvable, and `url` must point at it.
+# `status: proposed` means it is intended and does not exist yet, so there is no register to link and
+# only the site that would host it is named. The schema enforces that distinction.
+
+- id: grid
+  name: Global Registry Information Directory
+  abbreviation: GRID
+  status: operational
+  registers: >-
+    Authoritative government-run registers, such as business, land, asset and trademark registers,
+    and the registration authorities that operate them.
+  summary: >-
+    The directory of who may authoritatively attest to what. A verifier presented with an identity
+    anchor uses GRID to establish whether the registrar that issued it is the authority it claims to
+    be.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: grid.unece.org
+    url: https://grid.unece.org
+  url: https://grid.unece.org
+
+- id: cap
+  name: UNTP Community Activation Register
+  abbreviation: CAP
+  status: operational
+  registers: >-
+    Community Activation Programmes, the extension each one owns, the UNTP version it extends, and
+    the identifier schemes, conformity schemes and software it uses.
+  summary: >-
+    The discovery point for the engine-and-declaration split. An entry declares what a sector or
+    jurisdiction programme has published, and points at the profile document on the programme's own
+    domain that an engine then reads.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: untp.unece.org
+    url: https://untp.unece.org
+  url: https://untp.unece.org/registers/cap
+  note: >-
+    The register already carries several programmes. The profile document each entry points at, at
+    the expected well-known location on the programme's own domain, is in most cases not yet served,
+    which is the gap the community profile template exists to close.
+
+- id: idr
+  name: UNTP Identifier Scheme Register
+  abbreviation: IDR
+  status: operational
+  registers: >-
+    Community-tier identifier schemes that UNTP credentials use to identify products, facilities,
+    organisations, members, locations and key assets.
+  summary: >-
+    Lets a verifier resolve an identifier it has not seen before to the scheme that issued it.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: untp.unece.org
+    url: https://untp.unece.org
+  url: https://untp.unece.org/registers/idr
+  note: >-
+    Complements GRID rather than overlapping it. GRID catalogues authoritative government-run
+    registers; this one catalogues community-tier schemes.
+
+- id: cvc
+  name: UNTP Conformity Vocabulary Catalogue Register
+  abbreviation: CVC
+  status: operational
+  registers: >-
+    Conformity schemes that have published machine-readable conformity vocabulary catalogues, and
+    the vocabulary address each one serves.
+  summary: >-
+    What lets a conformity credential cite a criterion by identifier rather than by prose, so a
+    verifier can check a claim against the scheme's own published definition of it.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: untp.unece.org
+    url: https://untp.unece.org
+  url: https://untp.unece.org/registers/cvc
+
+- id: swi
+  name: UNTP Software Implementers Register
+  abbreviation: SWI
+  status: operational
+  registers: Software vendors that implement the UN Transparency Protocol.
+  summary: >-
+    A directory of who has implemented the protocol, designed to maintain itself: after vendors are
+    seeded, entries are discovered from the issuing software recorded in published credentials rather
+    than from vendors filing returns.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: untp.unece.org
+    url: https://untp.unece.org
+  url: https://untp.unece.org/registers/swi
+
+- id: vocabulary
+  name: Vocabulary register
+  status: proposed
+  registers: >-
+    Published vocabularies, their versions and the addresses at which their terms resolve.
+  summary: >-
+    A term in a vocabulary is an identifier before it is a web page. A register of published
+    vocabularies would make the set discoverable and versioned rather than known only to those
+    already using it.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: vocab.unece.org
+    url: https://vocab.unece.org
+
+- id: unvtd-implementers
+  name: UNVTD implementers register
+  status: proposed
+  registers: Implementers of UN Verifiable Trade Documents.
+  summary: >-
+    The UNVTD counterpart to the UNTP software implementers register, recording who has implemented
+    the verifiable trade document specifications.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: unvtd.unece.org
+    url: https://unvtd.unece.org

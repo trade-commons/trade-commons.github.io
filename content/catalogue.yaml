@@ -96,28 +96,6 @@
     Expected to move into trade-commons, and the dependency for a hosted conformity testing service
     the Commons would operate on a cost-recovery basis under charter section 2. Not yet scheduled.
 
-- id: grid
-  name: GRID, the Global Trust Registry
-  summary: >-
-    The authoritative register of who may attest to what: registration authorities, trust anchors and
-    the identifiers they vouch for. Listed here so the catalogue is navigable, not because the
-    Commons holds any authority over it.
-  tier: register
-  maturity: normative
-  home:
-    org: UN/CEFACT (UNICC GitLab)
-    url: https://opensource.unicc.org/un/unece/uncefact/gtr
-  standards:
-    - UNTP
-    - GRID
-  maintainer: UN/CEFACT, secretariat hosted by UNECE
-  operated: false
-  disposition: >-
-    Stays with UN/CEFACT. Charter section 3 makes the authoritative trust, identity, conformance and
-    implementation registers UN/CEFACT public goods. The Commons may hold code that serves a register
-    and configuration that operates it under revocable, non-exclusive delegation, never the data as
-    its own asset.
-
 # --- Organisation ------------------------------------------------------------------------------
 
 - id: site

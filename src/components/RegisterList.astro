@@ -1,0 +1,232 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'registers'>[];
+}
+
+const { entries } = Astro.props;
+
+// Operational registers first, then proposed. Within each, grouped by the site they reside on, so
+// the page reads as a map of the UNECE estate rather than an undifferentiated list.
+const hosts = [...new Set(entries.map((entry) => entry.data.host.site))];
+
+const groups = hosts
+  .map((site) => ({
+    site,
+    url: entries.find((entry) => entry.data.host.site === site)!.data.host.url,
+    entries: entries
+      .filter((entry) => entry.data.host.site === site)
+      .sort((a, b) => {
+        const rank = (e: CollectionEntry<'registers'>) => (e.data.status === 'proposed' ? 1 : 0);
+        return rank(a) - rank(b) || a.data.name.localeCompare(b.data.name);
+      }),
+  }))
+  .sort((a, b) => {
+    const live = (g: typeof a) => (g.entries.some((e) => e.data.status === 'operational') ? 0 : 1);
+    return live(a) - live(b) || b.entries.length - a.entries.length;
+  });
+---
+
+<div class="registers">
+  {
+    groups.map((group) => (
+      <section class="host">
+        <h2 id={group.site.replace(/\./g, '-')}>
+          <a href={group.url} target="_blank" rel="noreferrer">
+            {group.site}
+          </a>
+        </h2>
+        <ul class="list">
+          {group.entries.map(({ data }) => {
+            const proposed = data.status === 'proposed';
+            return (
+              <li class:list={['register', { proposed }]}>
+                <div class="register_head">
+                  <h3>
+                    {data.url ? (
+                      <a href={data.url} target="_blank" rel="noreferrer">
+                        {data.name}
+                      </a>
+                    ) : (
+                      data.name
+                    )}
+                  </h3>
+                  {data.abbreviation && <span class="abbr">{data.abbreviation}</span>}
+                  <span class:list={['badge', `status-${data.status}`]}>{data.status}</span>
+                </div>
+                <dl class="detail">
+                  <dt>Registers</dt>
+                  <dd>{data.registers}</dd>
+                </dl>
+                <p class="register_summary">{data.summary}</p>
+                {data.note && <p class="register_note">{data.note}</p>}
+                <p class="register_authority">
+                  <span>Authority</span>
+                  {data.authority}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .host {
+    & + & {
+      margin-top: var(--spacing-xl);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: var(--font-size-h4);
+      font-family: var(--font-sans, var(--font-fallback));
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .list {
+    margin: var(--spacing-sm) 0 0 0;
+    padding: 0;
+    display: grid;
+    list-style: none;
+    gap: var(--spacing-sm);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .register {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    background: var(--color-bg);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-gray-200);
+
+    // A proposed register does not exist, so there is no link and the card is quieter.
+    &.proposed {
+      background: transparent;
+      border-style: dashed;
+      border-color: var(--color-gray-300);
+
+      h3 {
+        color: var(--color-gray-700);
+      }
+    }
+
+    &_head {
+      gap: 0.5em;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+
+      h3 {
+        margin: 0;
+        font-size: var(--font-size-h5);
+      }
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &_summary {
+      margin: 0.9em 0 0 0;
+      color: var(--color-gray-800);
+    }
+
+    &_note {
+      margin: 0.9em 0 0 0;
+      padding-left: 0.9em;
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+      border-left: 2px solid var(--color-ochre-500);
+    }
+
+    &_authority {
+      margin: 0 !important;
+      margin-top: auto !important;
+      padding-top: 1.1em;
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+
+      span {
+        display: block;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--color-gray-500);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+  }
+
+  .detail {
+    margin: 0.9em 0 0 0;
+
+    dt {
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    dd {
+      margin-top: 0.2em;
+      color: var(--color-gray-800);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+    }
+  }
+
+  .abbr {
+    padding: 0.2em 0.45em;
+    color: var(--color-gray-700);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    background: var(--color-gray-100);
+    border-radius: var(--border-radius-xs);
+  }
+
+  .badge {
+    padding: 0.2em 0.5em;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border-radius: var(--border-radius-xs);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+  }
+
+  .status-operational {
+    color: var(--color-petrol-700);
+    background: rgb(from var(--color-petrol-400) r g b / 12%);
+    border: 1px solid rgb(from var(--color-petrol-400) r g b / 35%);
+  }
+
+  .status-proposed {
+    color: var(--color-gray-600);
+    background: transparent;
+    border: 1px dashed var(--color-gray-400);
+  }
+</style>

@@ -23,9 +23,10 @@ it.
 ```
 content/
   catalogue.yaml          one entry per component, wherever it lives
+  registers.yaml          one entry per register; none of them are ours
   blocks/*.md             page prose, kept as Markdown so translation stays prose
 src/
-  content.config.ts       the catalogue schema; the governance gate
+  content.config.ts       both schemas; the governance gate
   config.ts               site-wide strings and per-page titles
   layouts/                Layout, Header, Footer
   components/             Hero, Section, Heading, Button, CatalogueList, Icon
@@ -80,8 +81,41 @@ Append an entry to `content/catalogue.yaml` and open a pull request.
 ```
 
 Two conventions worth keeping. `home` records where a component is today, because a catalogue that
-records intentions is a roadmap and a roadmap is a commitment somebody has to honour. And nothing is
-listed at maturity `planned` until there is a repository behind it.
+records intentions is a roadmap and a roadmap is a commitment somebody has to honour. And a
+`proposed` component carries no `home` and no `maintainer`, because it has neither; the schema
+enforces the converse, so anything claiming to be more than proposed must say where it lives and who
+answers for it.
+
+## Adding a register
+
+Registers are a separate collection, in `content/registers.yaml`, and they are deliberately not
+components. Every one of them is a UN/CEFACT public good whose legal and administrative home is the
+UNECE secretariat, residing on a UNECE site. The Commons neither owns nor hosts any of them, which is
+why the schema has no `maintainer`, no `licence` and no `tier`: none of those are the Commons' to
+state. Listing a register in the same table as things the Commons builds would imply a relationship
+that does not exist.
+
+```yaml
+- id: some-register
+  name: Some Register
+  abbreviation: SR               # optional
+  status: operational            # operational | proposed
+  registers: >-                  # what the registered thing actually is
+    The things this register registers.
+  summary: >-
+    What question it answers for a verifier.
+  authority: UN/CEFACT, secretariat hosted by UNECE
+  host:
+    site: untp.unece.org         # the UNECE site it resides on
+    url: https://untp.unece.org
+  url: https://untp.unece.org/registers/sr   # the register itself; omitted when proposed
+  note: >-                       # optional
+    Anything a reader would otherwise misread.
+```
+
+An `operational` register must link to itself and a `proposed` one must not, because a link to a
+register that does not exist is the most direct way to mislead a reader. The schema enforces both
+directions.
 
 ## Internationalisation
 

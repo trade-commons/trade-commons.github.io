@@ -42,6 +42,12 @@ const config = {
         'The component catalogue: what exists, where it lives, how mature it is, which standards ' +
         'it serves and who maintains it.',
     },
+    registers: {
+      title: 'Registers',
+      description:
+        'The registers the ecosystem relies on: what each one registers, where it resides, and why '
+        + 'none of them belong to the Global Trade Commons.',
+    },
     getInvolved: {
       title: 'Get Involved',
       description:

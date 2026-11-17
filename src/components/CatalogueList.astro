@@ -16,7 +16,6 @@ const TIER_ORDER = [
   'tooling',
   'template',
   'operations',
-  'register',
   'organisation',
 ] as const;
 
@@ -44,10 +43,6 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
   operations: {
     title: 'Operations',
     note: 'Deployment and configuration for the services the Commons operates.',
-  },
-  register: {
-    title: 'Registers',
-    note: 'Authoritative registers governed by a standards body. Listed so the catalogue is navigable; the Commons holds no authority over them.',
   },
   organisation: {
     title: 'Organisation',
@@ -246,12 +241,6 @@ const groups = TIER_ORDER.map((tier) => ({
     color: var(--color-petrol-600);
     background: rgb(from var(--color-petrol-400) r g b / 8%);
     border-color: rgb(from var(--color-petrol-400) r g b / 28%);
-  }
-
-  .maturity-normative {
-    color: var(--color-ochre-600);
-    background: rgb(from var(--color-ochre-500) r g b / 10%);
-    border-color: rgb(from var(--color-ochre-500) r g b / 32%);
   }
 
   .maturity-proposed {

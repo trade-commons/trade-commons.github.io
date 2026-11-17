@@ -28,16 +28,14 @@ const catalogue = defineCollection({
       'application',
       'tooling',
       'template',
-      'register',
       'operations',
       'organisation',
     ]),
 
     // `proposed` means it appears in the repository architecture and does not exist yet: no
     // repository, no code, nobody committed to building it. `planned` means a repository exists and
-    // work has not started. `normative` marks a specification or register governed by a standards
-    // body, listed so the catalogue is navigable, never because the Commons holds authority over it.
-    maturity: z.enum(['production', 'beta', 'prototype', 'planned', 'proposed', 'normative']),
+    // work has not started.
+    maturity: z.enum(['production', 'beta', 'prototype', 'planned', 'proposed']),
 
     // Where the code actually lives today, not where it is expected to end up. Absent only for a
     // proposed component, which by definition has nowhere to point; the refinement below enforces
@@ -91,4 +89,63 @@ const catalogue = defineCollection({
   }),
 });
 
-export const collections = { catalogue };
+/**
+ * Registers the ecosystem relies on.
+ *
+ * Separate from the component catalogue because a register is not a component. These are UN/CEFACT
+ * public goods with their legal and administrative home in the UNECE secretariat, they reside on
+ * UNECE sites, and the Commons neither owns nor hosts any of them. Listing them in the same table as
+ * things the Commons builds would imply a relationship that does not exist, which is why the
+ * schema has no maintainer, no licence and no tier: none of those are the Commons' to state.
+ */
+const registers = defineCollection({
+  loader: file('./content/registers.yaml'),
+  schema: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+      abbreviation: z.string().optional(),
+      summary: z.string(),
+
+      // What the registered thing is. The most common way to misread a register is to assume it
+      // registers something other than what it does.
+      registers: z.string(),
+
+      // `operational` is published and resolvable; `proposed` is intended and does not exist.
+      status: z.enum(['operational', 'proposed']),
+
+      // Who governs it. Never the Commons.
+      authority: z.string(),
+
+      // The UNECE site the register resides on, named even for a proposed register because the
+      // intended host is known before the register is.
+      host: z.object({
+        site: z.string(),
+        url: z.url(),
+      }),
+
+      // The register itself. Absent while proposed, because there is nothing to link to.
+      url: z.url().optional(),
+
+      note: z.string().optional(),
+    })
+    .superRefine((entry, ctx) => {
+      if (entry.status === 'operational' && !entry.url) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['url'],
+          message: `"${entry.id}" is operational, so it must link to the register itself.`,
+        });
+      }
+
+      if (entry.status === 'proposed' && entry.url) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['url'],
+          message: `"${entry.id}" is proposed, so it cannot link to a register that does not exist.`,
+        });
+      }
+    }),
+});
+
+export const collections = { catalogue, registers };
