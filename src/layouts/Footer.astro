@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+
 import Button from '@/components/Button.astro';
 import Wordmark from '@/components/Wordmark.astro';
+import logo from '@/assets/logo.png';
 
 import config from '@/config';
 
@@ -17,11 +20,14 @@ const { navigation } = Astro.props;
 <footer class="footer">
   <div class="footer_content">
     <div class="footer_column">
-      <Wordmark class="footer_wordmark" />
+      <div class="footer_brand">
+        <Image class="footer_mark" src={logo} alt="" width={52} height={50} densities={[1, 2]} />
+        <Wordmark class="footer_wordmark" />
+      </div>
       <div class="footer_meta">
         <p>
           Implementation and adoption of open digital trade infrastructure. The Commons authors no
-          specifications and holds no normative authority over any it implements.
+          specifications and holds no normative authority over the standards it implements.
         </p>
         <p class="footer_copyright">
           <span>© {new Date().getFullYear()} {config.name}.</span>
@@ -71,6 +77,22 @@ const { navigation } = Astro.props;
       &:last-child {
         align-items: flex-end;
       }
+    }
+
+    &_brand {
+      gap: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+
+    // The mark is black line art on transparency, so it vanishes on the petrol background. The
+    // mark is circular, so a white disc behind it reads as part of the design.
+    &_mark {
+      width: 52px;
+      height: auto;
+      padding: 5px;
+      border-radius: 50%;
+      background: var(--color-white);
     }
 
     &_wordmark {

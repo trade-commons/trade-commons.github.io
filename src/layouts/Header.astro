@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+
 import Icon from '@/components/Icon/Icon.astro';
 import Wordmark from '@/components/Wordmark.astro';
+import logo from '@/assets/logo.png';
 
 interface Props {
   navigation: {
@@ -16,6 +19,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="header">
   <div class="header_content">
     <a class="header_logo" href="/" aria-label="Global Trade Commons, home">
+      <Image src={logo} alt="" width={44} height={42} densities={[1, 2]} loading="eager" />
       <Wordmark />
     </a>
     <button
@@ -81,10 +85,24 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     }
 
     &_logo {
+      gap: 0.7rem;
       display: flex;
       align-items: center;
       text-decoration: none;
       color: var(--color-petrol-700);
+
+      img {
+        width: 44px;
+        height: auto;
+      }
+
+      @media screen and (max-width: 768px) {
+        gap: 0.55rem;
+
+        img {
+          width: 36px;
+        }
+      }
     }
   }
 

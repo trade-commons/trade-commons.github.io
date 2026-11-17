@@ -34,7 +34,9 @@ const pageTitle = isHome ? config.name : `${title} | ${config.shortName}`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{pageTitle}</title>
     <meta property="og:title" content={pageTitle} />
@@ -42,6 +44,10 @@ const pageTitle = isHome ? config.name : `${title} | ${config.shortName}`;
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={config.name} />
     {description && <meta name="description" property="og:description" content={description} />}
+    <meta property="og:image" content={getAbsoluteUrl('/og-image.png')} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <Font preload cssVariable="--font-serif" />
     <Font preload cssVariable="--font-sans" />
   </head>

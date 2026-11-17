@@ -33,7 +33,8 @@ src/
   components/             Hero, Section, Heading, Button, CatalogueList, Icon
   pages/                  one file per route
   styles/                 global.scss (design tokens), mixins.scss
-public/                   favicon and anything served verbatim
+public/                   favicons, share card, anything served verbatim
+src/assets/logo.png       the mark; Astro emits WebP at the sizes used
 ```
 
 Prose belongs in `content/blocks/`, not in a page component. A page component arranges content; it
@@ -140,9 +141,13 @@ Site prose in `content/` is CC BY 4.0.
 
 ## Outstanding
 
-- No visual identity. The palette in `src/styles/global.scss` is a restrained placeholder, chosen to
-  be unlike UNECE cyan and UN blue so the Commons does not read as a standards body's own site, and
-  the header is a typographic lockup rather than a logo. Both are meant to be replaced.
+- The palette predates the logo. `src/styles/global.scss` is petrol and ochre, chosen as a
+  placeholder before there was a mark; the logo's accents are a bright blue globe with red, orange,
+  pink and green. They coexist without clashing badly, but nobody picked them together.
+- The mark softens below about 32px, because it carries a lot of line detail. A simplified variant
+  for the 16px favicon would read better if one is ever drawn.
+- The derived images in `public/` were generated from `src/assets/logo.png` with Pillow. Regenerate
+  them if the mark changes; they are not built from source automatically.
 - No contact address. `config.contactEmail` is empty, and the code of conduct and security policy
   both point at an address this site does not yet publish. That needs an address the foundation owns
   rather than an individual's.
