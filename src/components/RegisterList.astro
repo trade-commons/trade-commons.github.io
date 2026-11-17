@@ -7,8 +7,8 @@ interface Props {
 
 const { entries } = Astro.props;
 
-// Operational registers first, then proposed. Within each, grouped by the site they reside on, so
-// the page reads as a map of the UNECE estate rather than an undifferentiated list.
+// Grouped by the site each register resides on, operational sites first, and operational registers
+// before proposed ones inside each group. Grouping by host shows where the registers actually are.
 const hosts = [...new Set(entries.map((entry) => entry.data.host.site))];
 
 const groups = hosts

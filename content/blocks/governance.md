@@ -3,21 +3,26 @@ circulation to prospective founding participants, UN/CEFACT and its UNECE secret
 Digital Collaboration and prospective multilateral development bank partners. It has not been
 executed, and nothing here should be read as a commitment of a foundation that does not yet exist.
 
-The institutional home described below has moved on from that draft. The charter contemplates
-constitution directly as a foundation under a permanent international host; the present intention is
-to begin with a lighter arrangement and decide the permanent home later. The charter is being revised
-to match, and until it is, this page is the current statement on that point and the charter remains
-the source of truth on everything else.
+Two things on this page have moved on from that draft, and the charter is being revised to match.
+The charter has the Commons constituted directly as a foundation under a permanent international
+host, where the present intention is to begin with a lighter arrangement and decide the permanent
+home later. The charter also seats UN/CEFACT and the Global Digital Collaboration on the Governing
+Board, and neither now holds a seat. Until the charter is revised, this page is the current statement
+on the institutional home and on the composition of the Board, and the charter remains the source of
+truth on everything else.
+
+UN/CEFACT holding no seat changes nothing about where normative authority rests or about how the
+Commons routes a specification defect upstream. Both are set out below and neither depends on a seat.
 
 ## Institutional home
 
-Governance starts light and deliberately interim.
+Governance starts light, and the first arrangement is explicitly temporary.
 
 **Initially, a project hosted by the Linux Foundation.** This gives the Commons a neutral home for the
-code and the trademark, an established governance template, and the means to receive contributions
-and contract for work from the outset, without first standing up a foundation of its own. It is a
-starting position rather than a destination, chosen because the alternative is either to hold no funds
-at all or to wait a year for a permanent structure before any work can be funded.
+code and the trademark, an established governance template, and the means to receive contributions and
+contract for work from the outset, without first standing up a foundation of its own. It is a starting
+position and not a destination. The alternative is to hold no funds at all, or to wait a year for a
+permanent structure before any work can be funded.
 
 **The permanent home is not yet decided.** Two routes are under consideration:
 
@@ -27,18 +32,20 @@ at all or to wait a year for a permanent structure before any work can be funded
   Digital Collaboration (GDC) establishes and which is expected to be established under Swiss
   foundation law. The IODC provides shared central services to the entities constituted under it:
   legal, banking, accounting and audit, employment and payroll, contracting, insurance and
-  compliance, so the full institutional machinery is created once rather than rebuilt by each one.
+  compliance, so the full institutional machinery gets built once and every entity under it reuses
+  that machinery.
 
-The choice between them is deferred rather than open-ended, and it turns largely on which host can
-accept the kinds of funding the Commons expects. Membership dues from companies and grants from
-governments and development banks are different financial instruments with different requirements on
-the recipient's legal character, and a structure that suits one does not automatically suit the other.
+The choice is deferred, not left open. It turns largely on which host can accept the kinds of funding
+the Commons expects. Membership dues from companies and grants from governments and development banks
+are different financial instruments, with different requirements on the recipient's legal character,
+and a structure that suits one does not automatically suit the other.
 
-Two properties are required of whichever host is chosen. The constraint against distributing any
-surplus must hold by the nature of the host rather than by undertaking alone, which a Swiss
-foundation satisfies because it has no members or shareholders and irrevocably dedicates its assets to
-its stated purpose under the supervision of the competent foundation authority. And the arrangement
-must be one the Commons can leave, which is dealt with under continuity and portability below.
+Whichever host is chosen has to satisfy two conditions. The constraint against distributing any
+surplus must hold because of what the host is, not because the Commons has undertaken to observe it.
+A Swiss foundation satisfies that, because it has no members or shareholders and irrevocably
+dedicates its assets to its stated purpose under the supervision of the competent foundation
+authority. The second
+condition is that the Commons can leave, which continuity and portability below deals with.
 
 ## Where normative authority rests
 
@@ -54,26 +61,34 @@ contribution recipient is UNECE.
 
 Where implementation work identifies a defect, a gap or an improvement in a specification, the
 Commons routes it to the governing body through that body's established change-request and
-working-group processes rather than resolving it unilaterally. Where a specification is silent or
-ambiguous, the interpretation adopted is recorded and the question referred upstream.
+working-group processes, and does not resolve it unilaterally. Where a specification is silent or
+ambiguous, the Commons records the interpretation it adopted and refers the question upstream.
 
 ## Governing Board
 
 Governance is deliberately lean. A founding Governing Board provides strategic direction and
 oversight, approves the annual programme of work, and oversees the use of pooled funds at programme
-level. Its composition is:
+level.
 
-- UN/CEFACT, holding a liaison seat at no cost, with liaison seats open to other standards bodies on
-  the same terms.
-- The GDC, as institutional partner establishing the IODC.
-- Three to five founding organisations, which may include multilateral development banks.
-- One elected implementation and community representative.
+Seats for founding organisations are drawn from four classes, so that no single kind of participant
+can set the direction on its own:
+
+- **Technology corporates.** Software vendors, platform operators and supply-chain technology
+  providers, including those that sell products competing with components the Commons holds.
+- **Government agencies.** Customs administrations, trade and industry departments, regulators and
+  the multilateral development banks that fund adoption in developing and emerging economies.
+- **Industry membership organisations.** Sector bodies and responsible-sourcing schemes that set
+  criteria their members report against, and whose conformity vocabularies the work depends on.
+- **Civil society.** Environmental and labour organisations with a direct interest in whether
+  transparency claims can be checked.
+
+One elected implementation and community representative also sits on the Board.
 
 The Board elects a Chair, and a Vice-Chair for continuity, for a fixed term of twelve months
 renewable once, so the role rotates to another organisation after a maximum of two consecutive years.
 The Chair convenes meetings, sets the agenda in consultation with members and represents the Commons
-externally. The role is one of facilitation: it carries no casting vote and no veto, and it is tied to
-no contribution level.
+externally. The role is one of facilitation. It carries no casting vote and no veto, and it is tied
+to no contribution level.
 
 ## Technical governance
 
@@ -106,19 +121,19 @@ gatekeeper.
 The work is structured so that it can always be forked and continued. Copyright stays distributed
 among contributors under irrevocable open licences, so no host holds a lock on the commons.
 
-Because the initial host is explicitly interim, portability has to cover the move itself and not only
-a hypothetical fork. Distributed copyright under the Developer Certificate of Origin protects the
-code whatever happens to the institution, but it does not protect the name or the accumulated funds,
-and a host that holds a project's trademark holds something the licences do not reach. The terms of
-departure, meaning trademark assignment and the treatment of unspent contributions, are therefore to
-be settled on entry rather than negotiated later. An interim arrangement entered without exit terms
-is the one that becomes permanent by inertia.
+Because the first host is temporary, portability has to cover the planned move and not only a
+hypothetical fork. Distributed copyright under the Developer Certificate of Origin protects the code
+whatever happens to the institution. It does not protect the name or the accumulated funds, and a
+host that holds a project's trademark holds something no licence covers. So the terms of departure,
+meaning trademark assignment and the treatment of unspent contributions, get settled when the Commons
+joins, not when it wants to leave. Nobody negotiates a good exit from inside an arrangement that has
+started to feel permanent.
 
-That requirement has an architectural consequence, not merely a legal one. **No component may depend
-on infrastructure only the Commons can provide.** Every service must be deployable by a third party
+The consequence is architectural as well as legal. **No component may depend on infrastructure only
+the Commons can provide.** Every service must be deployable by a third party
 from its own repository, and a hosted instance must be one deployment of a thing anyone can run.
 Where an operator's configuration is sensitive, as a customs administration's risk rules are and
-often classified, it must be possible to run the software without the Commons seeing either the
+often classified, that operator must be able to run the software without the Commons ever seeing the
 configuration or the data.
 
 ## Funding
@@ -128,11 +143,11 @@ arrangement by the host and thereafter by the permanent entity. It operates on a
 basis, and no contributor acquires ownership of, or exclusive rights over, the infrastructure the fund
 produces.
 
-Contributions are presented as voluntary support for shared public-good infrastructure rather than as
-procurement of deliverables. The pooled, no-single-owner structure is what makes that
-characterisation defensible: where several governments, several companies and the standards community
-contribute to a fund producing open infrastructure owned by no contributor, the expenditure is
-support for a commons rather than acquisition from a favoured supplier. Whether a particular
+Contributions are voluntary support for shared public-good infrastructure, not procurement of
+deliverables. The pooled, no-single-owner structure is what makes that characterisation defensible.
+Where several governments, several companies and the standards community all contribute to a fund
+producing open infrastructure that no contributor owns, the expenditure reads as support for a
+commons and not as acquisition from a favoured supplier. Whether a particular
 contribution is permissible under a jurisdiction's public-finance rules is a matter for that
 contributor to confirm under its own rules, and the Commons asserts eligibility on nobody's behalf.
 

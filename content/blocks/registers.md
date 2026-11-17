@@ -7,13 +7,11 @@ UN/CEFACT public goods whose legal and administrative home is the UNECE secretar
 on UNECE sites. UN/CEFACT holds the namespace, the rules, the data, and the right to appoint or
 replace whoever operates them. This page points at them and does nothing else.
 
-That is a deliberate limit rather than a current state of affairs waiting to be improved. The Commons
-may populate a register, and may operate one under revocable, non-exclusive delegation, which means
-it can hold the code that serves a register and the configuration that runs it. It never holds the
-data as its own asset. The register data is open and the interface for submitting results is
-non-exclusive, so being recorded on a register is never conditional on going through the Commons.
-A body that could make itself the only route to registration would be a gatekeeper, and an exception
-made once is the one that gets cited afterwards.
+The limit is deliberate and permanent. The Commons may populate a register, and may operate one under
+revocable, non-exclusive delegation, which lets it hold the code that serves a register and the
+configuration that runs it. It never holds the data as its own asset. The register data is open and
+the interface for submitting results is non-exclusive, so being recorded on a register never depends
+on going through the Commons. Any body that could make itself the only route to registration would be
+a gatekeeper. Granting one exception creates the precedent for the next request.
 
-The same posture is offered to any other standards body whose registers the work touches, on the same
-terms.
+The Commons offers the same terms to every other standards body whose registers this work touches.

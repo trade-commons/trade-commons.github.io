@@ -39,17 +39,17 @@ const config = {
     components: {
       title: 'Components',
       description:
-        'The component catalogue: what exists, where it lives, how mature it is, which standards ' +
+        'The component catalogue. What exists, where it lives, how mature it is, which standards ' +
         'it serves and who maintains it.',
     },
     registers: {
       title: 'Registers',
       description:
-        'The registers the ecosystem relies on: what each one registers, where it resides, and why '
+        'The registers the ecosystem relies on. What each one registers, where it resides, and why '
         + 'none of them belong to the Global Trade Commons.',
     },
     getInvolved: {
-      title: 'Get Involved',
+      title: 'Get involved',
       description:
         'How to contribute to the Global Trade Commons, what the Developer Certificate of Origin ' +
         'means for your copyright, and what a community publishes for itself.',

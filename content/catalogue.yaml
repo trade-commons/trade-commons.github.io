@@ -19,8 +19,8 @@
 - id: vckit
   name: VCkit
   summary: >-
-    Credential issuance and verification primitives. The toolkit the issuing and verifying
-    applications are built on, rather than an application itself.
+    Credential issuance and verification. The toolkit the issuing and verifying applications call,
+    and not something a person runs directly.
   tier: library
   maturity: production
   home:
@@ -34,9 +34,10 @@
   maintainer: UN/CEFACT UNTP project team
   operated: false
   disposition: >-
-    Expected to move into trade-commons. The uncefact GitHub organisation was created informally
-    rather than as a UN/CEFACT asset, and the authoritative specification content has since moved to
-    UNICC GitLab, leaving adoption tooling that was only ever in the wrong place. Not yet scheduled.
+    Expected to move into trade-commons. Nobody created the uncefact GitHub organisation as a
+    UN/CEFACT asset; it grew up informally, and the authoritative specification content has since
+    moved to UNICC GitLab. What is left there is adoption tooling that was always in the wrong place.
+    Not yet scheduled.
 
 - id: storage
   name: Storage Service
@@ -74,8 +75,8 @@
   operated: false
   disposition: >-
     Offered as a contribution from Pyx Industries. A donation of a component a vendor also sells is
-    what makes the commons credible to that vendor's competitors, so it is to be dated, licensed and
-    minuted rather than performed quietly. Not yet completed.
+    what makes the commons credible to that vendor's competitors, so it needs a date, a licence and a
+    minute. Done quietly it convinces nobody. Not yet completed.
 
 - id: tests-untp
   name: UNTP Test Suites and Playground
@@ -93,16 +94,17 @@
   maintainer: UN/CEFACT UNTP project team
   operated: false
   disposition: >-
-    Expected to move into trade-commons, and the dependency for a hosted conformity testing service
-    the Commons would operate on a cost-recovery basis under charter section 2. Not yet scheduled.
+    Expected to move into trade-commons. A hosted conformity testing service, which charter
+    section 2 allows the Commons to operate on a cost-recovery basis, depends on it. Not yet
+    scheduled.
 
 # --- Organisation ------------------------------------------------------------------------------
 
 - id: site
   name: Organisation site and catalogue
   summary: >-
-    This site, and the component catalogue it builds its component page from. A registry with a
-    website attached rather than a website on its own.
+    This site, and the component catalogue it builds its component page from. The catalogue is the
+    substance and the website is how you read it.
   tier: organisation
   maturity: beta
   home:
@@ -136,10 +138,8 @@
   maturity: proposed
   standards: []
   disposition: >-
-    The site's governance page carries this content for now. A separate repository starts earning its
-    keep once there are decisions to minute and a donation record to keep, which is also the point at
-    which a donation of a component a vendor also sells needs to be dated, licensed and minuted
-    rather than performed quietly.
+    The site's governance page carries this content for now. A separate repository becomes worth
+    having once there are decisions to minute and a donation record to keep.
 
 # --- Libraries ---------------------------------------------------------------------------------
 
@@ -156,8 +156,8 @@
     - W3C Verifiable Credentials
     - SHACL
   disposition: >-
-    The verification side of the engine-and-declaration split, and the closest to existing: UNTP
-    already publishes SHACL shapes and the recommended profile unions several of them.
+    The verification side of the engine-and-declaration split, and the closest to existing. UNTP
+    already publishes SHACL shapes, and the recommended profile unions several of them.
 
 - id: connector-sdk
   name: Connector SDK
@@ -170,8 +170,8 @@
     - UNTP
     - UNVTD
   disposition: >-
-    Exists to stop each connector reimplementing the same plumbing. Its value depends on there being
-    several connectors, so it should follow the first two or three rather than precede them.
+    Exists to stop each connector reimplementing the same plumbing. It is only worth building once
+    several connectors exist, so it should follow the first two or three.
 
 # --- Services ----------------------------------------------------------------------------------
 
@@ -186,36 +186,36 @@
     - UNTP
     - UNVTD
   disposition: >-
-    New work rather than a move or a donation. Nothing comparable exists to adopt.
+    New work. Nothing comparable exists to move in or adopt.
 
 - id: cvc
   name: Conformity vocabulary catalogue
   summary: >-
     Lets a conformity scheme owner manage its criteria and vocabulary as published, machine-readable
-    artefacts, so a conformity credential can cite a criterion by identifier rather than by prose.
+    artefacts, so a conformity credential can cite a criterion by identifier instead of quoting it.
   tier: service
   maturity: proposed
   standards:
     - UNTP
     - UNVTD
   disposition: >-
-    Would build on existing conformity-schemes-as-code work done for an industry scheme owner, which
-    is not yet public. Scheme criteria are the scheme owner's content, so this manages a catalogue it
-    does not own.
+    Would build on conformity-schemes-as-code work already done for an industry scheme owner, which
+    is not yet public. Scheme criteria belong to the scheme owner, so this manages a catalogue the
+    Commons does not own.
 
 - id: conformance
   name: Conformity testing service
   summary: >-
-    Deployment, configuration and operational contract for a hosted conformity testing service.
-    Depends on the upstream test suites rather than reimplementing them.
+    Deployment, configuration and operational contract for a hosted conformity testing service. It
+    calls the upstream test suites and does not reimplement them.
   tier: service
   maturity: proposed
   standards:
     - UNTP
   disposition: >-
     Charter section 2 places cost-recovery conformity testing in scope, and establishing whether a
-    credential is genuine is the most load-bearing thing the Commons could operate. Depends on the
-    test suites moving first, so it doubles as the test of whether adoption from the existing
+    credential is genuine is the most load-bearing thing the Commons could operate. It depends on the
+    test suites moving first, which also makes it the test of whether adoption from the existing
     organisation works at all.
 
 # --- Applications ------------------------------------------------------------------------------
@@ -223,20 +223,20 @@
 - id: easy
   name: Easy issuer
   summary: >-
-    The spec-driven issuing application. Mobile-responsive, consumes published schemas, render
-    templates and community profiles, and issues any UNTP or UNVTD credential without being rebuilt
-    per sector.
+    The spec-driven issuing application. Mobile-responsive, reads published schemas, render
+    templates and community profiles, and issues any UNTP or UNVTD credential. No rebuild per
+    sector.
   tier: application
   maturity: proposed
   standards:
     - UNTP
     - UNVTD
   disposition: >-
-    One application rather than one per credential type: identity setup, key handling, form
-    rendering, validation, signing, publishing and revocation are most of the code and are shared.
-    The axis of variation is the sector, not the credential type. Must produce a correct if
-    unpolished result with no community declaration present, or no community can use it until the
-    first one acts.
+    One application, not one per credential type. Identity setup, key handling, form rendering,
+    validation, signing, publishing and revocation are most of the code and all of it is shared.
+    What varies between users is the sector they work in. It must produce a correct if unpolished
+    result with no community declaration present, or nobody can use it until the first community
+    acts.
 
 - id: verifier
   name: Verifier
@@ -250,7 +250,7 @@
     - W3C Verifiable Credentials
   disposition: >-
     An application over the graph validation library, and a test of the rule that an application
-    contains no protocol code. It fails the moment it reimplements what the library does.
+    contains no protocol code. The day it reimplements what the library does, the rule has failed.
 
 - id: grid-node
   name: Registry node
@@ -264,15 +264,14 @@
     - GRID
     - W3C Decentralised Identifiers
   disposition: >-
-    Named for what it is rather than for who runs it, because an application named after its operator
-    dates badly once the role is ordinary. Assembles capabilities currently spread across several
-    places.
+    Named for what it does, because an application named after its operator dates badly once the
+    role is ordinary. Assembles capabilities currently spread across several places.
 
 - id: customs
-  name: Customs front door
+  name: Customs credential intake
   summary: >-
-    A credential front door for a customs administration: receives trade credentials, verifies the
-    graph and produces declaration data for whatever system the administration already runs.
+    Receives trade credentials at a customs administration, verifies the graph, and produces
+    declaration data for whatever system the administration already runs.
   tier: application
   maturity: proposed
   standards:
@@ -283,9 +282,10 @@
     Depends on artefacts governed by UN/CEFACT and by the World Customs Organization and authored by
     neither, which is why customs administrations, the WCO and UN/CEFACT are all constituencies of
     the same organisation. A national tariff, procedure codes, valuation rules and above all risk
-    rules are its declarations rather than its code. Risk rules are sensitive and often classified,
-    so a private national configuration has to be the normal case rather than an afterthought: an
-    administration must be able to run this without the Commons seeing its configuration or its data.
+    rules are declarations this engine reads, and none of them are code. Risk rules are sensitive and
+    often classified, so a private national configuration is the normal case and not an exception. An
+    administration must be able to run this without the Commons seeing its configuration or its
+    data.
 
 - id: connectors
   name: Source-system connectors
@@ -298,12 +298,12 @@
     - UNTP
     - UNVTD
   disposition: >-
-    One repository rather than one per vendor or per specification. A finance-system connector emits
-    trade documents and may also emit passports for the goods on them, so splitting by specification
-    would put one integration in two repositories with its authentication and mapping duplicated.
-    When a vendor takes over maintenance the package is archived here and the catalogue repoints:
-    graduation is the intended outcome, and the catalogue records which state each connector is in
-    because a community demonstration and a vendor-supported integration are very different promises.
+    One repository, not one per vendor or per specification. A finance-system connector emits trade
+    documents and may also emit passports for the goods on them, so splitting by specification would
+    put one integration in two repositories and duplicate its authentication and mapping. When a
+    vendor takes over maintenance, the package is archived here and the catalogue repoints at the
+    vendor. That is the outcome the Commons wants, and the catalogue records which state each
+    connector is in so that a reader can tell a community demonstration from a supported product.
 
 # --- Operations and templates ------------------------------------------------------------------
 
@@ -315,9 +315,9 @@
   maturity: proposed
   standards: []
   disposition: >-
-    Constrained by the portability requirement: every service must stay deployable by a third party
-    from its own repository, so this configures hosted instances rather than becoming the only way to
-    run anything.
+    The portability requirement constrains it. Every service must stay deployable by a third party
+    from its own repository, so this configures the hosted instances and never becomes the only way
+    to run one.
 
 - id: cap-template
   name: Community profile template
@@ -330,10 +330,10 @@
     - UNTP
   disposition: >-
     Higher priority than its tier suggests. The register already carries several programmes, each
-    declaring the extension it owns and the identifier schemes it uses, but the profile document the
-    register points at is largely not served yet. Every engine downstream reads what this produces,
-    and an engine built before any declaration exists has nothing to read. Should produce a working
-    example that validates rather than a blank page.
+    declaring the extension it owns and the identifier schemes it uses, but the profile document each
+    entry points at is in most cases not yet served. Every engine downstream reads what this
+    produces, and an engine built before any declaration exists has nothing to read. It should ship a
+    worked example that validates, so a programme starts from something that works.
 
 - id: connector-template
   name: Connector template
@@ -345,4 +345,4 @@
     - UNTP
     - UNVTD
   disposition: >-
-    The graduation path out of the shared connectors repository.
+    How a vendor takes over a connector that started in the shared repository.

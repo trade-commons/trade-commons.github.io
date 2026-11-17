@@ -24,19 +24,17 @@ const existing = entries.length - proposed.length;
 
   <Section>
     <p class="lead">
-      Components live across four homes, so an entry below frequently points somewhere other than
-      this organisation. Each records where the component is today rather than where it is expected
-      to end up, and a pending move or donation is noted as such without implying a schedule that has
-      not been agreed.
+      Components live across four homes, so an entry below often points somewhere other than this
+      organisation. Each one records where the component is today, not where it is expected to end
+      up. A pending move or donation says so, without a date nobody has agreed.
     </p>
 
     <p class="counts">
       <strong>{existing}</strong> components exist. <strong>{proposed.length}</strong> are proposed
-      and do not: no repository, no code, and nobody committed to building them. A proposed entry is
-      drawn on a dashed outline and names neither a home nor a maintainer, because it has neither.
-      The whole set is published so the shape of the architecture is visible and can be argued with,
-      which is worth more than a short list that looks finished. It is not a roadmap and not a
-      schedule.
+      and do not exist: no repository, no code, nobody committed to building them. A proposed entry
+      has a dashed outline and names neither a home nor a maintainer, because it has neither. The
+      whole set is here so that the architecture can be read and argued with. It is not a roadmap and
+      not a schedule.
     </p>
     {
       standards.length > 0 && (
@@ -47,11 +45,11 @@ const existing = entries.length - proposed.length;
       )
     }
     <p class="add">
-      A component is added by a pull request against <code>content/catalogue.yaml</code> in
+      Add a component by opening a pull request against <code>content/catalogue.yaml</code> in
       <a href="https://github.com/trade-commons/trade-commons.github.io" rel="noreferrer">
         this site's repository
-      </a>. The entry is where somebody states who is accountable when it breaks, which is why a
-      maintainer is required.
+      </a>. The entry is where somebody states who is accountable when it breaks, which is why the
+      schema requires a maintainer.
     </p>
   </Section>
 

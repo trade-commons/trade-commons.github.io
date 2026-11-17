@@ -6,10 +6,10 @@ whoever owns the domain they describe. An Australian livestock passport differs 
 coffee passport in its schema extension, its identifier schemes, its validation rules and its
 vocabulary, and in none of its software.
 
-This is the only structure that survives the scale the work is heading for. Code maintained per
-sector per jurisdiction would make the Commons the bottleneck for every adoption, and no funded team
-is large enough for that. It follows that the formats are the leverage point: an engine can be
-rewritten, a format with a hundred published instances cannot.
+Any other structure breaks at the scale this work is heading for. Code maintained per sector per
+jurisdiction makes the Commons the bottleneck for every adoption, and no funded team is large enough
+for that. So the formats matter more than the code. An engine can be rewritten in a year. A format
+with a hundred published instances cannot.
 
 Every engine must therefore work with no community declaration at all, producing a correct if
 unpolished result, and improve as declarations arrive. Without that property an application cannot

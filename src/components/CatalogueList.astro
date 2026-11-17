@@ -7,8 +7,8 @@ interface Props {
 
 const { entries } = Astro.props;
 
-// Tier order is the dependency direction: an application calls a service or a library and never the
-// other way round, so reading the page top to bottom reads the stack bottom to top.
+// Tier order follows the dependency direction. An application calls a service or a library and never
+// the other way round, so reading the page top to bottom reads the stack bottom to top.
 const TIER_ORDER = [
   'library',
   'service',
@@ -26,11 +26,11 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
   },
   service: {
     title: 'Services',
-    note: 'Deployed and operated. Each must be deployable by a third party from its own repository.',
+    note: 'Deployed and operated. A third party must be able to deploy each one from its own repository.',
   },
   application: {
     title: 'Applications',
-    note: 'Used directly by a person. An application contains no protocol code; it calls a library or a service.',
+    note: 'Used directly by a person. An application contains no protocol code. It calls a library or a service.',
   },
   tooling: {
     title: 'Tooling',
@@ -46,7 +46,7 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
   },
   organisation: {
     title: 'Organisation',
-    note: 'The organisation itself: this site and the defaults every repository inherits.',
+    note: 'The organisation itself. This site, and the defaults every repository inherits.',
   },
 };
 
