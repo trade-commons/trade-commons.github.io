@@ -1,7 +1,7 @@
 /**
  * Which page is responsible for showing each tier.
  *
- * Two tiers are shown away from the component catalogue, each beside the thing that gives it
+ * Three tiers are shown away from the component catalogue, each beside the thing that gives it
  * meaning. This map is the single statement of that, and the pages assert against it, because the
  * failure it exists to prevent has already happened once: test suites were filtered off the
  * Components page and silently appeared on no page at all.
@@ -13,8 +13,7 @@ export const TIER_PAGE = {
   library: '/components',
   service: '/components',
   application: '/components',
-  template: '/components',
-  operations: '/components',
+  template: '/get-involved',
   tooling: '/conformance',
   organisation: '/governance',
 } as const;

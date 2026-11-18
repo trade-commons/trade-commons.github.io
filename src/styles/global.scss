@@ -7,7 +7,7 @@
 :root {
   --min-width: 320px;
   --max-width: 1200px;
-  --measure: 68ch;
+  --measure: 72ch;
   --content-padding-block:  #{clamp-builder(28px, 56px, 400px, 1200px)};
   --content-padding-inline: #{clamp-builder(16px, 64px, 400px, 1200px)};
 
@@ -221,5 +221,27 @@ table {
     color: var(--color-gray-700);
     font-weight: var(--font-weight-semibold);
     border-bottom: 1px solid var(--color-gray-300);
+  }
+}
+
+// A prose column. Defined once because six pages were each declaring their own and had already
+// drifted: three ran body text at 16px and three at 18px, and the narrow ones were the long reads.
+.prose {
+  max-width: var(--measure);
+
+  p,
+  ul,
+  ol {
+    font-size: var(--font-size-lg);
+  }
+
+  h2 {
+    margin-top: 2em;
+  }
+
+  // A table has its own measure and should use the width available to it.
+  table {
+    max-width: none;
+    font-size: var(--font-size-md);
   }
 }

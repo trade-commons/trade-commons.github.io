@@ -35,7 +35,6 @@ const catalogue = defineCollection({
       'application',
       'tooling',
       'template',
-      'operations',
       'organisation',
     ]),
 

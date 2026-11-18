@@ -409,16 +409,20 @@
 # --- Operations and templates ------------------------------------------------------------------
 
 - id: infra
-  name: Infrastructure as code
+  name: Commons operating infrastructure
   summary: >-
-    Deployment and configuration for the services the Commons operates.
-  tier: operations
+    Deployment and configuration for the few things the Commons itself runs, principally the hosted
+    conformity testing service and this site.
+  tier: organisation
   maturity: proposed
   standards: []
   disposition: >-
-    The portability requirement constrains it. Every service must stay deployable by a third party
-    from its own repository, so this configures the hosted instances and never becomes the only way
-    to run one.
+    Deliberately narrow. Deployment configuration for a component ships inside that component's own
+    repository, because charter section 9 requires every service to be deployable by a third party
+    from its own repository, and a central infrastructure repository would make the Commons the only
+    party able to deploy anything. What is left for a repository of its own is the Commons acting as
+    an operator of its own services, which is a different job from publishing software for others to
+    run.
 
 - id: cap-template
   name: Community profile template

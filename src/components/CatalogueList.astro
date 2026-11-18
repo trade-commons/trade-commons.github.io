@@ -21,7 +21,6 @@ const TIER_ORDER = [
   'service',
   'application',
   'template',
-  'operations',
   'organisation',
 ] as const;
 
@@ -41,10 +40,6 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
   template: {
     title: 'Templates',
     note: 'Starting points a community or a vendor copies and then owns.',
-  },
-  operations: {
-    title: 'Operations',
-    note: 'Deployment and configuration for the services the Commons operates.',
   },
   organisation: {
     title: 'Organisation',
