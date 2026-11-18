@@ -77,6 +77,15 @@ const COLUMNS: Column[] = [
   },
 ];
 
+// What unlocks the value, and the UN/CEFACT specification that defines each.
+const ENABLERS = [
+  { label: 'Verifiable digital trader identity', spec: 'GRID' },
+  { label: 'Verifiable digital trade documents', spec: 'UNVTD' },
+  { label: 'Verifiable product conformity', spec: 'UNTP' },
+];
+const ENABLER_X = [80, 440, 800];
+const ENABLER_W = 320;
+
 const COL_W = 265;
 const COL_X = [40, 325, 610, 895];
 const CHAIN_X = [60, 290, 520, 750, 980];
@@ -85,14 +94,15 @@ const CHAIN_W = 160;
 
 <figure class="scale">
   <div class="scale_scroll">
-    <svg viewBox="0 0 1200 600" role="img" aria-labelledby="scaleTitle scaleDesc">
+    <svg viewBox="0 0 1200 614" role="img" aria-labelledby="scaleTitle scaleDesc">
       <title id="scaleTitle">The scale of international trade and the share verifiable documents address</title>
       <desc id="scaleDesc">
         About 25 trillion dollars of exports move between some 10 million businesses as 2 billion
         consignments through 100,000 ports. Four columns set out what that costs: the cost of trade,
         illicit trade, the trade finance gap, and the cost of ESG compliance. The share of each that
-        verifiable trade documents and verifiable trader identity bear on is highlighted, and the
-        value each could release is shown beneath it.
+        the three UN/CEFACT specifications bear on is highlighted: GRID for verifiable trader
+        identity, UNVTD for verifiable trade documents, and UNTP for verifiable product conformity.
+        The value each could release is shown beneath it.
       </desc>
 
       <defs>
@@ -172,22 +182,29 @@ const CHAIN_W = 160;
         })
       }
 
-      {/* what unlocks it */}
-      <rect x={40} y={478} width={1120} height={70} rx={10} fill="#102E36"/>
-      <rect x={128} y={496} width={340} height={34} rx={17} fill="#FFFFFF"/>
-      <text x={298} y={518} text-anchor="middle" class="t-enabler">Verifiable digital trader identity</text>
-      <text x={600} y={519} text-anchor="middle" class="t-and">and</text>
-      <rect x={732} y={496} width={340} height={34} rx={17} fill="#FFFFFF"/>
-      <text x={902} y={518} text-anchor="middle" class="t-enabler">Verifiable digital trade documents</text>
+      {/* what unlocks it, and the specification behind each */}
+      <rect x={40} y={478} width={1120} height={88} rx={10} fill="#102E36"/>
+      {
+        ENABLERS.map((e, i) => (
+          <g>
+            <rect x={ENABLER_X[i]} y={496} width={ENABLER_W} height={52} rx={26} fill="#FFFFFF"/>
+            <text x={ENABLER_X[i] + ENABLER_W / 2} y={518} text-anchor="middle" class="t-enabler">{e.label}</text>
+            <text x={ENABLER_X[i] + ENABLER_W / 2} y={536} text-anchor="middle" class="t-spec">{e.spec}</text>
+            {i < ENABLERS.length - 1 && (
+              <text x={ENABLER_X[i] + ENABLER_W + 20} y={528} text-anchor="middle" class="t-plus">+</text>
+            )}
+          </g>
+        ))
+      }
 
-      <text x={40} y={576} class="t-attr">
-        Figures reproduced from UNVTD, which maintains them. Highlighted rows are the share verifiable documents and identity bear on.
+      <text x={40} y={594} class="t-attr">
+        Figures reproduced from UNVTD, which maintains them. Highlighted rows are the share these three specifications bear on.
       </text>
     </svg>
   </div>
   <figcaption>
-    The scale of international trade, and the share of its cost that verifiable documents and
-    verifiable identity address. Reproduced from{' '}
+    The scale of international trade, and the share of its cost that verifiable trader identity,
+    trade documents and product conformity address. Reproduced from{' '}
     <a href="https://unvtd.unece.org/business-cases/" target="_blank" rel="noreferrer">UNVTD</a>,
     which owns and maintains every figure in it.
   </figcaption>
@@ -230,6 +247,7 @@ const CHAIN_W = 160;
   .t-out-v { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
   .t-out-l { font-size: 11.5px; fill: #CFE2E6; }
   .t-enabler { font-size: 12.5px; font-weight: 600; fill: #102E36; }
-  .t-and { font-size: 13px; font-style: italic; fill: #FFFFFF; }
+  .t-spec { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; fill: #2E7483; }
+  .t-plus { font-size: 18px; font-weight: 700; fill: #6F97A0; }
   .t-attr { font-size: 10.5px; fill: #848D8D; }
 </style>
