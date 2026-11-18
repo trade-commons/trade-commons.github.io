@@ -8,6 +8,7 @@ import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import Heading from '@/components/Heading.astro';
 import CatalogueList from '@/components/CatalogueList.astro';
+import GovernanceMap from '@/components/GovernanceMap.astro';
 import { entriesFor } from '@/utils/placement';
 
 import config from '@/config';
@@ -25,6 +26,10 @@ entriesFor(catalogue, '/governance', organisation);
 
 <Layout title={title} description={description}>
   <Hero title={title} description={description} />
+  <Section>
+    <GovernanceMap />
+  </Section>
+
   <Section>
     <div class="prose centred">
       <Content />
