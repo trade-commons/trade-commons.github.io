@@ -38,8 +38,10 @@ scripts/check-links.mjs   every internal link resolves; runs as part of the buil
   components/             Hero, Section, Heading, Button, CatalogueList, Icon
   pages/                  one file per route
   styles/                 global.scss (design tokens), mixins.scss
-public/                   favicons, share card, anything served verbatim
-src/assets/logo.png       the mark; Astro emits WebP at the sizes used
+public/                   favicons, manifest, share card, anything served verbatim
+src/assets/brand-kit/     the three brand masters, and nothing derived from them
+src/assets/brand/         what the site loads; Astro emits WebP at the sizes used
+scripts/build-brand.py    regenerates src/assets/brand/ and the icons in public/
 ```
 
 Prose belongs in `content/blocks/`, not in a page component. A page component arranges content; it
@@ -174,13 +176,18 @@ Site prose in `content/` is CC BY 4.0.
 
 ## Outstanding
 
-- The palette predates the logo. `src/styles/global.scss` is petrol and ochre, chosen as a
-  placeholder before there was a mark; the logo's accents are a bright blue globe with red, orange,
-  pink and green. They coexist without clashing badly, but nobody picked them together.
-- The mark softens below about 32px, because it carries a lot of line detail. A simplified variant
-  for the 16px favicon would read better if one is ever drawn.
-- The derived images in `public/` were generated from `src/assets/logo.png` with Pillow. Regenerate
-  them if the mark changes; they are not built from source automatically.
+- The brand masters are raster, not vector. `src/assets/brand-kit/README.txt` says what that costs.
+  The mark can be flattened to one colour, which is how the footer version is made, but its own
+  gradient cannot be retuned and it will not sharpen past the resolution it came at.
+- The mark does not survive 16px. Five nodes over five overlapping arcs puts those strokes under a
+  pixel, and `build-brand.py` only thickens them enough to read. A small-size variant with fewer
+  elements is the fix, and it is vector work on the original artwork.
+- The wordmark is a bold geometric sans and the site sets its headings in Source Serif 4. On the
+  home page both render the organisation's name within a few hundred pixels of each other, in two
+  different voices. Either is defensible; nobody has chosen between them.
+- Ochre is not a brand colour. It marks the one emphasis callout on four pages, where its job is to
+  stand apart from a ramp that is teal throughout. It wants a decision once there is a secondary
+  palette.
 - No contact address. `config.contactEmail` is empty, and the code of conduct and security policy
   both point at an address this site does not yet publish. That needs an address the foundation owns
   rather than an individual's.

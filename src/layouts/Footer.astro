@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 
 import Button from '@/components/Button.astro';
 import Wordmark from '@/components/Wordmark.astro';
-import logo from '@/assets/logo.png';
+import icon from '@/assets/brand/icon-light.png';
 
 import config from '@/config';
 
@@ -21,7 +21,7 @@ const { navigation } = Astro.props;
   <div class="footer_content">
     <div class="footer_column">
       <div class="footer_brand">
-        <Image class="footer_mark" src={logo} alt="" width={52} height={50} densities={[1, 2]} />
+        <Image class="footer_mark" src={icon} alt="" width={48} height={48} densities={[1, 2]} />
         <Wordmark class="footer_wordmark" />
       </div>
       <div class="footer_meta">
@@ -52,7 +52,7 @@ const { navigation } = Astro.props;
   @use 'styles/mixins.scss';
 
   .footer {
-    background: var(--color-petrol-800);
+    background: var(--color-brand-800);
     padding-block: var(--content-padding-block);
     padding-block-end: calc(1.6 * var(--content-padding-block));
     color: rgb(from var(--color-white) r g b / 78%);
@@ -85,18 +85,16 @@ const { navigation } = Astro.props;
       align-items: center;
     }
 
-    // The mark is black line art on transparency, so it vanishes on the petrol background. The
-    // mark is circular, so a white disc behind it reads as part of the design.
+    // The brand mark's navy half all but disappears on brand-800, so the footer uses the flat
+    // white version rather than propping the colour one up on a white disc.
     &_mark {
-      width: 52px;
+      width: 48px;
       height: auto;
-      padding: 5px;
-      border-radius: 50%;
-      background: var(--color-white);
     }
 
     &_wordmark {
-      color: var(--color-white);
+      --wordmark-ink: var(--color-white);
+      --wordmark-accent: var(--color-brand-400);
     }
 
     &_meta {

@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 
 import Icon from '@/components/Icon/Icon.astro';
 import Wordmark from '@/components/Wordmark.astro';
-import logo from '@/assets/logo.png';
+import icon from '@/assets/brand/icon.png';
 
 interface Props {
   navigation: {
@@ -19,7 +19,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="header">
   <div class="header_content">
     <a class="header_logo" href="/" aria-label="Global Trade Commons, home">
-      <Image src={logo} alt="" width={44} height={42} densities={[1, 2]} loading="eager" />
+      <Image src={icon} alt="" width={42} height={42} densities={[1, 2]} loading="eager" />
       <Wordmark />
     </a>
     <button
@@ -89,11 +89,24 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
       display: flex;
       align-items: center;
       text-decoration: none;
-      color: var(--color-petrol-700);
 
       img {
-        width: 44px;
+        width: 42px;
         height: auto;
+      }
+
+      // The rule between mark and type is part of the lockup.
+      &::after {
+        order: 1;
+        content: '';
+        width: 1px;
+        height: 2.1em;
+        align-self: center;
+        background: var(--color-gray-300);
+      }
+
+      :global(.wordmark) {
+        order: 2;
       }
 
       @media screen and (max-width: 768px) {
@@ -101,6 +114,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 
         img {
           width: 36px;
+        }
+
+        &::after {
+          display: none;
         }
       }
     }
@@ -121,7 +138,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
       }
 
       &[aria-current='page'] {
-        color: var(--color-petrol-700);
+        color: var(--color-brand-700);
         font-weight: var(--font-weight-semibold);
         text-decoration: underline;
         text-underline-offset: 6px;

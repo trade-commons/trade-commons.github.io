@@ -1,7 +1,11 @@
 ---
-// A typographic lockup, not a logo. The foundation has no visual identity yet, and anything invented
-// here would have to be undone later. The mark in public/favicon.svg is a placeholder on the same
-// footing.
+// The text half of the brand lockup, set live rather than placed as an image. The master is raster
+// artwork, so at header size its tagline is already illegible and its edges soften; type stays
+// crisp, reflows on a narrow screen and can be read aloud. It follows the lockup: "Global Trade" in
+// the wordmark ink, "Commons" in the Commons teal.
+//
+// Both colours come from custom properties, so a dark surface overrides them without reaching into
+// this component's scope. See Footer.astro.
 interface Props {
   class?: string;
 }
@@ -10,27 +14,27 @@ const { class: className } = Astro.props;
 ---
 
 <span class:list={['wordmark', className]}>
-  <span class="wordmark_line">Global</span>
-  <span class="wordmark_line">Trade Commons</span>
+  <span class="wordmark_line">Global Trade</span>
+  <span class="wordmark_line wordmark_line-accent">Commons</span>
 </span>
 
 <style lang="scss">
   .wordmark {
+    --wordmark-ink: var(--color-brand-800);
+    --wordmark-accent: var(--color-brand-500);
+
     display: grid;
-    line-height: 1.05;
-    font-family: var(--font-serif, var(--font-fallback-serif));
+    line-height: 1.08;
+    font-family: var(--font-sans, var(--font-fallback));
 
     &_line {
+      color: var(--wordmark-ink);
       font-size: var(--font-size-md);
-      font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: -0.012em;
 
-      &:first-child {
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-family: var(--font-sans, var(--font-fallback));
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-semibold);
-        opacity: 0.75;
+      &-accent {
+        color: var(--wordmark-accent);
       }
     }
   }

@@ -10,17 +10,20 @@ import { join } from 'node:path';
 
 const DIST = 'dist';
 
-async function htmlFiles(dir) {
+async function allFiles(dir) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...(await htmlFiles(path)));
-    else if (entry.name.endsWith('.html')) out.push(path);
+    if (entry.isDirectory()) out.push(...(await allFiles(path)));
+    else out.push(path);
   }
   return out;
 }
 
-const files = await htmlFiles(DIST);
+const everything = await allFiles(DIST);
+const files = everything.filter((f) => f.endsWith('.html'));
+// Every file as the URL it is served at, so a link to an asset is verified rather than skipped.
+const assets = new Set(everything.map((f) => '/' + f.slice(DIST.length + 1)));
 const routeOf = (f) => '/' + f.slice(DIST.length + 1).replace(/index\.html$/, '').replace(/\/$/, '');
 
 const pages = new Map();
@@ -34,11 +37,13 @@ for (const [route, { html }] of pages) {
   for (const m of html.matchAll(/href="(\/[^"]*)"/g)) {
     const [path, anchor] = m[1].split('#');
     const target = path === '' ? route : path.replace(/\/$/, '') || '/';
-    // Assets are served from disk and are not routes.
-    if (target.startsWith('/_astro') || /\.[a-z0-9]{2,5}$/i.test(target)) continue;
+    // An asset is served from disk rather than routed, so it is checked against what was built.
+    // Skipping anything that merely looks like a filename would let a dead favicon through.
+    if (assets.has(target)) continue;
     const page = pages.get(target) ?? pages.get(target + '/');
     if (!page) {
-      problems.push(`${route} -> ${m[1]} (no such page)`);
+      const kind = /\.[a-z0-9]+$/i.test(target) ? 'no such file' : 'no such page';
+      problems.push(`${route} -> ${m[1]} (${kind})`);
       continue;
     }
     if (anchor && !page.ids.has(anchor)) problems.push(`${route} -> ${m[1]} (no such anchor)`);

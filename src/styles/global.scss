@@ -42,32 +42,37 @@
   --border-radius-md: 8px;
   --border-radius-lg: 12px;
 
-  // Colours. A restrained placeholder palette, deliberately unlike UNECE cyan and UN blue so the
-  // Commons does not read as a standards body's own site. Replace wholesale when an identity exists.
+  // Colours, sampled from the brand mark. The ramp follows the logo's own gradient, navy at the
+  // deep end and teal at the light end, so 600 to 700 changes hue. That is the artwork, not a
+  // mistake. Every step was checked against its background: links, button labels and footer text
+  // all clear 4.5:1.
+  //
+  // Ochre is the one colour not in the brand. It marks the single emphasis callout on four pages,
+  // and its job is to stand apart from the brand ramp, which a teal cannot do on a teal site.
   --color-black: #000000;
   --color-white: #FFFFFF;
-  --color-fg: #16201F;
+  --color-fg: #14202B;
   --color-bg: #FFFFFF;
-  --color-gray-50: #F8F9F9;
-  --color-gray-100: #F1F3F3;
-  --color-gray-200: #E4E7E7;
-  --color-gray-300: #CDD2D2;
-  --color-gray-400: #A7AFAF;
-  --color-gray-500: #848D8D;
-  --color-gray-600: #68716F;
-  --color-gray-700: #4E5654;
-  --color-gray-800: #343A39;
-  --color-petrol-400: #3C8E9E;
-  --color-petrol-500: #2E7483;
-  --color-petrol-600: #225B68;
-  --color-petrol-700: #18444F;
-  --color-petrol-800: #102E36;
+  --color-gray-50: #F7F9FA;
+  --color-gray-100: #EFF2F5;
+  --color-gray-200: #E1E6EB;
+  --color-gray-300: #C8D0D9;
+  --color-gray-400: #A2ACB8;
+  --color-gray-500: #7E8A97;
+  --color-gray-600: #626E7B;
+  --color-gray-700: #4A5560;
+  --color-gray-800: #313A44;
+  --color-brand-400: #15A48D; // the icon's bright teal arc
+  --color-brand-500: #0B8171; // the "Commons" teal of the wordmark
+  --color-brand-600: #0A6470;
+  --color-brand-700: #123E5E; // the icon's navy arc
+  --color-brand-800: #0B2540; // the wordmark ink
   --color-ochre-500: #A1612A;
   --color-ochre-600: #834E20;
 
-  --color-focus: var(--color-petrol-400);
-  --color-link: var(--color-petrol-600);
-  --color-link-hover: var(--color-petrol-400);
+  --color-focus: var(--color-brand-400);
+  --color-link: var(--color-brand-600);
+  --color-link-hover: var(--color-brand-500);
 
   --spacing-2xs: #{clamp-builder(08px, 10px, 560px, 960px)};
   --spacing-xs:  #{clamp-builder(12px, 14px, 560px, 960px)};
@@ -126,7 +131,7 @@ main {
 @each $tag in h1, h2, h3, h4, h5, h6 {
   #{$tag} {
     margin: 1.75em 0 0.6em 0;
-    color: var(--color-petrol-700);
+    color: var(--color-brand-700);
     font-family: var(--font-serif, var(--font-fallback-serif));
     font-size: var(--font-size-#{$tag});
     font-weight: var(--font-weight-semibold);

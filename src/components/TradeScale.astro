@@ -107,10 +107,10 @@ const CHAIN_W = 160;
 
       <defs>
         <marker id="tsArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0 L7.5,3 L0,6 Z" fill="#848D8D"/>
+          <path d="M0,0 L7.5,3 L0,6 Z" fill="#7E8A97"/>
         </marker>
         <marker id="tsDown" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0 L7.5,3 L0,6 Z" fill="#2E7483"/>
+          <path d="M0,0 L7.5,3 L0,6 Z" fill="#0B8171"/>
         </marker>
       </defs>
 
@@ -118,14 +118,14 @@ const CHAIN_W = 160;
       {
         CHAIN.map((node, i) => (
           <g>
-            <rect x={CHAIN_X[i]} y={20} width={CHAIN_W} height={66} rx={8} fill="#F1F3F3"/>
+            <rect x={CHAIN_X[i]} y={20} width={CHAIN_W} height={66} rx={8} fill="#EFF2F5"/>
             <text x={CHAIN_X[i] + CHAIN_W / 2} y={48} text-anchor="middle" class="t-chain-v">{node.value}</text>
             <text x={CHAIN_X[i] + CHAIN_W / 2} y={70} text-anchor="middle" class="t-chain-l">{node.label}</text>
             {node.link && (
               <g>
                 <line
                   x1={CHAIN_X[i] + CHAIN_W + 8} y1={53} x2={CHAIN_X[i + 1] - 8} y2={53}
-                  stroke="#848D8D" stroke-width="1.6" marker-end="url(#tsArrow)"
+                  stroke="#7E8A97" stroke-width="1.6" marker-end="url(#tsArrow)"
                 />
                 <text x={(CHAIN_X[i] + CHAIN_W + CHAIN_X[i + 1]) / 2} y={44} text-anchor="middle" class="t-link">
                   {node.link}
@@ -143,7 +143,7 @@ const CHAIN_W = 160;
           const cx = x + COL_W / 2;
           return (
             <g>
-              <rect x={x} y={116} width={COL_W} height={238} rx={10} fill="#F8F9F9" stroke="#E4E7E7" stroke-width="1.2"/>
+              <rect x={x} y={116} width={COL_W} height={238} rx={10} fill="#F7F9FA" stroke="#E1E6EB" stroke-width="1.2"/>
               <text x={cx} y={142} text-anchor="middle" class="t-col">{col.title}</text>
 
               {col.rows.map((row, r) => {
@@ -153,8 +153,8 @@ const CHAIN_W = 160;
                   <g>
                     <rect
                       x={x + 12} y={y} width={COL_W - 24} height={h} rx={6}
-                      fill={row.addressable ? '#E6F0F2' : '#FFFFFF'}
-                      stroke={row.addressable ? '#2E7483' : '#CDD2D2'}
+                      fill={row.addressable ? '#E3F1EE' : '#FFFFFF'}
+                      stroke={row.addressable ? '#0B8171' : '#C8D0D9'}
                       stroke-width={row.addressable ? 1.5 : 1}
                     />
                     <text x={cx} y={row.label2 ? y + 22 : y + 26} text-anchor="middle" class="t-row">
@@ -170,20 +170,20 @@ const CHAIN_W = 160;
               <text x={cx} y={322} text-anchor="middle" class="t-src">{col.source[0]}</text>
               <text x={cx} y={336} text-anchor="middle" class="t-src">{col.source[1]}</text>
 
-              <line x1={cx} y1={354} x2={cx} y2={382} stroke="#2E7483" stroke-width="2" marker-end="url(#tsDown)"/>
+              <line x1={cx} y1={354} x2={cx} y2={382} stroke="#0B8171" stroke-width="2" marker-end="url(#tsDown)"/>
 
-              <rect x={x + 10} y={386} width={COL_W - 20} height={58} rx={29} fill="#225B68"/>
+              <rect x={x + 10} y={386} width={COL_W - 20} height={58} rx={29} fill="#0A6470"/>
               <text x={cx} y={411} text-anchor="middle" class="t-out-v">{col.outcome.amount}</text>
               <text x={cx} y={430} text-anchor="middle" class="t-out-l">{col.outcome.label}</text>
 
-              <line x1={cx} y1={444} x2={cx} y2={474} stroke="#2E7483" stroke-width="2" marker-end="url(#tsDown)"/>
+              <line x1={cx} y1={444} x2={cx} y2={474} stroke="#0B8171" stroke-width="2" marker-end="url(#tsDown)"/>
             </g>
           );
         })
       }
 
       {/* what unlocks it, and the specification behind each */}
-      <rect x={40} y={478} width={1120} height={88} rx={10} fill="#102E36"/>
+      <rect x={40} y={478} width={1120} height={88} rx={10} fill="#0B2540"/>
       {
         ENABLERS.map((e, i) => (
           <g>
@@ -237,17 +237,17 @@ const CHAIN_W = 160;
     }
   }
 
-  .t-chain-v { font-size: 19px; font-weight: 700; fill: #18444F; }
-  .t-chain-l { font-size: 11.5px; fill: #4E5654; }
-  .t-link { font-size: 10.5px; font-style: italic; fill: #68716F; }
-  .t-col { font-size: 14px; font-weight: 700; fill: #16201F; }
-  .t-row { font-size: 12px; fill: #16201F; }
+  .t-chain-v { font-size: 19px; font-weight: 700; fill: #123E5E; }
+  .t-chain-l { font-size: 11.5px; fill: #4A5560; }
+  .t-link { font-size: 10.5px; font-style: italic; fill: #626E7B; }
+  .t-col { font-size: 14px; font-weight: 700; fill: #14202B; }
+  .t-row { font-size: 12px; fill: #14202B; }
   .t-amt { font-weight: 700; }
-  .t-src { font-size: 10px; fill: #68716F; }
+  .t-src { font-size: 10px; fill: #626E7B; }
   .t-out-v { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
-  .t-out-l { font-size: 11.5px; fill: #CFE2E6; }
-  .t-enabler { font-size: 12.5px; font-weight: 600; fill: #102E36; }
-  .t-spec { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; fill: #2E7483; }
-  .t-plus { font-size: 18px; font-weight: 700; fill: #6F97A0; }
-  .t-attr { font-size: 10.5px; fill: #848D8D; }
+  .t-out-l { font-size: 11.5px; fill: #C9E4DE; }
+  .t-enabler { font-size: 12.5px; font-weight: 600; fill: #0B2540; }
+  .t-spec { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; fill: #0B8171; }
+  .t-plus { font-size: 18px; font-weight: 700; fill: #5E8E93; }
+  .t-attr { font-size: 10.5px; fill: #7E8A97; }
 </style>

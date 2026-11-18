@@ -23,8 +23,8 @@ const { title, description, notice, variant = 'compact' } = Astro.props;
 
   .hero {
     color: var(--color-white);
-    background: var(--color-petrol-800);
-    background-image: linear-gradient(140deg, var(--color-petrol-800) 0%, var(--color-petrol-600) 100%);
+    background: var(--color-brand-800);
+    background-image: linear-gradient(140deg, var(--color-brand-800) 0%, var(--color-brand-600) 100%);
 
     &_content {
       @include mixins.wrapper();
@@ -65,7 +65,7 @@ const { title, description, notice, variant = 'compact' } = Astro.props;
     }
 
     :global(.button.primary) {
-      --text-color: var(--color-petrol-800);
+      --text-color: var(--color-brand-800);
       --background-color: var(--color-white);
     }
 
