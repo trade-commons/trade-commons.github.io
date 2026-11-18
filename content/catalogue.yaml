@@ -299,33 +299,6 @@
     An application over the graph validation library, and a test of the rule that an application
     contains no protocol code. The day it reimplements what the library does, the rule has failed.
 
-- id: customs
-  name: Customs credential intake
-  summary: >-
-    Receives trade credentials at a customs administration, verifies the graph, and produces
-    declaration data for whatever system the administration already runs.
-  tier: application
-  maturity: proposed
-  standards:
-    - UNVTD
-    - WCO Data Model
-    - UNTP
-  composedOf:
-    - verifier
-    - graph-validation
-    - connectors
-  interfaces:
-    - api
-    - ui
-  disposition: >-
-    Depends on artefacts governed by UN/CEFACT and by the World Customs Organization and authored by
-    neither, which is why customs administrations, the WCO and UN/CEFACT are all constituencies of
-    the same organisation. A national tariff, procedure codes, valuation rules and above all risk
-    rules are declarations this engine reads, and none of them are code. Risk rules are sensitive and
-    often classified, so a private national configuration is the normal case and not an exception. An
-    administration must be able to run this without the Commons seeing its configuration or its
-    data.
-
 - id: connectors
   name: Source-system connectors
   summary: >-

@@ -125,10 +125,19 @@
     Receives trade documents and consignment claims at a border, and needs to verify them and turn
     them into declaration data for the systems it already runs.
   operates:
-    - customs
+    - verifier
+    - graph-validation
+    - connectors
   serves:
     - producer
     - regulator
+  note: >-
+    An administration integrates these into the declaration processing, risk and clearance systems
+    it already runs. The Commons supplies no customs application, because an administration of any
+    size has its own systems and its own public face and will build its own integration over these
+    services. A national tariff, procedure codes, valuation rules and above all risk rules are
+    configuration the administration holds, and risk rules are sensitive and often classified, so
+    none of it belongs in a Commons repository and none of it should ever be visible to the Commons.
   value:
     - unvtd-customs
     - unvtd-country
