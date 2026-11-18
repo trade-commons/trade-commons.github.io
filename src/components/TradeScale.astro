@@ -18,8 +18,23 @@ const CHAIN = [
 ];
 
 // `addressable` marks the share verifiable documents and identity bear on, which is what the
-// outcome below each column is drawn from.
-const COLUMNS = [
+// outcome below each column is drawn from. `label2` is a second line, used where a label does not
+// fit one; declaring it optional keeps every row the same type.
+interface Row {
+  amount: string;
+  label: string;
+  label2?: string;
+  addressable?: boolean;
+}
+
+interface Column {
+  title: string;
+  rows: Row[];
+  source: [string, string];
+  outcome: { amount: string; label: string };
+}
+
+const COLUMNS: Column[] = [
   {
     title: 'Cost of trade adds',
     rows: [
