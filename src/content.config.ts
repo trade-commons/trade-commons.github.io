@@ -210,6 +210,11 @@ const roles = defineCollection({
   schema: z.object({
     id: z.string(),
     order: z.number().int().positive(),
+
+    // Where the role sits in the flow of value. Drawn as the figure on the Roles page, which is why
+    // every role must carry one: a role with no band would vanish from the figure silently.
+    band: z.enum(['infrastructure', 'publish', 'rely', 'support']),
+
     name: z.string(),
     summary: z.string(),
 

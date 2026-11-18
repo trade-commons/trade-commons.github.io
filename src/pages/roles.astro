@@ -8,6 +8,7 @@ import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import Heading from '@/components/Heading.astro';
 import RoleList from '@/components/RoleList.astro';
+import RoleFlow from '@/components/RoleFlow.astro';
 
 import config from '@/config';
 
@@ -56,6 +57,9 @@ for (const role of roles) {
   </Section>
 
   <Section variant="gray">
+    <Heading title="Where effort goes, and where benefit lands" />
+    <RoleFlow roles={roles} />
+
     <Heading title="Who runs what" />
     <RoleList roles={roles} catalogue={catalogue} value={value} registers={registers} />
   </Section>

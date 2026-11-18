@@ -1,0 +1,157 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+/**
+ * Where value comes from and where it lands.
+ *
+ * Drawn from the roles collection, not hand-placed, so it cannot drift from the cards below it.
+ * Deliberately not a network: thirty-five serves-edges across thirteen roles is a hairball, and the
+ * thing worth seeing is the direction, not the individual pairs. Also deliberately not a chart of
+ * the counts: "components run" and "roles served" are editorial judgements in a data file, and
+ * plotting them would lend an arithmetic authority they have not earned. The counts appear as
+ * labels, where a reader can see what they are.
+ */
+
+interface Props {
+  roles: CollectionEntry<'roles'>[];
+}
+
+const { roles } = Astro.props;
+
+// Notes are pre-wrapped. Slicing a string to fit a box breaks it mid-word sooner or later, so the
+// line breaks are decided here rather than computed from a character count.
+const BANDS = [
+  {
+    id: 'infrastructure',
+    title: 'Make claims checkable',
+    note: ['Identity, identifier schemes and conformity criteria', 'that everything downstream resolves against.'],
+  },
+  {
+    id: 'publish',
+    title: 'Publish claims',
+    note: ['Say what a thing is, where it came from', 'and what it complies with.'],
+  },
+  {
+    id: 'rely',
+    title: 'Rely on claims',
+    note: ['Act on what the credential says:', 'buy, clear, enforce.'],
+  },
+] as const;
+
+// How many roles each one serves, counted from the data rather than asserted.
+const servedBy = new Map<string, number>(roles.map((r) => [r.id, 0]));
+for (const role of roles) {
+  for (const ref of role.data.serves) servedBy.set(ref, (servedBy.get(ref) ?? 0) + 1);
+}
+
+const inBand = (id: string) =>
+  roles.filter((r) => r.data.band === id).sort((a, b) => a.data.order - b.data.order);
+
+const support = inBand('support');
+
+// Every role must appear, or the figure quietly lies about the page beneath it.
+const shown = new Set([...BANDS.flatMap((b) => inBand(b.id)), ...support].map((r) => r.id));
+const missing = roles.filter((r) => !shown.has(r.id));
+if (missing.length > 0) {
+  throw new Error(`RoleFlow: no band for ${missing.map((r) => r.id).join(', ')}.`);
+}
+
+const COL_X = [40, 420, 800];
+const COL_W = 360;
+---
+
+<figure class="flow">
+  <div class="flow_scroll">
+    <svg viewBox="0 0 1200 470" role="img" aria-labelledby="flowTitle flowDesc">
+      <title id="flowTitle">Where effort goes and where benefit lands across the thirteen roles</title>
+      <desc id="flowDesc">
+        Value moves left to right in three steps. Registration authorities, identifier scheme
+        operators and conformity scheme owners make claims checkable. Producers, conformity
+        assessment bodies and facility operators publish claims. Buyers, customs administrations and
+        regulators rely on them. Software vendors, communities, verification service operators and
+        the Commons support all three. The roles that run the most components are served by the
+        fewest others, which is why adoption stalls unless enough of the chain acts at once.
+      </desc>
+
+      <defs>
+        <marker id="rfA" markerWidth="10" markerHeight="10" refX="7.5" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#2E7483"/>
+        </marker>
+      </defs>
+
+      {
+        BANDS.map((band, i) => {
+          const x = COL_X[i];
+          const members = inBand(band.id);
+          return (
+            <g>
+              <rect x={x} y={44} width={COL_W} height={248} rx={10} fill="#F8F9F9" stroke="#CDD2D2" stroke-width="1.1"/>
+              <text x={x + COL_W / 2} y={28} text-anchor="middle" class="f-step">{i + 1}</text>
+              <text x={x + COL_W / 2} y={70} text-anchor="middle" class="f-title">{band.title}</text>
+              {band.note.map((line, n) => (
+                <text x={x + COL_W / 2} y={88 + n * 13} text-anchor="middle" class="f-note">{line}</text>
+              ))}
+              {members.map((role, r) => (
+                <g>
+                  <rect x={x + 16} y={116 + r * 56} width={COL_W - 32} height={46} rx={6} fill="#FFFFFF" stroke="#2E7483" stroke-width="1.1"/>
+                  <text x={x + 28} y={138 + r * 56} class="f-role">{role.data.name}</text>
+                  <text x={x + 28} y={154 + r * 56} class="f-meta">
+                    runs {role.data.operates.length} · serves {role.data.serves.length} · served by {servedBy.get(role.id)}
+                  </text>
+                </g>
+              ))}
+            </g>
+          );
+        })
+      }
+
+      <line x1={404} y1={168} x2={416} y2={168} stroke="#2E7483" stroke-width="2.4" marker-end="url(#rfA)"/>
+      <line x1={784} y1={168} x2={796} y2={168} stroke="#2E7483" stroke-width="2.4" marker-end="url(#rfA)"/>
+
+      {/* the support roles cut across all three */}
+      <rect x={40} y={312} width={1120} height={70} rx={10} fill="#E6F0F2" stroke="#2E7483" stroke-width="1.2"/>
+      <text x={60} y={336} class="f-title-s">Supporting all three</text>
+      {
+        support.map((role, i) => (
+          <g>
+            <rect x={262 + i * 222} y={322} width={206} height={46} rx={6} fill="#FFFFFF" stroke="#2E7483" stroke-width="1"/>
+            <text x={365 + i * 222} y={341} text-anchor="middle" class="f-role-s">{role.data.name}</text>
+            <text x={365 + i * 222} y={357} text-anchor="middle" class="f-meta">runs {role.data.operates.length} · serves {role.data.serves.length}</text>
+          </g>
+        ))
+      }
+
+      <text x={40} y={410} class="f-foot-b">Effort and benefit sit at opposite ends.</text>
+      <text x={40} y={428} class="f-foot">A registration authority runs six components and is served by two. A buyer runs one and is served by nine. Almost nothing here is</text>
+      <text x={40} y={444} class="f-foot">deployed for its operator's own benefit alone, which is why adoption stalls unless enough of the chain acts at once.</text>
+    </svg>
+  </div>
+</figure>
+
+<style lang="scss">
+  .flow {
+    margin: 0 0 var(--spacing-md) 0;
+
+    &_scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      min-width: 820px;
+      height: auto;
+    }
+  }
+
+  .f-step { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; fill: #848D8D; }
+  .f-title { font-size: 14px; font-weight: 700; fill: #16201F; }
+  .f-title-s { font-size: 12.5px; font-weight: 700; fill: #18444F; }
+  .f-note { font-size: 10px; fill: #68716F; }
+  .f-role { font-size: 12.5px; font-weight: 600; fill: #16201F; }
+  .f-role-s { font-size: 12px; font-weight: 600; fill: #16201F; }
+  .f-meta { font-size: 10px; fill: #68716F; }
+  .f-foot-b { font-size: 11.5px; font-weight: 700; fill: #2E7483; }
+  .f-foot { font-size: 11px; fill: #68716F; }
+</style>

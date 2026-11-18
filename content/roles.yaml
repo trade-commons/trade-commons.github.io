@@ -4,6 +4,10 @@
 # the job somebody has, because an organisation arriving here knows its own role long before it
 # knows which component it needs.
 #
+# `band` places the role in the flow of value: infrastructure that lets claims be checked, roles that
+# publish claims, roles that rely on them, and the support roles that cut across. The bands are what
+# the figure on the page is drawn from.
+#
 # `register` names the UN register this role is listed in, where there is one. Not every role is
 # listed anywhere, and saying so is more useful than implying everyone ends up somewhere.
 #
@@ -14,6 +18,7 @@
 
 - id: producer
   order: 1
+  band: publish
   name: Producer or supplier
   summary: >-
     Makes or supplies something and needs to say what it is, where it came from and what it complies
@@ -35,6 +40,7 @@
 
 - id: conformity-assessment-body
   order: 2
+  band: publish
   name: Conformity assessment body
   summary: >-
     Audits, inspects or certifies against a published scheme, and issues the result as a credential
@@ -51,6 +57,7 @@
 
 - id: scheme-owner
   order: 3
+  band: infrastructure
   name: Conformity scheme owner
   summary: >-
     Owns the criteria that conformity assessment bodies test against, and publishes them as
@@ -67,6 +74,7 @@
 
 - id: registrar
   order: 4
+  band: infrastructure
   name: Registration authority
   summary: >-
     A business register, land register, asset register or trademark office, whose authority comes
@@ -94,6 +102,7 @@
 
 - id: identifier-scheme-operator
   order: 5
+  band: infrastructure
   name: Identifier scheme operator
   summary: >-
     Runs a register of products, facilities, locations, members or assets that is not a government
@@ -120,6 +129,7 @@
 
 - id: customs-administration
   order: 6
+  band: rely
   name: Customs administration
   summary: >-
     Receives trade documents and consignment claims at a border, and needs to verify them and turn
@@ -145,6 +155,7 @@
 
 - id: facility-operator
   order: 7
+  band: publish
   name: Facility operator
   summary: >-
     Runs a mine, mill, farm or plant where assessed material is received, processed and sent on, and
@@ -160,6 +171,7 @@
 
 - id: buyer
   order: 8
+  band: rely
   name: Buyer, brand owner or OEM
   summary: >-
     Buys from a supply base and has to establish whether the claims attached to what it bought
@@ -174,6 +186,7 @@
 
 - id: community
   order: 9
+  band: support
   name: Community or sector programme
   summary: >-
     A sector or jurisdiction programme that defines how the protocol applies in its domain. Publishes
@@ -196,6 +209,7 @@
 
 - id: vendor
   order: 10
+  band: support
   name: Software vendor
   summary: >-
     Builds products that issue, verify or move credentials, for customers who will not build their
@@ -217,6 +231,7 @@
 
 - id: verifier-operator
   order: 11
+  band: support
   name: Verification service operator
   summary: >-
     Runs verification for others, whether as a commercial service, a market platform check or a
@@ -233,6 +248,7 @@
 
 - id: regulator
   order: 12
+  band: rely
   name: Regulator
   summary: >-
     Sets or enforces a disclosure obligation, and needs to establish whether a claim made to satisfy
@@ -246,6 +262,7 @@
 
 - id: commons
   order: 13
+  band: support
   name: The Commons itself
   summary: >-
     Operates the shared infrastructure that nobody else can run neutrally, and publishes the tooling
