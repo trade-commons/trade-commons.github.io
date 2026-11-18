@@ -132,14 +132,20 @@ const hrefFor = (tier?: string) => (tier === 'tooling' ? '/conformance' : `/comp
       margin: 0;
       gap: 0.4em;
       display: inline-flex;
-      align-items: baseline;
-      padding: 0.15em 0.5em;
+      align-items: center;
+      // Keeps the tap target at the 24px minimum; these chips are links.
+      min-height: 24px;
+      padding: 0.2em 0.6em;
       font-size: var(--font-size-sm);
       border-radius: var(--border-radius-xs);
       background: var(--color-gray-100);
     }
 
     a {
+      // The anchor is the tap target, not the chip around it, so the 24px minimum goes here.
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
       text-decoration: none;
 
       &:hover {

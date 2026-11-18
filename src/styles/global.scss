@@ -244,4 +244,26 @@ table {
     max-width: none;
     font-size: var(--font-size-md);
   }
+
+  // Pages that are almost entirely prose centre the column, so it reads as a deliberate measure
+  // instead of a narrow block stranded against the left edge of a wide screen. Pages where prose
+  // introduces a grid keep the default alignment, so the two share a left edge.
+  &.centred {
+    margin-inline: auto;
+  }
+
+  // A four-column table does not fit a phone. Shrink it first, and let it scroll on its own axis
+  // when shrinking is not enough, so the page itself never scrolls sideways.
+  @media screen and (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+    }
+
+    th,
+    td {
+      padding: 0.5em;
+    }
+  }
 }

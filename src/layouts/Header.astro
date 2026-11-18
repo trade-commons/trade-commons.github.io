@@ -150,15 +150,24 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     }
 
     .nav {
-      gap: 1em;
+      gap: 0;
       position: absolute;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       top: var(--header-height);
       background: var(--color-bg);
-      padding: 1.5em 3em 1.5em 1.5em;
+      padding: 0.5em 1.5em;
       box-shadow: 0 1px 0 1px rgba(0 0 0 / 10%);
       right: calc(var(--content-padding-inline) / 2);
+
+      // A drawer entry is a primary navigation target and wants a comfortable tap area, well
+      // above the 24px minimum.
+      a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding-right: 2.5em;
+      }
 
       &:not(.open) {
         display: none;
