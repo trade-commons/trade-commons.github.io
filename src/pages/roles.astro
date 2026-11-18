@@ -16,12 +16,14 @@ const { title, description } = config.pages.roles;
 const roles = (await getCollection('roles')).sort((a, b) => a.data.order - b.data.order);
 const catalogue = await getCollection('catalogue');
 const value = await getCollection('value');
+const registers = await getCollection('registers');
 
 // A role pointing at a component or a role that does not exist is a broken page, so fail the build
 // rather than render a dead link. Per-entry schemas cannot see across collections.
 const componentIds = new Set(catalogue.map((entry) => entry.id));
 const roleIds = new Set(roles.map((role) => role.id));
 const valueIds = new Set(value.map((entry) => entry.id));
+const registerIds = new Set(registers.map((entry) => entry.id));
 for (const role of roles) {
   for (const ref of role.data.operates) {
     if (!componentIds.has(ref)) {
@@ -38,6 +40,9 @@ for (const role of roles) {
       throw new Error(`roles: "${role.id}" cites "${ref}", which is not a business case.`);
     }
   }
+  if (role.data.register && !registerIds.has(role.data.register)) {
+    throw new Error(`roles: "${role.id}" is listed in "${role.data.register}", which is not a register.`);
+  }
 }
 ---
 
@@ -52,7 +57,7 @@ for (const role of roles) {
 
   <Section variant="gray">
     <Heading title="Who runs what" />
-    <RoleList roles={roles} catalogue={catalogue} value={value} />
+    <RoleList roles={roles} catalogue={catalogue} value={value} registers={registers} />
   </Section>
 </Layout>
 

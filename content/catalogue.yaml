@@ -299,37 +299,6 @@
     An application over the graph validation library, and a test of the rule that an application
     contains no protocol code. The day it reimplements what the library does, the rule has failed.
 
-- id: grid-node
-  name: Registry node
-  summary: >-
-    Everything a registration authority needs to act as a trust anchor. Issues identity anchors
-    against entries in its own register, hosts decentralised identifiers for registrants who cannot
-    run their own, answers resolver queries, and witnesses its own log.
-  tier: application
-  maturity: proposed
-  standards:
-    - UNTP
-    - GRID
-    - W3C Decentralised Identifiers
-  composedOf:
-    - vckit
-    - did-manager
-    - idr
-    - storage
-    - blind-witness
-    - verifier
-  interfaces:
-    - api
-    - ui
-  disposition: >-
-    A business register, land register or trademark office is already the authoritative answer to
-    whether an entity exists and who controls it. An identity anchor is that answer made checkable
-    by a verifier who has never dealt with the registrar before. Few registration authorities will
-    assemble six services to get there, so this exists to make becoming a trust anchor a deployment
-    and not a project. Two things are harder than the software: the authority to issue rests on the
-    registrar's existing statutory role, which maps differently in every jurisdiction, and hosting
-    identifiers for registrants means holding keys on their behalf.
-
 - id: customs
   name: Customs credential intake
   summary: >-

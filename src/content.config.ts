@@ -223,6 +223,11 @@ const roles = defineCollection({
     // it would run and not why it would bother is half a page.
     value: z.array(z.string()).default([]),
 
+    // The UN register this role is listed in, where there is one. Most roles are listed nowhere,
+    // and the ones that are differ in which register takes them, which is the clearest expression
+    // of how much authority each kind of registry actually carries.
+    register: z.string().optional(),
+
     note: z.string().optional(),
   }),
 });

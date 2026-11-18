@@ -38,10 +38,10 @@ const groups = hosts
           </a>
         </h2>
         <ul class="list">
-          {group.entries.map(({ data }) => {
+          {group.entries.map(({ id, data }) => {
             const proposed = data.status === 'proposed';
             return (
-              <li class:list={['register', { proposed }]}>
+              <li id={id} class:list={['register', { proposed }]}>
                 <div class="register_head">
                   <h3>
                     {data.url ? (
@@ -119,6 +119,7 @@ const groups = hosts
     background: var(--color-bg);
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-gray-200);
+    scroll-margin-top: calc(var(--header-height) + 1rem);
 
     // A proposed register does not exist, so there is no link and the card is quieter.
     &.proposed {

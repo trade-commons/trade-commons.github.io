@@ -7,9 +7,11 @@ interface Props {
   roles: CollectionEntry<'roles'>[];
   catalogue: CollectionEntry<'catalogue'>[];
   value: CollectionEntry<'value'>[];
+  registers: CollectionEntry<'registers'>[];
 }
 
-const { roles, catalogue, value } = Astro.props;
+const { roles, catalogue, value, registers } = Astro.props;
+const register = new Map(registers.map((entry) => [entry.id, entry.data]));
 const businessCase = new Map(value.map((entry) => [entry.id, entry.data]));
 
 const component = new Map(catalogue.map((entry) => [entry.id, entry]));
@@ -72,6 +74,19 @@ const hrefFor = (entry?: { id: string; data: { tier: string } }) => {
                   <a href={`#${ref}`}>{roleName.get(ref) ?? ref}</a>
                 </li>
               ))}
+            </ul>
+          </div>
+        )}
+
+        {data.register && (
+          <div class="block">
+            <h4>Listed in</h4>
+            <ul class="components">
+              <li>
+                <a href={`/conformance#${data.register}`}>
+                  {register.get(data.register)?.abbreviation ?? register.get(data.register)?.name}
+                </a>
+              </li>
             </ul>
           </div>
         )}

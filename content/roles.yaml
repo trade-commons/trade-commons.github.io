@@ -4,6 +4,9 @@
 # the job somebody has, because an organisation arriving here knows its own role long before it
 # knows which component it needs.
 #
+# `register` names the UN register this role is listed in, where there is one. Not every role is
+# listed anywhere, and saying so is more useful than implying everyone ends up somewhere.
+#
 # `operates` names catalogue entries the role deploys or uses. `serves` names the roles that consume
 # what it publishes or operates. `value` names the business cases that argue for this role adopting,
 # on the Value page. All three are validated at build time, so a role cannot point at something that
@@ -18,7 +21,6 @@
   operates:
     - easy
     - storage
-    - idr
     - connectors
   serves:
     - buyer
@@ -61,16 +63,22 @@
     - verifier-operator
   value:
     - untp-services
+  register: cvc
 
 - id: registrar
   order: 4
   name: Registration authority
   summary: >-
-    A business register, land register, asset register or trademark office. Already the authoritative
-    source for who or what exists, and issues identity anchors that let a verifier establish that an
-    identifier belongs to the party claiming it.
+    A business register, land register, asset register or trademark office, whose authority comes
+    from statute. Already the authoritative answer to whether an entity exists and who controls it,
+    and issues identity anchors that carry that answer to a verifier who has never dealt with it.
   operates:
-    - grid-node
+    - vckit
+    - did-manager
+    - idr
+    - storage
+    - blind-witness
+    - verifier
   serves:
     - producer
     - buyer
@@ -78,9 +86,40 @@
     - verifier-operator
   value:
     - unvtd-registry
+  register: grid
+  note: >-
+    These are deployed as separate services and not as one package. A register of any size already
+    has its own systems and its own public face, and will put its own interface over them, so what
+    the Commons supplies is the services underneath and not an application to adopt whole.
+
+- id: identifier-scheme-operator
+  order: 5
+  name: Identifier scheme operator
+  summary: >-
+    Runs a register of products, facilities, locations, members or assets that is not a government
+    register: a member association, an industry body, a product or facility registry. Enrols and
+    maintains entries much as an authoritative register does, and its authority comes from its
+    members or its sector instead of from statute.
+  operates:
+    - idr
+    - storage
+    - vckit
+  serves:
+    - producer
+    - buyer
+    - verifier-operator
+  register: idr
+  value:
+    - untp-services
+  note: >-
+    There are thousands of these and only a handful of authoritative registers, so most identifiers
+    in circulation come from here. The difference from a registration authority is what a verifier
+    may conclude: a statutory register answers whether an entity exists in law, and a scheme answers
+    whether it is a member in good standing of something. Both are useful and they are not
+    interchangeable, which is why they are listed in different registers.
 
 - id: customs-administration
-  order: 5
+  order: 6
   name: Customs administration
   summary: >-
     Receives trade documents and consignment claims at a border, and needs to verify them and turn
@@ -96,7 +135,7 @@
     - untp-government
 
 - id: facility-operator
-  order: 6
+  order: 7
   name: Facility operator
   summary: >-
     Runs a mine, mill, farm or plant where assessed material is received, processed and sent on, and
@@ -111,7 +150,7 @@
     - untp-industry
 
 - id: buyer
-  order: 7
+  order: 8
   name: Buyer, brand owner or OEM
   summary: >-
     Buys from a supply base and has to establish whether the claims attached to what it bought
@@ -125,7 +164,7 @@
     - unvtd-bank
 
 - id: community
-  order: 8
+  order: 9
   name: Community or sector programme
   summary: >-
     A sector or jurisdiction programme that defines how the protocol applies in its domain. Publishes
@@ -144,9 +183,10 @@
     validator, and does not run the programme.
   value:
     - untp-cap
+  register: cap
 
 - id: vendor
-  order: 9
+  order: 10
   name: Software vendor
   summary: >-
     Builds products that issue, verify or move credentials, for customers who will not build their
@@ -164,9 +204,10 @@
     - registrar
   value:
     - untp-services
+  register: swi
 
 - id: verifier-operator
-  order: 10
+  order: 11
   name: Verification service operator
   summary: >-
     Runs verification for others, whether as a commercial service, a market platform check or a
@@ -182,7 +223,7 @@
     - untp-services
 
 - id: regulator
-  order: 11
+  order: 12
   name: Regulator
   summary: >-
     Sets or enforces a disclosure obligation, and needs to establish whether a claim made to satisfy
@@ -195,7 +236,7 @@
     - untp-impact
 
 - id: commons
-  order: 12
+  order: 13
   name: The Commons itself
   summary: >-
     Operates the shared infrastructure that nobody else can run neutrally, and publishes the tooling
