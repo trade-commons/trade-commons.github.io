@@ -7,6 +7,12 @@
 # agreed in principle but not carried out belongs in `origin`, without a date unless one has actually
 # been agreed.
 #
+# `imports` is a library the component pulls into its own process. `composedOf` is a service or
+# application it deploys alongside and calls. Both are declared only where the component's own
+# description already says so, never predicted: most of this is unbuilt, and a dependency graph of
+# software nobody has written reads as fact while being guesswork. The real cross-repository graph
+# should be generated from repository manifests once the code exists, not maintained by hand here.
+#
 # Two narrow fields replace what used to be one `disposition` doing four jobs at once. `origin` says
 # where the code comes from, and is absent where the answer is simply new work. `blockedBy` says what
 # has to happen before it can be built, which is what distinguishes a component waiting on something
@@ -256,11 +262,11 @@
   standards:
     - UNTP
     - UNVTD
-  composedOf:
-    - vckit
   interfaces:
     - api
     - ui
+  imports:
+    - vckit
 
 - id: verifier
   name: Verifier
@@ -273,12 +279,12 @@
   standards:
     - UNTP
     - W3C Verifiable Credentials
-  composedOf:
-    - graph-validation
-    - vckit
   interfaces:
     - api
     - ui
+  imports:
+    - graph-validation
+    - vckit
 
 - id: connectors
   name: Source-system connectors
@@ -293,6 +299,8 @@
     - UNVTD
   interfaces:
     - api
+  imports:
+    - connector-sdk
 
 - id: facility-coc
   name: Facility chain of custody
@@ -307,15 +315,16 @@
     - W3C Verifiable Credentials
     - W3C Decentralised Identifiers
     - Certificate Transparency
-  composedOf:
-    - blind-witness
-    - vckit
   interfaces:
     - api
     - ui
   blockedBy: >-
     The UNTP 1.0 custody-model and coverage changes, and the 1.1 bound putting an assessed quantity
     on a conformity assessment.
+  imports:
+    - vckit
+  composedOf:
+    - blind-witness
 
 # --- Operations and templates ------------------------------------------------------------------
 

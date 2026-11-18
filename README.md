@@ -89,6 +89,15 @@ Append an entry to `content/catalogue.yaml` and open a pull request.
     A specification change that has not landed.
 ```
 
+`imports` names a library the component pulls into its own process; `composedOf` names a service it
+deploys alongside and calls. Both are declared only where the component's own description already
+says so. Most of this catalogue is unbuilt, and a predicted dependency reads as fact while being a
+guess, so there are four import edges and one assembly edge rather than a full graph.
+
+**The real dependency graph should be generated, not maintained here.** Once components exist, read
+it from their manifests across the organisation. A hand-maintained graph of software nobody has
+written is worse than no graph, because it looks authoritative.
+
 `origin` and `blockedBy` are deliberately narrow. They replaced a single `disposition` field that had
 grown to carry four different things: where code came from, what it waits on, why a repository is
 split the way it is, and how the component works. The first two belong in a catalogue. The third

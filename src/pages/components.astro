@@ -29,6 +29,14 @@ for (const entry of all) {
       throw new Error(`catalogue: "${entry.id}" is composed of "${ref}", which is not an entry.`);
     }
   }
+  for (const ref of entry.data.imports) {
+    if (!ids.has(ref)) {
+      throw new Error(`catalogue: "${entry.id}" imports "${ref}", which is not an entry.`);
+    }
+    if (all.find((e) => e.id === ref)?.data.tier !== 'library') {
+      throw new Error(`catalogue: "${entry.id}" imports "${ref}", which is not a library.`);
+    }
+  }
 }
 
 const proposed = entries.filter((entry) => entry.data.maturity === 'proposed');

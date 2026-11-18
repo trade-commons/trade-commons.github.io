@@ -61,9 +61,14 @@ const catalogue = defineCollection({
     // component, since anything a person can do through it should also be reachable over the API.
     interfaces: z.array(z.enum(['api', 'ui'])).default([]),
 
-    // For an application, the catalogue entries it assembles. Empty where an application composes
-    // nothing over the network, which is the offline-first case. This is also what makes the
-    // no-protocol-code rule checkable: an application assembles, it does not implement.
+    // Libraries this component pulls into its own process. Any tier may import; that is what a
+    // library is for. Declared only where the component's own description already says so, because
+    // most of this is unbuilt and a predicted dependency reads as fact while being a guess.
+    imports: z.array(z.string()).default([]),
+
+    // Services or applications this one deploys alongside and calls. Applications only: a service is
+    // one capability by definition. Together with `imports` this is what makes the no-protocol-code
+    // rule checkable, since an application that implements rather than calls declares neither.
     composedOf: z.array(z.string()).default([]),
 
     licence: z.string().optional(),

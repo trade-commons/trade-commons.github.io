@@ -101,9 +101,15 @@ if (grouped) {
                     ))}
                   </div>
                   <p class="component_summary">{data.summary}</p>
+                  {data.imports.length > 0 && (
+                    <p class="component_composed">
+                      <span>Imports</span>
+                      {data.imports.map((ref) => nameById.get(ref) ?? ref).join(' · ')}
+                    </p>
+                  )}
                   {data.composedOf.length > 0 && (
                     <p class="component_composed">
-                      <span>Assembles</span>
+                      <span>Deploys alongside</span>
                       {data.composedOf.map((ref) => nameById.get(ref) ?? ref).join(' · ')}
                     </p>
                   )}
