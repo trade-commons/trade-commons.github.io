@@ -15,9 +15,17 @@ const { title, description } = config.pages.value;
 const entries = (await getCollection('value')).sort((a, b) => a.data.order - b.data.order);
 
 // Grouped by who is being persuaded, because a reader arrives as one audience and not as a suite.
-const AUDIENCE_ORDER = ['Government', 'Industry', 'Trust infrastructure', 'Measurement'] as const;
+const AUDIENCE_ORDER = [
+  'Community',
+  'Government',
+  'Industry',
+  'Trust infrastructure',
+  'Measurement',
+] as const;
 
 const AUDIENCE_NOTES: Record<string, string> = {
+  Community:
+    'Adopting together instead of one company at a time, which is how most of these costs get shared.',
   Government:
     'Border and domestic revenue, trade cost, and data granular enough to aim policy with.',
   Industry: 'Firm-level return: cost, working capital, risk, and the incentives offered for adopting.',
@@ -31,6 +39,15 @@ const groups = AUDIENCE_ORDER.map((audience) => ({
   note: AUDIENCE_NOTES[audience],
   entries: entries.filter((entry) => entry.data.audience === audience),
 })).filter((group) => group.entries.length > 0);
+
+// An audience missing from the order above would be dropped without a trace, which is how the
+// community activation case shipped invisible while the Roles page linked to it. Fail instead.
+const rendered = new Set(groups.flatMap((group) => group.entries.map((entry) => entry.id)));
+const dropped = entries.filter((entry) => !rendered.has(entry.id));
+if (dropped.length > 0) {
+  const named = dropped.map((e) => `${e.id} (${e.data.audience})`).join(', ');
+  throw new Error(`value: no audience group for ${named}. Add it to AUDIENCE_ORDER.`);
+}
 ---
 
 <Layout title={title} description={description}>
