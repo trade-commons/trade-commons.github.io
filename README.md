@@ -83,9 +83,17 @@ Append an entry to `content/catalogue.yaml` and open a pull request.
   licence: Apache-2.0
   maintainer: Who answers when it breaks
   operated: false               # true only where the Commons runs a hosted instance
-  disposition: >-               # optional: a pending move, donation or graduation
-    Offered as a contribution, not yet completed.
+  origin: >-                    # optional: a move, a donation, or prior work it builds on
+    Offered as a contribution by someone, not yet completed.
+  blockedBy: >-                 # optional: what has to happen before it can be built
+    A specification change that has not landed.
 ```
+
+`origin` and `blockedBy` are deliberately narrow. They replaced a single `disposition` field that had
+grown to carry four different things: where code came from, what it waits on, why a repository is
+split the way it is, and how the component works. The first two belong in a catalogue. The third
+belongs in `gtc-repository-architecture.md`, which already holds it. The fourth belongs in the
+component's own README. Keep them that way, or the field grows back.
 
 The three tiers classify by what you do with a component, and the axis is scope. A **library** you
 import; it runs in your process with nothing to deploy. A **service** is one capability: you deploy

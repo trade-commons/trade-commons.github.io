@@ -76,10 +76,18 @@ const catalogue = defineCollection({
     // handling, jurisdiction and liability, so it is recorded explicitly rather than inferred.
     operated: z.boolean().default(false),
 
-    // A pending move, donation or graduation, or for a proposed component the reasoning behind it.
-    // Dated where a date exists, absent where none does, rather than implying a schedule that has
-    // not been agreed.
-    disposition: z.string().optional(),
+    // Where the code comes from: a move, a donation, or prior work it would build on. Absent where
+    // the answer is simply new work, which is the default for anything proposed.
+    origin: z.string().optional(),
+
+    // What has to happen before it can be built. This is what separates a component waiting on
+    // something concrete from one nobody has started, which is the question a reader of fourteen
+    // proposed entries actually has.
+    //
+    // Neither field carries reasoning about how repositories are divided. That belongs in the
+    // architecture document, which already holds it, and putting it here made one field do four
+    // jobs at once.
+    blockedBy: z.string().optional(),
   })
   .superRefine((entry, ctx) => {
     // Anything that is not proposed is claimed to exist, and a claim that something exists has to

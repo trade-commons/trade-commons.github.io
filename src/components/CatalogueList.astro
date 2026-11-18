@@ -140,7 +140,18 @@ if (grouped) {
                       </div>
                     )}
                   </dl>
-                  {data.disposition && <p class="component_disposition">{data.disposition}</p>}
+                  {data.origin && (
+                    <p class="component_note">
+                      <span>Origin</span>
+                      {data.origin}
+                    </p>
+                  )}
+                  {data.blockedBy && (
+                    <p class="component_note component_note--blocked">
+                      <span>Waiting on</span>
+                      {data.blockedBy}
+                    </p>
+                  )}
                 </li>
               );
             })}
@@ -245,18 +256,27 @@ if (grouped) {
       }
     }
 
-    &_disposition {
-      margin: 1em 0 0 0;
+    &_note {
+      margin: 0.9em 0 0 0;
       padding-left: 0.9em;
       color: var(--color-gray-600);
       font-size: var(--font-size-sm);
       line-height: var(--line-height-sm);
-      border-left: 2px solid var(--color-ochre-500);
+      border-left: 2px solid var(--color-gray-300);
 
-      // A folded YAML scalar turns a blank line into a newline. Honour it, so a long disposition
-      // can be paragraphed instead of arriving as one block. Entries without newlines are
-      // unaffected, since pre-line still collapses ordinary wrapping whitespace.
-      white-space: pre-line;
+      span {
+        display: block;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--color-gray-500);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      // What a component waits on is the more actionable of the two, so it is the one marked.
+      &--blocked {
+        border-left-color: var(--color-ochre-500);
+      }
     }
   }
 

@@ -3,9 +3,15 @@
 # One entry per component, wherever it lives. Adding one is a pull request against this file, and the
 # entry is where somebody states who is accountable for the component.
 #
-# `home` records where the code is today, not where it is expected to end up. Where a move or a
-# donation has been agreed in principle but not carried out, that belongs in `disposition`, without
-# a date unless a date has actually been agreed.
+# `home` records where the code is today, not where it is expected to end up. A move or donation
+# agreed in principle but not carried out belongs in `origin`, without a date unless one has actually
+# been agreed.
+#
+# Two narrow fields replace what used to be one `disposition` doing four jobs at once. `origin` says
+# where the code comes from, and is absent where the answer is simply new work. `blockedBy` says what
+# has to happen before it can be built, which is what distinguishes a component waiting on something
+# concrete from one nobody has started. Reasoning about how repositories are split belongs in
+# gtc-repository-architecture.md, not here.
 #
 # `maturity: proposed` means the component appears in the repository architecture and does not exist
 # yet: no repository, no code, and nobody committed to building it. A proposed entry carries no `home`
@@ -34,11 +40,9 @@
   licence: Apache-2.0
   maintainer: UN/CEFACT UNTP project team
   operated: false
-  disposition: >-
-    Expected to move into trade-commons. Nobody created the uncefact GitHub organisation as a
-    UN/CEFACT asset; it grew up informally, and the authoritative specification content has since
-    moved to UNICC GitLab. What is left there is adoption tooling that was always in the wrong place.
-    Not yet scheduled.
+  origin: >-
+    Moving in from the uncefact GitHub organisation, where it was only ever in the wrong place. Not
+    yet scheduled.
 
 - id: storage
   name: Storage Service
@@ -58,7 +62,8 @@
   licence: Apache-2.0
   maintainer: UN/CEFACT UNTP project team
   operated: false
-  disposition: Expected to move into trade-commons, with VCkit. Not yet scheduled.
+  origin: >-
+    Moving in from the uncefact GitHub organisation, with VCkit. Not yet scheduled.
 
 - id: idr
   name: Identity Resolver
@@ -78,10 +83,9 @@
   licence: Apache-2.0
   maintainer: Pyx Industries
   operated: false
-  disposition: >-
-    Offered as a contribution from Pyx Industries. A donation of a component a vendor also sells is
-    what makes the commons credible to that vendor's competitors, so it needs a date, a licence and a
-    minute. Done quietly it convinces nobody. Not yet completed.
+  origin: >-
+    Offered as a contribution by Pyx Industries, to be dated, licensed and minuted. Not yet
+    completed.
 
 - id: tests-untp
   name: UNTP Test Suites and Playground
@@ -98,10 +102,8 @@
   licence: Apache-2.0
   maintainer: UN/CEFACT UNTP project team
   operated: false
-  disposition: >-
-    Expected to move into trade-commons. A hosted conformity testing service, which charter
-    section 2 allows the Commons to operate on a cost-recovery basis, depends on it. Not yet
-    scheduled.
+  origin: >-
+    Moving in from the uncefact GitHub organisation. Not yet scheduled.
 
 # --- Organisation ------------------------------------------------------------------------------
 
@@ -144,9 +146,8 @@
   tier: organisation
   maturity: proposed
   standards: []
-  disposition: >-
-    The site's governance page carries this content for now. A separate repository becomes worth
-    having once there are decisions to minute and a donation record to keep.
+  blockedBy: >-
+    Decisions to minute and a donation record to keep. The site carries this content until then.
 
 # --- Libraries ---------------------------------------------------------------------------------
 
@@ -162,9 +163,6 @@
     - UNTP
     - W3C Verifiable Credentials
     - SHACL
-  disposition: >-
-    The verification side of the engine-and-declaration split, and the closest to existing. UNTP
-    already publishes SHACL shapes, and the recommended profile unions several of them.
 
 - id: connector-sdk
   name: Connector SDK
@@ -176,9 +174,9 @@
   standards:
     - UNTP
     - UNVTD
-  disposition: >-
-    Exists to stop each connector reimplementing the same plumbing. It is only worth building once
-    several connectors exist, so it should follow the first two or three.
+  blockedBy: >-
+    Several connectors existing, since its whole value is removing what they would otherwise each
+    reimplement.
 
 # --- Services ----------------------------------------------------------------------------------
 
@@ -194,7 +192,7 @@
     - UNVTD
   interfaces:
     - api
-  disposition: >-
+  origin: >-
     New work. Nothing comparable exists to move in or adopt.
 
 - id: cvc
@@ -210,10 +208,9 @@
   interfaces:
     - api
     - ui
-  disposition: >-
+  origin: >-
     Would build on conformity-schemes-as-code work already done for an industry scheme owner, which
-    is not yet public. Scheme criteria belong to the scheme owner, so this manages a catalogue the
-    Commons does not own.
+    is not yet public.
 
 - id: conformance
   name: Conformity testing service
@@ -227,11 +224,9 @@
   interfaces:
     - api
     - ui
-  disposition: >-
-    Charter section 2 places cost-recovery conformity testing in scope, and establishing whether a
-    credential is genuine is the most load-bearing thing the Commons could operate. It depends on the
-    test suites moving first, which also makes it the test of whether adoption from the existing
-    organisation works at all.
+  blockedBy: >-
+    The UNTP test suites moving in first, which also makes it the test of whether adoption from the
+    existing organisation works.
 
 - id: did-manager
   name: Decentralised identifier management
@@ -247,11 +242,6 @@
     - W3C Decentralised Identifiers
     - did:webvh
     - UNTP
-  disposition: >-
-    A gap the catalogue did not previously record. Resolving an identifier to the credentials
-    published against it is the identity resolver's job and this is a different one, because a
-    registrant that cannot run its own key infrastructure still needs a document that resolves and a
-    history a verifier can check. Required by the registry node.
 
 # --- Applications ------------------------------------------------------------------------------
 
@@ -271,12 +261,6 @@
   interfaces:
     - api
     - ui
-  disposition: >-
-    One application, not one per credential type. Identity setup, key handling, form rendering,
-    validation, signing, publishing and revocation are most of the code and all of it is shared.
-    What varies between users is the sector they work in. It must produce a correct if unpolished
-    result with no community declaration present, or nobody can use it until the first community
-    acts.
 
 - id: verifier
   name: Verifier
@@ -295,9 +279,6 @@
   interfaces:
     - api
     - ui
-  disposition: >-
-    An application over the graph validation library, and a test of the rule that an application
-    contains no protocol code. The day it reimplements what the library does, the rule has failed.
 
 - id: connectors
   name: Source-system connectors
@@ -312,13 +293,6 @@
     - UNVTD
   interfaces:
     - api
-  disposition: >-
-    One repository, not one per vendor or per specification. A finance-system connector emits trade
-    documents and may also emit passports for the goods on them, so splitting by specification would
-    put one integration in two repositories and duplicate its authentication and mapping. When a
-    vendor takes over maintenance, the package is archived here and the catalogue repoints at the
-    vendor. That is the outcome the Commons wants, and the catalogue records which state each
-    connector is in so that a reader can tell a community demonstration from a supported product.
 
 - id: facility-coc
   name: Facility chain of custody
@@ -339,14 +313,9 @@
   interfaces:
     - api
     - ui
-  disposition: >-
-    No shared ledger, no operator and no party with a view across the chain. Each holder keeps a
-    Merkle transparency log, which keeps proofs short as a register reaches millions of entries. A
-    Merkle tree proves membership and adds nothing up, so showing a buyer that a supplier stayed
-    within an assessed cap takes a sum-committing tree whose root is published, and each holder
-    checks its own leaf against that root. Enforcement rests on the fraction of holders who check
-    and not on the cryptography. Depends on the UNTP 1.0 custody-model and coverage changes and the
-    1.1 assessed-quantity bound, so it cannot be built ahead of the specification.
+  blockedBy: >-
+    The UNTP 1.0 custody-model and coverage changes, and the 1.1 bound putting an assessed quantity
+    on a conformity assessment.
 
 # --- Operations and templates ------------------------------------------------------------------
 
@@ -358,13 +327,6 @@
   tier: organisation
   maturity: proposed
   standards: []
-  disposition: >-
-    Deliberately narrow. Deployment configuration for a component ships inside that component's own
-    repository, because charter section 9 requires every service to be deployable by a third party
-    from its own repository, and a central infrastructure repository would make the Commons the only
-    party able to deploy anything. What is left for a repository of its own is the Commons acting as
-    an operator of its own services, which is a different job from publishing software for others to
-    run.
 
 - id: cap-template
   name: Community profile template
@@ -375,12 +337,9 @@
   maturity: proposed
   standards:
     - UNTP
-  disposition: >-
-    Higher priority than its tier suggests. The register already carries several programmes, each
-    declaring the extension it owns and the identifier schemes it uses, but the profile document each
-    entry points at is in most cases not yet served. Every engine downstream reads what this
-    produces, and an engine built before any declaration exists has nothing to read. It should ship a
-    worked example that validates, so a programme starts from something that works.
+  blockedBy: >-
+    Nothing. It is the highest-value thing here that nobody has started: the register already points
+    at profile documents that are mostly not served.
 
 - id: connector-template
   name: Connector template
@@ -391,5 +350,3 @@
   standards:
     - UNTP
     - UNVTD
-  disposition: >-
-    How a vendor takes over a connector that started in the shared repository.
