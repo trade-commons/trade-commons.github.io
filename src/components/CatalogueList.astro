@@ -3,9 +3,11 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   entries: CollectionEntry<'catalogue'>[];
+  /** Group under tier headings. False renders one flat run, for a curated selection. */
+  grouped?: boolean;
 }
 
-const { entries } = Astro.props;
+const { entries, grouped = true } = Astro.props;
 
 // Resolve composition references to names so a reader sees what an application assembles.
 const nameById = new Map(entries.map((entry) => [entry.id, entry.data.name]));
@@ -56,11 +58,26 @@ const byExistence = (a: CollectionEntry<'catalogue'>, b: CollectionEntry<'catalo
   return rank(a) - rank(b) || a.data.name.localeCompare(b.data.name);
 };
 
-const groups = TIER_ORDER.map((tier) => ({
-  tier,
-  ...TIER_LABELS[tier],
-  entries: entries.filter((entry) => entry.data.tier === tier).sort(byExistence),
-})).filter((group) => group.entries.length > 0);
+const groups = grouped
+  ? TIER_ORDER.map((tier) => ({
+      tier,
+      title: TIER_LABELS[tier].title,
+      note: TIER_LABELS[tier].note,
+      entries: entries.filter((entry) => entry.data.tier === tier).sort(byExistence),
+    })).filter((group) => group.entries.length > 0)
+  : [{ tier: '', title: '', note: '', entries: [...entries].sort(byExistence) }];
+
+// A tier missing from TIER_ORDER would be dropped silently, which is how test suites disappeared
+// from the site once tooling moved off the Components page. Fail loudly instead.
+if (grouped) {
+  const shown = new Set(groups.flatMap((g) => g.entries.map((e) => e.id)));
+  const lost = entries.filter((entry) => !shown.has(entry.id));
+  if (lost.length > 0) {
+    throw new Error(
+      `CatalogueList: no tier group for ${lost.map((e) => `${e.id} (${e.data.tier})`).join(', ')}.`,
+    );
+  }
+}
 ---
 
 {
@@ -73,8 +90,8 @@ const groups = TIER_ORDER.map((tier) => ({
     <div class="catalogue">
       {groups.map((group) => (
         <section class="group">
-          <h2 id={group.tier}>{group.title}</h2>
-          <p class="group_note">{group.note}</p>
+          {group.title && <h2 id={group.tier}>{group.title}</h2>}
+          {group.note && <p class="group_note">{group.note}</p>}
           <ul class="components">
             {group.entries.map(({ data }) => {
               const proposed = data.maturity === 'proposed';

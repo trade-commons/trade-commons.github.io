@@ -5,14 +5,18 @@ import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import CatalogueList from '@/components/CatalogueList.astro';
+import { TIER_PAGE, assertAllTiersPlaced } from '@/utils/placement';
 
 import config from '@/config';
 
 const { title, description } = config.pages.components;
 const all = (await getCollection('catalogue')).sort((a, b) => a.data.name.localeCompare(b.data.name));
 
-// Test suites and harnesses live on the Testing page, where the sequence they belong to is told.
-const entries = all.filter((entry) => entry.data.tier !== 'tooling');
+// Two tiers are shown elsewhere, each beside the thing that gives it meaning. The map in
+// utils/placement is the single statement of that, and this assertion means a new tier cannot be
+// added without someone deciding which page shows it.
+assertAllTiersPlaced(all);
+const entries = all.filter((entry) => TIER_PAGE[entry.data.tier] === '/components');
 
 const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
 
@@ -57,8 +61,9 @@ const existing = entries.length - proposed.length;
       )
     }
     <p class="add">
-      Test suites, reference implementations and the harnesses an implementer runs against are on the
-      <a href="/conformance">Conformance</a> page, with the sequence they belong to.
+      Test suites and harnesses are on the <a href="/conformance">Conformance</a> page, with the
+      sequence they belong to. The organisation's own repositories, including the governance record,
+      are on the <a href="/governance">Governance</a> page.
     </p>
 
     <p class="add">

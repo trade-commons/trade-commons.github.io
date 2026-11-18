@@ -30,7 +30,8 @@ content/
   value.yaml              the UN/CEFACT business cases, linked and never restated
   blocks/*.md             page prose, kept as Markdown so translation stays prose
 src/
-  content.config.ts       both schemas; the governance gate
+  content.config.ts       the collection schemas; the governance gate
+  utils/placement.ts      which page shows which tier; asserted at build time
   config.ts               site-wide strings and per-page titles
   layouts/                Layout, Header, Footer
   components/             Hero, Section, Heading, Button, CatalogueList, Icon

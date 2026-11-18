@@ -1,13 +1,26 @@
 ---
+import { getCollection } from 'astro:content';
+
 import { Content } from '../../content/blocks/governance.md';
 
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
+import Heading from '@/components/Heading.astro';
+import CatalogueList from '@/components/CatalogueList.astro';
+import { entriesFor } from '@/utils/placement';
 
 import config from '@/config';
 
 const { title, description } = config.pages.governance;
+
+// The organisation's own repositories, which are about how the Commons runs itself and not about
+// what it builds for anyone else. They sit here rather than in the component catalogue.
+const catalogue = await getCollection('catalogue');
+const organisation = catalogue
+  .filter((entry) => entry.data.tier === 'organisation')
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+entriesFor(catalogue, '/governance', organisation);
 ---
 
 <Layout title={title} description={description}>
@@ -17,9 +30,24 @@ const { title, description } = config.pages.governance;
       <Content />
     </div>
   </Section>
+
+  <Section variant="gray">
+    <Heading title="Where the record lives" />
+    <p class="lead">
+      The organisation's own repositories. Decisions, the donation record, the defaults every other
+      repository inherits, and this site. Once there are members, the register of them belongs here
+      too.
+    </p>
+    <CatalogueList entries={organisation} grouped={false} />
+  </Section>
 </Layout>
 
 <style lang="scss">
+  .lead {
+    max-width: var(--measure);
+    color: var(--color-gray-700);
+  }
+
   .prose {
     max-width: var(--measure);
 

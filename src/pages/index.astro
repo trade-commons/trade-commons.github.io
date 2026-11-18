@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 
-import { Content as Principle } from '../../content/blocks/home-principle.md';
-
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
 import Button from '@/components/Button.astro';
@@ -12,32 +10,38 @@ import Section from '@/components/Section.astro';
 import config from '@/config';
 
 const { title, description } = config.pages.home;
-const catalogue = await getCollection('catalogue');
+
 const specifications = (await getCollection('specifications')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
-const homes = [
+// A landing page orients and routes. Everything below has a page of its own, and the job here is to
+// say which page answers which question.
+const routes = [
   {
-    home: "A standards body's own infrastructure",
-    holds:
-      'Normative specifications and their registers. UNICC GitLab for UN/CEFACT, the WCO for the Data Model, the W3C for the credential and identifier specifications.',
-    accountable: "That body's process and members",
+    url: '/value',
+    name: 'Why anyone adopts',
+    note: 'The UN/CEFACT business cases, by audience. Customs, tax, ports, banks, traders, industry and the trust infrastructure everything depends on.',
   },
   {
-    home: 'The Global Trade Commons',
-    holds: 'Implementations, tooling, operated services and adoption material.',
-    accountable: 'The foundation, as a funded entity that can hold an obligation',
+    url: '/components',
+    name: 'What exists',
+    note: 'The component catalogue: libraries, services and applications, where each one lives today, and what is proposed and does not exist yet.',
   },
   {
-    home: "A community's own infrastructure",
-    holds: 'Its extension, its overlay rules, its profile.',
-    accountable: 'That community',
+    url: '/roles',
+    name: 'What your organisation would run',
+    note: 'The same material arranged by the job you have, because an organisation knows its own role long before it knows which component it needs.',
   },
   {
-    home: "A vendor's own repositories",
-    holds: 'Its supported connectors and products.',
-    accountable: 'The vendor',
+    url: '/conformance',
+    name: 'How you prove it works',
+    note: 'From building to being listed in a UN register: deploy, integrate, test, certify where a register asks for it, register.',
+  },
+  {
+    url: '/governance',
+    name: 'Who decides',
+    note: 'How the Commons is constituted, where normative authority rests, and the arrangements that keep contribution and control apart.',
   },
 ];
 ---
@@ -45,7 +49,7 @@ const homes = [
 <Layout title={title} description={description}>
   <Hero variant="full" title={title} description={description} notice={config.formingNotice}>
     <Button href="/about" title="What the Commons does" />
-    <Button href="/components" title="See the components" variant="outline" />
+    <Button href="/value" title="Why it matters" variant="outline" />
   </Hero>
 
   <Section>
@@ -73,56 +77,41 @@ const homes = [
   </Section>
 
   <Section variant="gray">
-    <Heading title="The organising principle" />
-    <div class="prose">
-      <Principle />
-    </div>
-  </Section>
-
-  <Section>
-    <Heading title="Where things live">
-      <Button
-        href="/components"
-        title={`${catalogue.length} components`}
-        icon="arrow-right"
-        iconPosition="end"
-        variant="link"
-      />
-    </Heading>
-    <p class="lead">
-      Four kinds of home, and four different answers to who is accountable when something breaks. The
-      component catalogue spans all four, so an entry often points somewhere other than this
-      organisation.
-    </p>
-    <ul class="homes">
+    <Heading title="Where to start" />
+    <ul class="routes">
       {
-        homes.map(({ home, holds, accountable }) => (
+        routes.map(({ url, name, note }) => (
           <li>
-            <h3>{home}</h3>
-            <p>{holds}</p>
-            <p class="homes_accountable">
-              <span>Accountable</span>
-              {accountable}
-            </p>
+            <a href={url}>{name}</a>
+            <p>{note}</p>
           </li>
         ))
       }
     </ul>
   </Section>
 
-  <Section variant="gray">
-    <Heading title="What the Commons does not do" />
-    <p class="lead">
-      The Commons implements standards governed by others. It holds no normative authority over any of
-      them, authors none of them, and coordinates with each through liaison on the same terms. Nothing
-      in this organisation forks a specification. Schemas, contexts, vocabularies and registers are
-      referenced at their published location, never copied in.
+  <Section>
+    <p class="closing">
+      The Commons implements standards governed by others. It holds no normative authority over any
+      of them, authors none of them, and coordinates with each through liaison on the same terms.
+      Nothing in this organisation forks a specification. Schemas, contexts, vocabularies and
+      registers are referenced at their published location, never copied in.
     </p>
-    <Button href="/about" title="Read the full scope" icon="arrow-right" iconPosition="end" />
+    <Button href="/about" title="Scope, and the rules that hold it" icon="arrow-right" iconPosition="end" variant="link" />
   </Section>
 </Layout>
 
 <style lang="scss">
+  .lead {
+    max-width: var(--measure);
+    font-size: var(--font-size-lg);
+  }
+
+  .closing {
+    max-width: var(--measure);
+    font-size: var(--font-size-lg);
+  }
+
   .specs {
     margin: var(--spacing-md) 0 0 0;
     padding: 0;
@@ -182,21 +171,8 @@ const homes = [
     }
   }
 
-  .prose {
-    max-width: var(--measure);
-
-    :global(p) {
-      font-size: var(--font-size-lg);
-    }
-  }
-
-  .lead {
-    max-width: var(--measure);
-    font-size: var(--font-size-lg);
-  }
-
-  .homes {
-    margin: var(--spacing-md) 0 0 0;
+  .routes {
+    margin: var(--spacing-sm) 0 0 0;
     padding: 0;
     display: grid;
     list-style: none;
@@ -205,38 +181,29 @@ const homes = [
 
     li {
       margin: 0;
-      display: flex;
-      flex-direction: column;
       padding: var(--spacing-md);
       background: var(--color-bg);
       border-radius: var(--border-radius-sm);
       border: 1px solid var(--color-gray-200);
     }
 
-    h3 {
-      margin: 0 0 0.6em 0;
+    a {
+      text-decoration: none;
+      font-family: var(--font-serif, var(--font-fallback-serif));
       font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-petrol-700);
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     p {
-      margin: 0;
+      margin: 0.6em 0 0 0;
       color: var(--color-gray-800);
-    }
-
-    &_accountable {
-      margin-top: auto !important;
-      padding-top: 1.1em;
       font-size: var(--font-size-sm);
-      line-height: var(--line-height-sm);
-
-      span {
-        display: block;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-        color: var(--color-gray-500);
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-semibold);
-      }
+      line-height: var(--line-height-md);
     }
 
     @media screen and (max-width: 768px) {

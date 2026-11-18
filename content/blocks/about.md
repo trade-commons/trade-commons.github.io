@@ -56,6 +56,38 @@ non-exclusive delegation, and may hold the code that serves a register and the c
 operates it. It never holds the data as its own asset. The Commons offers every other body the same terms,
 because granting one exception creates the precedent for the next request.
 
+## The organising principle
+
+The Commons builds engines. Standards bodies and communities publish the declarations those engines
+consume.
+
+Engines are few, generic and maintained centrally. Declarations are many, specific, and maintained by
+whoever owns the domain they describe. An Australian livestock passport differs from a Brazilian
+coffee passport in its schema extension, its identifier schemes, its validation rules and its
+vocabulary, and in none of its software.
+
+Any other structure breaks at the scale this work is heading for. Code maintained per sector per
+jurisdiction makes the Commons the bottleneck for every adoption, and no funded team is large enough
+for that. So the formats matter more than the code. An engine can be rewritten in a year. A format
+with a hundred published instances cannot.
+
+Every engine must therefore work with no community declaration at all, producing a correct if
+unpolished result, and improve as declarations arrive. Without that property an application cannot
+ship until the first community acts, and every community waits on the Commons.
+
+## Where things live
+
+Four kinds of home, and four different answers to who is accountable when something breaks. The
+component catalogue spans all four, so an entry on it often points somewhere other than this
+organisation.
+
+| Home | Holds | Accountable |
+|---|---|---|
+| A standards body's own infrastructure | Normative specifications and their registers. UNICC GitLab for UN/CEFACT, the WCO for the Data Model, the W3C for the credential and identifier specifications | That body's process and members |
+| The Global Trade Commons | Implementations, tooling, operated services and adoption material | The foundation, as a funded entity that can hold an obligation |
+| A community's own infrastructure | Its extension, its overlay rules, its profile | That community |
+| A vendor's own repositories | Its supported connectors and products | The vendor |
+
 ## Why the name
 
 The Commons is named for a commons and not for any single standard, so that a government agency, a
