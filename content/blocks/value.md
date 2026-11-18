@@ -5,9 +5,12 @@ is the opportunity the cases below quantify.
 
 **The Commons does not make this case and does not own it.** UN/CEFACT maintains the business case
 for UNTP and for UNVTD, each with its own methodology and cited evidence. This page points at that
-work and does not restate its figures, because UNVTD in particular keeps every number in exactly one
-place so the published cases cannot drift from the evidence behind them. A second copy here would be
-a second thing to keep true.
+work rather than restating it, because UNVTD keeps every number in exactly one place so the published
+cases cannot drift from the evidence behind them.
+
+The one exception is the figure below, reproduced from UNVTD because the shape of the opportunity is
+hard to convey without it. Every number in it is UNVTD's and is maintained there, which the figure
+says on its face. Nothing else on this page carries a figure.
 
 What the Commons changes is the other side of the arithmetic. Every one of these cases nets a benefit
 against a cost of implementation, and that cost is what the components, the open test suites and the

@@ -1,0 +1,220 @@
+---
+/**
+ * The scale of international trade, and the share of it that verifiable documents address.
+ *
+ * Reproduced from UNVTD, which maintains these figures. Every number here has its home on
+ * unvtd.unece.org and none of them originate with the Commons; the page says so beside the figure,
+ * because the rest of the Value page deliberately carries no figures at all.
+ *
+ * Source: https://unvtd.unece.org/business-cases/
+ */
+
+const CHAIN = [
+  { value: '~$25 Tn', label: 'FoB exports', link: 'between' },
+  { value: '~10 m', label: 'businesses', link: 'shipping' },
+  { value: '~10 Bn', label: 'tonnes of cargo', link: 'as' },
+  { value: '~2 Bn', label: 'consignments', link: 'between' },
+  { value: '~100 k', label: 'land, sea and air ports', link: null },
+];
+
+// `addressable` marks the share verifiable documents and identity bear on, which is what the
+// outcome below each column is drawn from.
+const COLUMNS = [
+  {
+    title: 'Cost of trade adds',
+    rows: [
+      { amount: '~$2 Tn', label: 'tariffs' },
+      { amount: '~$6 Tn', label: 'transport and logistics' },
+      { amount: '~$6 Tn', label: 'border and regulatory frictions', addressable: true },
+    ],
+    source: ['World Bank and UNESCAP', 'cost of trade database'],
+    outcome: { amount: '~$2 Tn', label: 'border cost savings' },
+  },
+  {
+    title: 'Illicit trade hides',
+    rows: [
+      { amount: '~$0.6 Tn', label: 'counterfeits', addressable: true },
+      { amount: '~$0.6 Tn', label: 'tariff evasion', addressable: true },
+      { amount: '~$0.6 Tn', label: 'smuggling, mostly', label2: 'piggybacking', addressable: true },
+    ],
+    source: ['Reported seizures and audits;', 'likely an underestimate'],
+    outcome: { amount: '~$0.5 Tn', label: 'revenue compliance' },
+  },
+  {
+    title: 'Trade finance helps',
+    rows: [
+      { amount: '~$20 Tn', label: 'financed' },
+      { amount: '~$4 Tn', label: 'not required' },
+      { amount: '~$3 Tn', label: 'not granted:', label2: 'the finance gap', addressable: true },
+    ],
+    source: ['Asian Development Bank', 'trade finance gap report'],
+    outcome: { amount: '~$2 Tn', label: 'additional trade' },
+  },
+  {
+    title: 'ESG rules impact',
+    rows: [
+      { amount: '~$1 Tn', label: 'biodiversity', addressable: true },
+      { amount: '~$2 Tn', label: 'due diligence', addressable: true },
+      { amount: '~$3 Tn', label: 'emissions intensive,', label2: 'of which $0.5 Tn CO2eq', addressable: true },
+    ],
+    source: ['Moderate extrapolations of', 'EUDR, CBAM and CSDDD'],
+    outcome: { amount: '~$0.5 Tn', label: 'ESG value premium' },
+  },
+];
+
+const COL_W = 265;
+const COL_X = [40, 325, 610, 895];
+const CHAIN_X = [60, 290, 520, 750, 980];
+const CHAIN_W = 160;
+---
+
+<figure class="scale">
+  <div class="scale_scroll">
+    <svg viewBox="0 0 1200 600" role="img" aria-labelledby="scaleTitle scaleDesc">
+      <title id="scaleTitle">The scale of international trade and the share verifiable documents address</title>
+      <desc id="scaleDesc">
+        About 25 trillion dollars of exports move between some 10 million businesses as 2 billion
+        consignments through 100,000 ports. Four columns set out what that costs: the cost of trade,
+        illicit trade, the trade finance gap, and the cost of ESG compliance. The share of each that
+        verifiable trade documents and verifiable trader identity bear on is highlighted, and the
+        value each could release is shown beneath it.
+      </desc>
+
+      <defs>
+        <marker id="tsArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L7.5,3 L0,6 Z" fill="#848D8D"/>
+        </marker>
+        <marker id="tsDown" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L7.5,3 L0,6 Z" fill="#2E7483"/>
+        </marker>
+      </defs>
+
+      {/* the scale chain */}
+      {
+        CHAIN.map((node, i) => (
+          <g>
+            <rect x={CHAIN_X[i]} y={20} width={CHAIN_W} height={66} rx={8} fill="#F1F3F3"/>
+            <text x={CHAIN_X[i] + CHAIN_W / 2} y={48} text-anchor="middle" class="t-chain-v">{node.value}</text>
+            <text x={CHAIN_X[i] + CHAIN_W / 2} y={70} text-anchor="middle" class="t-chain-l">{node.label}</text>
+            {node.link && (
+              <g>
+                <line
+                  x1={CHAIN_X[i] + CHAIN_W + 8} y1={53} x2={CHAIN_X[i + 1] - 8} y2={53}
+                  stroke="#848D8D" stroke-width="1.6" marker-end="url(#tsArrow)"
+                />
+                <text x={(CHAIN_X[i] + CHAIN_W + CHAIN_X[i + 1]) / 2} y={44} text-anchor="middle" class="t-link">
+                  {node.link}
+                </text>
+              </g>
+            )}
+          </g>
+        ))
+      }
+
+      {/* the four columns */}
+      {
+        COLUMNS.map((col, i) => {
+          const x = COL_X[i];
+          const cx = x + COL_W / 2;
+          return (
+            <g>
+              <rect x={x} y={116} width={COL_W} height={238} rx={10} fill="#F8F9F9" stroke="#E4E7E7" stroke-width="1.2"/>
+              <text x={cx} y={142} text-anchor="middle" class="t-col">{col.title}</text>
+
+              {col.rows.map((row, r) => {
+                const y = [152, 200, 248][r];
+                const h = row.label2 ? 56 : 42;
+                return (
+                  <g>
+                    <rect
+                      x={x + 12} y={y} width={COL_W - 24} height={h} rx={6}
+                      fill={row.addressable ? '#E6F0F2' : '#FFFFFF'}
+                      stroke={row.addressable ? '#2E7483' : '#CDD2D2'}
+                      stroke-width={row.addressable ? 1.5 : 1}
+                    />
+                    <text x={cx} y={row.label2 ? y + 22 : y + 26} text-anchor="middle" class="t-row">
+                      <tspan class="t-amt">{row.amount}</tspan> {row.label}
+                    </text>
+                    {row.label2 && (
+                      <text x={cx} y={y + 40} text-anchor="middle" class="t-row">{row.label2}</text>
+                    )}
+                  </g>
+                );
+              })}
+
+              <text x={cx} y={322} text-anchor="middle" class="t-src">{col.source[0]}</text>
+              <text x={cx} y={336} text-anchor="middle" class="t-src">{col.source[1]}</text>
+
+              <line x1={cx} y1={354} x2={cx} y2={382} stroke="#2E7483" stroke-width="2" marker-end="url(#tsDown)"/>
+
+              <rect x={x + 10} y={386} width={COL_W - 20} height={58} rx={29} fill="#225B68"/>
+              <text x={cx} y={411} text-anchor="middle" class="t-out-v">{col.outcome.amount}</text>
+              <text x={cx} y={430} text-anchor="middle" class="t-out-l">{col.outcome.label}</text>
+
+              <line x1={cx} y1={444} x2={cx} y2={474} stroke="#2E7483" stroke-width="2" marker-end="url(#tsDown)"/>
+            </g>
+          );
+        })
+      }
+
+      {/* what unlocks it */}
+      <rect x={40} y={478} width={1120} height={70} rx={10} fill="#102E36"/>
+      <rect x={128} y={496} width={340} height={34} rx={17} fill="#FFFFFF"/>
+      <text x={298} y={518} text-anchor="middle" class="t-enabler">Verifiable digital trader identity</text>
+      <text x={600} y={519} text-anchor="middle" class="t-and">and</text>
+      <rect x={732} y={496} width={340} height={34} rx={17} fill="#FFFFFF"/>
+      <text x={902} y={518} text-anchor="middle" class="t-enabler">Verifiable digital trade documents</text>
+
+      <text x={40} y={576} class="t-attr">
+        Figures reproduced from UNVTD, which maintains them. Highlighted rows are the share verifiable documents and identity bear on.
+      </text>
+    </svg>
+  </div>
+  <figcaption>
+    The scale of international trade, and the share of its cost that verifiable documents and
+    verifiable identity address. Reproduced from{' '}
+    <a href="https://unvtd.unece.org/business-cases/" target="_blank" rel="noreferrer">UNVTD</a>,
+    which owns and maintains every figure in it.
+  </figcaption>
+</figure>
+
+<style lang="scss">
+  .scale {
+    margin: var(--spacing-md) 0 0 0;
+
+    // Four columns of figures cannot be read on a phone, so the figure scrolls on its own axis
+    // rather than shrinking into illegibility or forcing the page sideways.
+    &_scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+    }
+
+    figcaption {
+      margin-top: 0.9em;
+      max-width: var(--measure);
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+    }
+  }
+
+  .t-chain-v { font-size: 19px; font-weight: 700; fill: #18444F; }
+  .t-chain-l { font-size: 11.5px; fill: #4E5654; }
+  .t-link { font-size: 10.5px; font-style: italic; fill: #68716F; }
+  .t-col { font-size: 14px; font-weight: 700; fill: #16201F; }
+  .t-row { font-size: 12px; fill: #16201F; }
+  .t-amt { font-weight: 700; }
+  .t-src { font-size: 10px; fill: #68716F; }
+  .t-out-v { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
+  .t-out-l { font-size: 11.5px; fill: #CFE2E6; }
+  .t-enabler { font-size: 12.5px; font-weight: 600; fill: #102E36; }
+  .t-and { font-size: 13px; font-style: italic; fill: #FFFFFF; }
+  .t-attr { font-size: 10.5px; fill: #848D8D; }
+</style>
