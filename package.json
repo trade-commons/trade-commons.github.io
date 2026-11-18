@@ -8,12 +8,13 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run check:links",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
     "format": "prettier --write \"**/*.{astro,ts,js,mjs,scss,md,yaml,yml,json}\"",
-    "format:check": "prettier --check \"**/*.{astro,ts,js,mjs,scss,md,yaml,yml,json}\""
+    "format:check": "prettier --check \"**/*.{astro,ts,js,mjs,scss,md,yaml,yml,json}\"",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "astro": "^7.4.12"

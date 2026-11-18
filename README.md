@@ -32,6 +32,7 @@ content/
 src/
   content.config.ts       the collection schemas; the governance gate
   utils/placement.ts      which page shows which tier; asserted at build time
+scripts/check-links.mjs   every internal link resolves; runs as part of the build
   config.ts               site-wide strings and per-page titles
   layouts/                Layout, Header, Footer
   components/             Hero, Section, Heading, Button, CatalogueList, Icon
@@ -50,7 +51,7 @@ makes a translation a file copy rather than a code change.
 ```sh
 npm install
 npm run dev        # http://localhost:4321
-npm run build      # static output in dist/
+npm run build      # static output in dist/, then checks every internal link
 npm run check      # astro check
 npm run format     # prettier
 ```

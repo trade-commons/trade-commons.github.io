@@ -1,15 +1,22 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 
+import { pageFor } from '@/utils/placement';
+
 interface Props {
   steps: CollectionEntry<'journey'>[];
   catalogue: CollectionEntry<'catalogue'>[];
 }
 
 const { steps, catalogue } = Astro.props;
-const component = new Map(catalogue.map((entry) => [entry.id, entry.data]));
-// Tooling lives on the Testing page now, so a link to /components#tooling would be dead.
-const hrefFor = (tier?: string) => (tier === 'tooling' ? '/conformance' : `/components#${tier ?? ''}`);
+const component = new Map(catalogue.map((entry) => [entry.id, entry]));
+// Where a component is shown decides the link. Only the tiers that the Components page renders have
+// an anchor to aim at; the others moved to pages of their own.
+const hrefFor = (entry?: { id: string; data: { tier: string } }) => {
+  if (!entry) return '/components';
+  const page = pageFor(entry);
+  return page === '/components' ? `/components#${entry.data.tier}` : page;
+};
 ---
 
 <ol class="steps">
@@ -28,8 +35,8 @@ const hrefFor = (tier?: string) => (tier === 'tooling' ? '/conformance' : `/comp
                 const c = component.get(ref);
                 return (
                   <li>
-                    <a href={hrefFor(c?.tier)}>{c?.name ?? ref}</a>
-                    {c?.maturity === 'proposed' && <span class="pending">proposed</span>}
+                    <a href={hrefFor(c)}>{c?.data.name ?? ref}</a>
+                    {c?.data.maturity === 'proposed' && <span class="pending">proposed</span>}
                   </li>
                 );
               })}
