@@ -4,9 +4,11 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   roles: CollectionEntry<'roles'>[];
   catalogue: CollectionEntry<'catalogue'>[];
+  value: CollectionEntry<'value'>[];
 }
 
-const { roles, catalogue } = Astro.props;
+const { roles, catalogue, value } = Astro.props;
+const businessCase = new Map(value.map((entry) => [entry.id, entry.data]));
 
 const component = new Map(catalogue.map((entry) => [entry.id, entry.data]));
 const roleName = new Map(roles.map((role) => [role.id, role.data.name]));
@@ -31,6 +33,22 @@ const hrefFor = (tier?: string) => (tier === 'tooling' ? '/conformance' : `/comp
                   <li>
                     <a href={hrefFor(c?.tier)}>{c?.name ?? ref}</a>
                     {c?.maturity === 'proposed' && <span class="pending">proposed</span>}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        {data.value.length > 0 && (
+          <div class="block">
+            <h4>Why</h4>
+            <ul class="components">
+              {data.value.map((ref) => {
+                const c = businessCase.get(ref);
+                return (
+                  <li>
+                    <a href={`/value#${ref}`}>{c?.name ?? ref}</a>
                   </li>
                 );
               })}

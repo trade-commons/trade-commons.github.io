@@ -7,8 +7,21 @@
 #
 # `suite` is UNTP or UNVTD. `audience` groups the entries on the page.
 
-- id: untp-industry
+- id: untp-cap
   order: 1
+  suite: UNTP
+  audience: Community
+  name: Community activation programme
+  summary: >-
+    The case for adopting as a community instead of one company at a time. A handful of software
+    platforms usually serve most of an industry in a given country, and a handful of schemes and
+    certifiers are common to it, so a vendor that implements once serves all its customers and the
+    cost of the rest is shared. It also gives governments and development banks something fundable.
+    Includes a cost and benefit model at community level.
+  url: https://untp.unece.org/docs/governance/CommunityActivationProgram
+
+- id: untp-industry
+  order: 2
   suite: UNTP
   audience: Industry
   name: Business case for industry
@@ -20,7 +33,7 @@
   url: https://untp.unece.org/docs/business-case/BusinessCaseIndustry
 
 - id: untp-government
-  order: 2
+  order: 3
   suite: UNTP
   audience: Government
   name: Business case for government
@@ -31,7 +44,7 @@
   url: https://untp.unece.org/docs/business-case/BusinessCaseGovernment
 
 - id: untp-services
-  order: 3
+  order: 4
   suite: UNTP
   audience: Trust infrastructure
   name: Case for schemes and registers
@@ -42,7 +55,7 @@
   url: https://untp.unece.org/docs/business-case/BusinessCaseDependentServices
 
 - id: untp-impact
-  order: 4
+  order: 5
   suite: UNTP
   audience: Measurement
   name: Impact assessment framework
@@ -53,7 +66,7 @@
   url: https://untp.unece.org/docs/business-case/ImpactAssessmentFramework
 
 - id: unvtd-country
-  order: 5
+  order: 6
   suite: UNVTD
   audience: Government
   name: Country and government
@@ -63,7 +76,7 @@
   url: https://unvtd.unece.org/business-cases/country/
 
 - id: unvtd-customs
-  order: 6
+  order: 7
   suite: UNVTD
   audience: Government
   name: Customs
@@ -74,7 +87,7 @@
   url: https://unvtd.unece.org/business-cases/customs/
 
 - id: unvtd-tax
-  order: 7
+  order: 8
   suite: UNVTD
   audience: Government
   name: Tax
@@ -85,7 +98,7 @@
   url: https://unvtd.unece.org/business-cases/tax/
 
 - id: unvtd-registry
-  order: 8
+  order: 9
   suite: UNVTD
   audience: Trust infrastructure
   name: Registry operator
@@ -96,7 +109,7 @@
   url: https://unvtd.unece.org/business-cases/registry-operator/
 
 - id: unvtd-trader
-  order: 9
+  order: 10
   suite: UNVTD
   audience: Industry
   name: Trader
@@ -107,7 +120,7 @@
   url: https://unvtd.unece.org/business-cases/trader/
 
 - id: unvtd-logistics
-  order: 10
+  order: 11
   suite: UNVTD
   audience: Industry
   name: Logistics
@@ -117,7 +130,7 @@
   url: https://unvtd.unece.org/business-cases/logistics/
 
 - id: unvtd-ports
-  order: 11
+  order: 12
   suite: UNVTD
   audience: Industry
   name: Ports
@@ -127,7 +140,7 @@
   url: https://unvtd.unece.org/business-cases/ports/
 
 - id: unvtd-bank
-  order: 12
+  order: 13
   suite: UNVTD
   audience: Industry
   name: Bank
@@ -138,7 +151,7 @@
   url: https://unvtd.unece.org/business-cases/bank/
 
 - id: unvtd-method
-  order: 13
+  order: 14
   suite: UNVTD
   audience: Measurement
   name: Assessment methodology

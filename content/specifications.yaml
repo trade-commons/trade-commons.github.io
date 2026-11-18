@@ -31,9 +31,9 @@
   name: Global Registry Information Directory
   abbreviation: GRID
   summary: >-
-    A directory of authoritative government-run registers, such as business, land, asset and
-    trademark registers, and the registration authorities that operate them. It is how a verifier
-    establishes that the registrar behind an identity anchor is the authority it claims to be.
+    Defines how a registration authority declares what it is authoritative for, and how a verifier
+    resolves an identity anchor back to the body that issued it. The specification behind the
+    question of whether a registrar is who it says it is.
   authority: UN/CEFACT
   url: https://grid.unece.org
   note: The register itself is listed under Conformance, alongside the other UN registers.

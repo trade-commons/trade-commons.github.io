@@ -5,8 +5,9 @@
 # knows which component it needs.
 #
 # `operates` names catalogue entries the role deploys or uses. `serves` names the roles that consume
-# what it publishes or operates. Both are validated against the catalogue at build time, so a role
-# cannot point at a component that does not exist.
+# what it publishes or operates. `value` names the business cases that argue for this role adopting,
+# on the Value page. All three are validated at build time, so a role cannot point at something that
+# does not exist.
 
 - id: producer
   order: 1
@@ -26,6 +27,9 @@
   note: >-
     The smallest producers run none of this themselves and publish through a community programme or
     a vendor. The capability is the same and the hosting is somebody else's.
+  value:
+    - untp-industry
+    - unvtd-trader
 
 - id: conformity-assessment-body
   order: 2
@@ -40,6 +44,8 @@
     - producer
     - buyer
     - regulator
+  value:
+    - untp-services
 
 - id: scheme-owner
   order: 3
@@ -53,6 +59,8 @@
     - conformity-assessment-body
     - buyer
     - verifier-operator
+  value:
+    - untp-services
 
 - id: registrar
   order: 4
@@ -68,6 +76,8 @@
     - buyer
     - customs-administration
     - verifier-operator
+  value:
+    - unvtd-registry
 
 - id: customs-administration
   order: 5
@@ -80,19 +90,25 @@
   serves:
     - producer
     - regulator
+  value:
+    - unvtd-customs
+    - unvtd-country
+    - untp-government
 
 - id: facility-operator
   order: 6
   name: Facility operator
   summary: >-
-    Holds material at a named facility, accounts for what it takes in and allocates out, and must
-    prove nothing leaves beyond what was assessed without revealing quantities or counterparties.
+    Runs a mine, mill, farm or plant where assessed material is received, processed and sent on, and
+    has to account for it without exposing volumes or customers to competitors.
   operates:
     - facility-coc
     - storage
   serves:
     - buyer
     - conformity-assessment-body
+  value:
+    - untp-industry
 
 - id: buyer
   order: 7
@@ -104,6 +120,9 @@
     - verifier
   serves:
     - regulator
+  value:
+    - untp-industry
+    - unvtd-bank
 
 - id: community
   order: 8
@@ -120,6 +139,8 @@
   note: >-
     A community publishes declarations and does not build software. The extension, the overlay shape
     graph and the profile live on the community's own infrastructure, and every engine reads them.
+  value:
+    - untp-cap
 
 - id: vendor
   order: 9
@@ -138,6 +159,8 @@
     - conformity-assessment-body
     - buyer
     - registrar
+  value:
+    - untp-services
 
 - id: verifier-operator
   order: 10
@@ -152,6 +175,8 @@
     - buyer
     - customs-administration
     - regulator
+  value:
+    - untp-services
 
 - id: regulator
   order: 11
@@ -162,6 +187,9 @@
   operates:
     - verifier
   serves: []
+  value:
+    - untp-government
+    - untp-impact
 
 - id: commons
   order: 12

@@ -1,22 +1,11 @@
-The arrangements on this page are drawn from the Global Trade Commons charter, which is a draft for
-circulation to prospective founding participants, UN/CEFACT and its UNECE secretariat, the Global
-Digital Collaboration and prospective multilateral development bank partners. It has not been
-executed, and nothing here should be read as a commitment of a foundation that does not yet exist.
-
-Two things on this page have moved on from that draft, and the charter is being revised to match.
-The charter has the Commons constituted directly as a foundation under a permanent international
-host, where the present intention is to begin with a lighter arrangement and decide the permanent
-home later. The charter also seats UN/CEFACT and the Global Digital Collaboration on the Governing
-Board, and neither now holds a seat. Until the charter is revised, this page is the current statement
-on the institutional home and on the composition of the Board, and the charter remains the source of
-truth on everything else.
-
-UN/CEFACT holding no seat changes nothing about where normative authority rests or about how the
-Commons routes a specification defect upstream. Both are set out below and neither depends on a seat.
+These arrangements come from the Global Trade Commons charter, a draft in circulation that has not
+been executed. Nothing here is a commitment of a foundation that does not yet exist. On the
+institutional home and the composition of the Board this page is ahead of the charter, which is being
+revised to match it.
 
 ## Institutional home
 
-Governance starts light, and the first arrangement is explicitly temporary.
+The first arrangement is explicitly temporary.
 
 **Initially, a project hosted by the Linux Foundation.** This gives the Commons a neutral home for the
 code and the trademark, an established governance template, and the means to receive contributions and
@@ -118,10 +107,8 @@ earned through contribution and conferred by no payment. The Committee elects th
 Board seat above, so technical leadership is represented in strategic decisions without any
 organisation buying its way there.
 
-**Financial contribution does not purchase a governance seat or a technical decision right.** Board
-seats are elected within a class, and a class is defined by what its members are and never by what
-they pay, so no contribution at any level carries representation. Public bodies participate
-regardless of whether they contribute at all. Contributions may be earmarked at programme level, never at the level of a
+**Financial contribution does not purchase a technical decision right either.** Public bodies
+participate in the technical work regardless of whether they contribute at all. Contributions may be earmarked at programme level, never at the level of a
 specific feature for a specific contributor, because feature-specific funding directed to a
 contributor's own benefit begins to resemble procurement.
 
@@ -182,9 +169,8 @@ responsible-sourcing scheme whose criteria the work depends on.
 
 Contribution levels for commercial participants are not published here. The Governing Board sets them
 once it is constituted, and until then they are a matter for direct conversation, because the amounts
-depend on the host arrangement and on what the first programme of work costs. Whatever they turn out
-to be, no level purchases a governance seat or a technical decision right. A higher level carries
-recognition and the right to direct a contribution to a named programme of work, and nothing else.
+depend on the host arrangement and on what the first programme of work costs. A higher level carries recognition
+and the right to direct a contribution to a named programme of work, and nothing else.
 
 **Conformity testing is not a membership benefit and is never bundled into one.** It is sold at cost
 recovery to anyone who wants an implementation tested, member or not, on the open and

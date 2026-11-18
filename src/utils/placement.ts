@@ -18,7 +18,20 @@ export const TIER_PAGE = {
   organisation: '/governance',
 } as const;
 
+/**
+ * Entries whose page differs from their tier's. The conformity testing service is a service, and
+ * belongs in the sequence it serves rather than appearing in full on two pages.
+ */
+export const COMPONENT_PAGE: Record<string, string> = {
+  conformance: '/conformance',
+};
+
 export type Placed = { id: string; data: { tier: string } };
+
+/** The page responsible for an entry: its own override, else its tier's page. */
+export function pageFor(entry: Placed) {
+  return COMPONENT_PAGE[entry.id] ?? TIER_PAGE[entry.data.tier as keyof typeof TIER_PAGE];
+}
 
 /** Every entry must have a destination. */
 export function assertAllTiersPlaced(entries: Placed[]) {
@@ -31,7 +44,7 @@ export function assertAllTiersPlaced(entries: Placed[]) {
 
 /** Entries this page is responsible for, with a check that none were dropped on the way. */
 export function entriesFor<T extends Placed>(entries: T[], page: string, shown: T[]) {
-  const owed = entries.filter((entry) => TIER_PAGE[entry.data.tier as keyof typeof TIER_PAGE] === page);
+  const owed = entries.filter((entry) => pageFor(entry) === page);
   const have = new Set(shown.map((entry) => entry.id));
   const missing = owed.filter((entry) => !have.has(entry.id));
   if (missing.length > 0) {

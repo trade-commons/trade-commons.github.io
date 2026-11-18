@@ -54,8 +54,8 @@ const groups = AUDIENCE_ORDER.map((audience) => ({
           <h3>{group.audience}</h3>
           <p class="group_note">{group.note}</p>
           <ul class="cases">
-            {group.entries.map(({ data }) => (
-              <li>
+            {group.entries.map(({ id, data }) => (
+              <li id={id}>
                 <div class="case_head">
                   <h4>
                     <a href={data.url} target="_blank" rel="noreferrer">
@@ -109,6 +109,7 @@ const groups = AUDIENCE_ORDER.map((audience) => ({
     li {
       margin: 0;
       padding: var(--spacing-md);
+      scroll-margin-top: calc(var(--header-height) + 1rem);
       background: var(--color-bg);
       border-radius: var(--border-radius-sm);
       border: 1px solid var(--color-gray-200);

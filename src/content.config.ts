@@ -219,6 +219,10 @@ const roles = defineCollection({
     // Roles that consume what this one publishes or operates.
     serves: z.array(z.string()).default([]),
 
+    // Business cases on the Value page that argue for this role adopting. A role that can see what
+    // it would run and not why it would bother is half a page.
+    value: z.array(z.string()).default([]),
+
     note: z.string().optional(),
   }),
 });

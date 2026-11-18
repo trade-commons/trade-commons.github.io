@@ -33,12 +33,9 @@ for (const step of steps) {
 
 // The components that do the testing. They were taken off the Components page so the sequence they
 // belong to could be told here, which only works if they are actually shown here.
-// Everything this page is responsible for, plus the hosted service, which is a service shown on
-// Components as well because it belongs to both the stack and the sequence.
-const testing = catalogue.filter(
+const testing = entriesFor(catalogue, '/conformance', catalogue.filter(
   (entry) => entry.data.tier === 'tooling' || entry.id === 'conformance',
-);
-entriesFor(catalogue, '/conformance', testing);
+));
 
 const operational = registers.filter((entry) => entry.data.status === 'operational').length;
 const proposed = registers.length - operational;

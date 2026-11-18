@@ -5,7 +5,7 @@ import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import CatalogueList from '@/components/CatalogueList.astro';
-import { TIER_PAGE, assertAllTiersPlaced } from '@/utils/placement';
+import { pageFor, assertAllTiersPlaced } from '@/utils/placement';
 
 import config from '@/config';
 
@@ -16,7 +16,7 @@ const all = (await getCollection('catalogue')).sort((a, b) => a.data.name.locale
 // utils/placement is the single statement of that, and this assertion means a new tier cannot be
 // added without someone deciding which page shows it.
 assertAllTiersPlaced(all);
-const entries = all.filter((entry) => TIER_PAGE[entry.data.tier] === '/components');
+const entries = all.filter((entry) => pageFor(entry) === '/components');
 
 const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
 
@@ -61,8 +61,8 @@ const existing = entries.length - proposed.length;
       )
     }
     <p class="add">
-      Three kinds of thing sit elsewhere. Test suites and harnesses are on
-      <a href="/conformance">Conformance</a>, with the sequence they belong to. Templates are on
+      Three kinds of thing sit elsewhere. Test suites, harnesses and the hosted conformity testing
+      service are on <a href="/conformance">Conformance</a>, with the sequence they belong to. Templates are on
       <a href="/get-involved">Get involved</a>, beside the instructions for using them. The
       organisation's own repositories, including the governance record, are on
       <a href="/governance">Governance</a>.

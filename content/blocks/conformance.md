@@ -11,10 +11,7 @@ compulsory. A vendor that writes its own implementation, tests it against the op
 declares its own conformity has done the same thing, and the register does not record whose code was
 used.
 
-**The registers themselves belong to UN/CEFACT and not to the Commons.** They are public goods whose
-legal and administrative home is the UNECE secretariat, and they reside on UNECE sites. UN/CEFACT
-holds the namespace, the rules, the data, and the right to appoint or replace whoever operates them.
-The Commons may populate a register, and may operate one under revocable, non-exclusive delegation,
-which lets it hold the code that serves a register and the configuration that runs it. It never holds
-the data as its own asset, and being recorded on a register never depends on going through the
-Commons.
+**The registers belong to UN/CEFACT and not to the Commons.** They are public goods residing on
+UNECE sites, and being recorded on one never depends on going through the Commons. The terms on
+which the Commons may populate or operate a register are set out under
+[governance](/governance).
