@@ -84,8 +84,10 @@ Three classes, each electing one representative:
 - **Civil society.** Non-governmental organisations, philanthropic foundations, industry membership
   organisations and sector bodies.
 
-One elected implementation and community representative also sits on the Board, which makes four
-voting seats in all. No seat is appointed, and no class holds more than one. Representing by class is
+Two further seats are held by role and not by class: one elected implementation and community
+representative, and the Chair of the Technical Steering Committee, so that technical leadership is
+represented in strategic decisions. That makes five voting seats in all. No seat is appointed, and
+no class holds more than one. Representing by class is
 deliberately not proportional, and a body that wanted proportional representation would not use
 classes at all. Weighting a class by what it contributes would put money back into representation,
 and weighting it by how many members it has would reward the classes that join at no cost, so
@@ -111,7 +113,10 @@ to no contribution level.
 
 Technical direction is open and contribution-based, following established open-source practice.
 Decisions on the test harnesses, reference implementations and registries rest with the active
-contributors and maintainers.
+contributors and maintainers. A Technical Steering Committee directs that work, and its membership is
+earned through contribution and conferred by no payment. The Committee elects the Chair who holds the
+Board seat above, so technical leadership is represented in strategic decisions without any
+organisation buying its way there.
 
 **Financial contribution does not purchase a governance seat or a technical decision right.** Board
 seats are elected within a class, and a class is defined by what its members are and never by what
