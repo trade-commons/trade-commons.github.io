@@ -9,7 +9,7 @@ interface Props {
 const { steps, catalogue } = Astro.props;
 const component = new Map(catalogue.map((entry) => [entry.id, entry.data]));
 // Tooling lives on the Testing page now, so a link to /components#tooling would be dead.
-const hrefFor = (tier?: string) => (tier === 'tooling' ? '/testing' : `/components#${tier ?? ''}`);
+const hrefFor = (tier?: string) => (tier === 'tooling' ? '/conformance' : `/components#${tier ?? ''}`);
 ---
 
 <ol class="steps">

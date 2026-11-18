@@ -244,4 +244,25 @@ const journey = defineCollection({
   }),
 });
 
-export const collections = { catalogue, registers, specifications, roles, journey };
+/**
+ * The business case, as its owners state it.
+ *
+ * Deliberately no figures. UNTP and UNVTD maintain their own cases with their own methodology, and
+ * UNVTD keeps every number in one place so published cases cannot drift from the evidence. An entry
+ * here summarises the shape of an argument and links to the page that owns it, so there is nothing
+ * to keep in step.
+ */
+const value = defineCollection({
+  loader: file('./content/value.yaml'),
+  schema: z.object({
+    id: z.string(),
+    order: z.number().int().positive(),
+    suite: z.enum(['UNTP', 'UNVTD']),
+    audience: z.string(),
+    name: z.string(),
+    summary: z.string(),
+    url: z.url(),
+  }),
+});
+
+export const collections = { catalogue, registers, specifications, roles, journey, value };

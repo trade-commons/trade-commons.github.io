@@ -27,6 +27,7 @@ content/
   specifications.yaml     the normative specifications this work supports
   roles.yaml              who runs what, and who it serves
   journey.yaml            the steps from built to listed in a register
+  value.yaml              the UN/CEFACT business cases, linked and never restated
   blocks/*.md             page prose, kept as Markdown so translation stays prose
 src/
   content.config.ts       both schemas; the governance gate

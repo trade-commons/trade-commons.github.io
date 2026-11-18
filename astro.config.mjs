@@ -25,7 +25,8 @@ export default defineConfig({
 
   // /registers was published before the page became the Testing journey. Keep the old URL working.
   redirects: {
-    '/registers': '/testing',
+    '/registers': '/conformance',
+    '/testing': '/conformance',
   },
 
   integrations: [sitemap()],

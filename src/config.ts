@@ -48,8 +48,14 @@ const config = {
         'Who runs what, and who it serves. The component catalogue organised by the job an ' +
         'organisation has rather than by what each component is.',
     },
-    testing: {
-      title: 'Testing',
+    value: {
+      title: 'Value',
+      description:
+        'Why anyone adopts this. The UN/CEFACT business cases for UNTP and UNVTD, by audience, and '
+        + 'what shared infrastructure changes about the cost side of them.',
+    },
+    conformance: {
+      title: 'Conformance',
       description:
         'How an implementation gets from built to listed: deploy, integrate, test, certify where '
         + 'it is asked for, and register. The UN registers are the destination.',

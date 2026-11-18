@@ -1,0 +1,148 @@
+# The business case, as its owners state it.
+#
+# Deliberately no figures. UNTP and UNVTD each maintain their own cases with their own methodology
+# and cited evidence, and UNVTD in particular runs a strict single-source-of-truth model where every
+# number has one home. Restating a figure here would create a second copy free to drift from the
+# first, so each entry summarises the shape of the argument and links to the page that owns it.
+#
+# `suite` is UNTP or UNVTD. `audience` groups the entries on the page.
+
+- id: untp-industry
+  order: 1
+  suite: UNTP
+  audience: Industry
+  name: Business case for industry
+  summary: >-
+    Why a company adopts: better supplier selection from granular data, disclosure accurate enough to
+    survive scrutiny, reputational risk managed before it becomes an incident, finance offered on
+    better terms to credible sustainability credentials, and traceability that serves logistics and
+    circularity as much as compliance. Includes a template for building the case internally.
+  url: https://untp.unece.org/docs/business-case/BusinessCaseIndustry
+
+- id: untp-government
+  order: 2
+  suite: UNTP
+  audience: Government
+  name: Business case for government
+  summary: >-
+    Trade cost reduction through standardised and digitised clearance, documentation and inspection;
+    better revenue collection where transparency reduces fraud; and granular trade data that lets
+    policy be aimed rather than guessed. Stated at both agency and national-economy level.
+  url: https://untp.unece.org/docs/business-case/BusinessCaseGovernment
+
+- id: untp-services
+  order: 3
+  suite: UNTP
+  audience: Trust infrastructure
+  name: Case for schemes and registers
+  summary: >-
+    The case for the parties the whole structure depends on and who are easiest to forget: conformity
+    schemes, conformity assessment bodies, and the identity registers that also resolve their
+    registered entities. Without a case of their own they do not act, and nothing downstream works.
+  url: https://untp.unece.org/docs/business-case/BusinessCaseDependentServices
+
+- id: untp-impact
+  order: 4
+  suite: UNTP
+  audience: Measurement
+  name: Impact assessment framework
+  summary: >-
+    A minimal set of indicators each implementer can measure and report, that communities can
+    aggregate and report upward, mapped to the targets under the UN Sustainable Development Goals.
+    This is how a claim that adoption worked is made checkable instead of asserted.
+  url: https://untp.unece.org/docs/business-case/ImpactAssessmentFramework
+
+- id: unvtd-country
+  order: 5
+  suite: UNVTD
+  audience: Government
+  name: Country and government
+  summary: >-
+    The national roll-up: cheaper trade, recovered border and domestic revenue, and a deeper
+    trade-finance market, set against a one-time decentralised cost rather than per-transaction fees.
+  url: https://unvtd.unece.org/business-cases/country/
+
+- id: unvtd-customs
+  order: 6
+  suite: UNVTD
+  audience: Government
+  name: Customs
+  summary: >-
+    Verifiable declarations let an administration move from sampled manual audit to algorithmic
+    verification of every transaction, and the recovered revenue is what funds the incentives,
+    deferred duty and pre-arrival clearance, that pull traders into adopting at all.
+  url: https://unvtd.unece.org/business-cases/customs/
+
+- id: unvtd-tax
+  order: 7
+  suite: UNVTD
+  audience: Government
+  name: Tax
+  summary: >-
+    Verifiable invoices move assurance coverage from a small fraction of transactions toward all of
+    them, and the deterrence effect lifts voluntary compliance, at lower cost than audit-led
+    enforcement.
+  url: https://unvtd.unece.org/business-cases/tax/
+
+- id: unvtd-registry
+  order: 8
+  suite: UNVTD
+  audience: Trust infrastructure
+  name: Registry operator
+  summary: >-
+    The identity anchor every other lever depends on. A registry issuing verifiable business identity
+    at near-zero marginal cost per entity underwrites the trust that makes decentralised documents
+    work, without the per-entity fees an intermediary identity scheme would charge.
+  url: https://unvtd.unece.org/business-cases/registry-operator/
+
+- id: unvtd-trader
+  order: 9
+  suite: UNVTD
+  audience: Industry
+  name: Trader
+  summary: >-
+    Fewer documentary disputes and faster clearance, though the larger gains usually arrive as
+    incentives offered by the parties that benefit when a trader's documents are verifiable: deferred
+    duty, expedited clearance, cheaper finance.
+  url: https://unvtd.unece.org/business-cases/trader/
+
+- id: unvtd-logistics
+  order: 10
+  suite: UNVTD
+  audience: Industry
+  name: Logistics
+  summary: >-
+    Verifiable transport documents cut document handling and courier cost, reduce mis-delivery and
+    title-fraud liability, and turn equipment around faster through quicker cargo release.
+  url: https://unvtd.unece.org/business-cases/logistics/
+
+- id: unvtd-ports
+  order: 11
+  suite: UNVTD
+  audience: Industry
+  name: Ports
+  summary: >-
+    For a cargo terminal, verifiable arrival, release and delivery documents cut dwell time,
+    demurrage and manual document handling, which shows up as asset utilisation.
+  url: https://unvtd.unece.org/business-cases/ports/
+
+- id: unvtd-bank
+  order: 12
+  suite: UNVTD
+  audience: Industry
+  name: Bank
+  summary: >-
+    Automated know-your-customer and document due diligence, with double-financing and fraud exposed
+    rather than discovered later. Lower assurance cost is the direct effect; more SME trade becoming
+    safely financeable is the larger one.
+  url: https://unvtd.unece.org/business-cases/bank/
+
+- id: unvtd-method
+  order: 13
+  suite: UNVTD
+  audience: Measurement
+  name: Assessment methodology
+  summary: >-
+    How the UNVTD figures are derived, including the conservatism and attribution assumptions. Read
+    this before quoting any number from the cases above.
+  url: https://unvtd.unece.org/business-cases/assessment-methodology/

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 
-import { Content } from '../../content/blocks/testing.md';
+import { Content } from '../../content/blocks/conformance.md';
 
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
@@ -12,7 +12,7 @@ import RegisterList from '@/components/RegisterList.astro';
 
 import config from '@/config';
 
-const { title, description } = config.pages.testing;
+const { title, description } = config.pages.conformance;
 
 const steps = (await getCollection('journey')).sort((a, b) => a.data.order - b.data.order);
 const catalogue = await getCollection('catalogue');

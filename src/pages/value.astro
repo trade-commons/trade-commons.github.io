@@ -1,0 +1,166 @@
+---
+import { getCollection } from 'astro:content';
+
+import { Content } from '../../content/blocks/value.md';
+
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Heading from '@/components/Heading.astro';
+
+import config from '@/config';
+
+const { title, description } = config.pages.value;
+
+const entries = (await getCollection('value')).sort((a, b) => a.data.order - b.data.order);
+
+// Grouped by who is being persuaded, because a reader arrives as one audience and not as a suite.
+const AUDIENCE_ORDER = ['Government', 'Industry', 'Trust infrastructure', 'Measurement'] as const;
+
+const AUDIENCE_NOTES: Record<string, string> = {
+  Government:
+    'Border and domestic revenue, trade cost, and data granular enough to aim policy with.',
+  Industry: 'Firm-level return: cost, working capital, risk, and the incentives offered for adopting.',
+  'Trust infrastructure':
+    'The parties everything else depends on. Without a case of their own they do not act, and nothing downstream works.',
+  Measurement: 'How a claim that adoption worked is made checkable rather than asserted.',
+};
+
+const groups = AUDIENCE_ORDER.map((audience) => ({
+  audience,
+  note: AUDIENCE_NOTES[audience],
+  entries: entries.filter((entry) => entry.data.audience === audience),
+})).filter((group) => group.entries.length > 0);
+---
+
+<Layout title={title} description={description}>
+  <Hero title={title} description={description} />
+
+  <Section>
+    <div class="prose">
+      <Content />
+    </div>
+  </Section>
+
+  <Section variant="gray">
+    <Heading title="The cases" />
+    <p class="lead">
+      Maintained by UN/CEFACT on its own sites. Each link goes to the page that owns the argument and
+      the figures behind it.
+    </p>
+    {
+      groups.map((group) => (
+        <section class="group">
+          <h3>{group.audience}</h3>
+          <p class="group_note">{group.note}</p>
+          <ul class="cases">
+            {group.entries.map(({ data }) => (
+              <li>
+                <div class="case_head">
+                  <h4>
+                    <a href={data.url} target="_blank" rel="noreferrer">
+                      {data.name}
+                    </a>
+                  </h4>
+                  <span class="suite">{data.suite}</span>
+                </div>
+                <p>{data.summary}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </Section>
+</Layout>
+
+<style lang="scss">
+  .prose {
+    max-width: var(--measure);
+
+    :global(p) {
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  .lead {
+    max-width: var(--measure);
+    color: var(--color-gray-700);
+  }
+
+  .group {
+    margin-top: var(--spacing-lg);
+
+    h3 {
+      margin: 0;
+      font-size: var(--font-size-h4);
+    }
+
+    &_note {
+      margin: 0.35em 0 0 0;
+      max-width: var(--measure);
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+    }
+  }
+
+  .cases {
+    margin: var(--spacing-sm) 0 0 0;
+    padding: 0;
+    display: grid;
+    list-style: none;
+    gap: var(--spacing-sm);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    li {
+      margin: 0;
+      padding: var(--spacing-md);
+      background: var(--color-bg);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--color-gray-200);
+    }
+
+    p {
+      margin: 0.7em 0 0 0;
+      color: var(--color-gray-800);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-md);
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .case_head {
+    gap: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    h4 {
+      margin: 0;
+      font-size: var(--font-size-h5);
+      font-family: var(--font-serif, var(--font-fallback-serif));
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .suite {
+    padding: 0.15em 0.45em;
+    letter-spacing: 0.03em;
+    color: var(--color-gray-600);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    background: var(--color-gray-100);
+    border-radius: var(--border-radius-xs);
+  }
+</style>
