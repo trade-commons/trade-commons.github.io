@@ -302,8 +302,9 @@
 - id: grid-node
   name: Registry node
   summary: >-
-    The registry operator's application: issues identity anchors, manages hosted decentralised
-    identifiers, serves resolver queries and runs a witness.
+    Everything a registration authority needs to act as a trust anchor. Issues identity anchors
+    against entries in its own register, hosts decentralised identifiers for registrants who cannot
+    run their own, answers resolver queries, and witnesses its own log.
   tier: application
   maturity: proposed
   standards:
@@ -321,8 +322,13 @@
     - api
     - ui
   disposition: >-
-    Named for what it does, because an application named after its operator dates badly once the
-    role is ordinary. Assembles capabilities currently spread across several places.
+    A business register, land register or trademark office is already the authoritative answer to
+    whether an entity exists and who controls it. An identity anchor is that answer made checkable
+    by a verifier who has never dealt with the registrar before. Few registration authorities will
+    assemble six services to get there, so this exists to make becoming a trust anchor a deployment
+    and not a project. Two things are harder than the software: the authority to issue rests on the
+    registrar's existing statutory role, which maps differently in every jurisdiction, and hosting
+    identifiers for registrants means holding keys on their behalf.
 
 - id: customs
   name: Customs credential intake
