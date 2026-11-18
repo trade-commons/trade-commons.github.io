@@ -70,18 +70,29 @@ Governance is deliberately lean. A founding Governing Board provides strategic d
 oversight, approves the annual programme of work, and oversees the use of pooled funds at programme
 level.
 
-Seats for founding organisations are drawn from four classes, so that no single kind of participant
-can set the direction on its own:
+**Representation follows what an organisation is. Contribution follows what it can afford. The two
+are held apart.** This is what makes the commitment that contribution buys no seat structural rather
+than merely stated: two organisations in the same class elect the same representative, whether one
+contributes ten times what the other does.
 
-- **Technology corporates.** Software vendors, platform operators and supply-chain technology
-  providers, including those that sell products competing with components the Commons holds.
-- **Government agencies.** Customs administrations, trade and industry departments, and regulators.
-- **Industry membership organisations.** Sector bodies and responsible-sourcing schemes that set
-  criteria their members report against, and whose conformity vocabularies the work depends on.
-- **Civil society.** Environmental and labour organisations with a direct interest in whether
-  transparency claims can be checked.
+Three classes, each electing one representative:
 
-One elected implementation and community representative also sits on the Board.
+- **Commercial.** Corporates, software vendors, platform operators and supply-chain technology
+  providers, including those selling products that compete with components the Commons holds.
+- **Public.** Government agencies, meaning customs administrations, trade and industry departments
+  and regulators.
+- **Civil society.** Non-governmental organisations, philanthropic foundations, industry membership
+  organisations and sector bodies.
+
+One elected implementation and community representative also sits on the Board, which makes four
+voting seats in all. No seat is appointed, and no class holds more than one. Representing by class is
+deliberately not proportional, and a body that wanted proportional representation would not use
+classes at all. Weighting a class by what it contributes would put money back into representation,
+and weighting it by how many members it has would reward the classes that join at no cost, so
+neither is used.
+
+Only commercial members carry a funding floor. Every other class may join at no cost, and may
+contribute if it chooses.
 
 The Board may additionally offer liaison seats to intergovernmental organisations. A liaison seat
 carries no vote and no contribution, so an organisation that cannot pay a membership fee, or cannot
@@ -102,10 +113,10 @@ Technical direction is open and contribution-based, following established open-s
 Decisions on the test harnesses, reference implementations and registries rest with the active
 contributors and maintainers.
 
-**Financial contribution does not purchase a governance seat or a technical decision right.** The
-founding Board seats held by founding organisations derive from their role in establishing the
-Commons, not from the size of any contribution, and public bodies participate regardless of whether
-they contribute at all. Contributions may be earmarked at programme level, never at the level of a
+**Financial contribution does not purchase a governance seat or a technical decision right.** Board
+seats are elected within a class, and a class is defined by what its members are and never by what
+they pay, so no contribution at any level carries representation. Public bodies participate
+regardless of whether they contribute at all. Contributions may be earmarked at programme level, never at the level of a
 specific feature for a specific contributor, because feature-specific funding directed to a
 contributor's own benefit begins to resemble procurement.
 
@@ -158,7 +169,8 @@ contribution is permissible under a jurisdiction's public-finance rules is a mat
 contributor to confirm under its own rules, and the Commons asserts eligibility on nobody's behalf.
 
 **Participation does not depend on paying.** Government agencies, academic institutions, non-profit
-organisations and civil society organisations participate at no cost. A customs administration that
+organisations and civil society organisations participate at no cost. Only commercial members carry
+a funding floor. A customs administration that
 implements the work, or a civil society organisation that tests whether a transparency claim holds up,
 contributes something the Commons needs and cannot buy. The same applies to a sector body or
 responsible-sourcing scheme whose criteria the work depends on.
@@ -166,7 +178,14 @@ responsible-sourcing scheme whose criteria the work depends on.
 Contribution levels for commercial participants are not published here. The Governing Board sets them
 once it is constituted, and until then they are a matter for direct conversation, because the amounts
 depend on the host arrangement and on what the first programme of work costs. Whatever they turn out
-to be, no level purchases a governance seat or a technical decision right.
+to be, no level purchases a governance seat or a technical decision right. A higher level carries
+recognition and the right to direct a contribution to a named programme of work, and nothing else.
+
+**Conformity testing is not a membership benefit and is never bundled into one.** It is sold at cost
+recovery to anyone who wants an implementation tested, member or not, on the open and
+non-discriminatory basis the charter requires. Membership is support for a mission; a testing fee is
+payment for a service. Keeping them apart is what lets a contribution be characterised as a grant,
+and it means nobody has to join anything to use what the Commons produces.
 
 Multilateral development banks and other international organisations are welcome, consistent with
 the priority given to lowering adoption barriers for developing and emerging economies. Two routes
