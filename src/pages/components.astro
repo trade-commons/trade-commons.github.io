@@ -9,16 +9,17 @@ import CatalogueList from '@/components/CatalogueList.astro';
 import config from '@/config';
 
 const { title, description } = config.pages.components;
-const entries = (await getCollection('catalogue')).sort((a, b) =>
-  a.data.name.localeCompare(b.data.name),
-);
+const all = (await getCollection('catalogue')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+// Test suites and harnesses live on the Testing page, where the sequence they belong to is told.
+const entries = all.filter((entry) => entry.data.tier !== 'tooling');
 
 const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
 
 // A composition reference that points nowhere is a broken catalogue, so fail the build rather than
 // render a dangling name. The per-entry schema cannot see across entries, so the check lives here.
-const ids = new Set(entries.map((entry) => entry.id));
-for (const entry of entries) {
+const ids = new Set(all.map((entry) => entry.id));
+for (const entry of all) {
   for (const ref of entry.data.composedOf) {
     if (!ids.has(ref)) {
       throw new Error(`catalogue: "${entry.id}" is composed of "${ref}", which is not an entry.`);
@@ -55,6 +56,11 @@ const existing = entries.length - proposed.length;
         </p>
       )
     }
+    <p class="add">
+      Test suites, reference implementations and the harnesses an implementer runs against are on the
+      <a href="/testing">Testing</a> page, with the sequence they belong to.
+    </p>
+
     <p class="add">
       Add a component by opening a pull request against <code>content/catalogue.yaml</code> in
       <a href="https://github.com/trade-commons/trade-commons.github.io" rel="noreferrer">

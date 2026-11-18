@@ -224,4 +224,24 @@ const roles = defineCollection({
   }),
 });
 
-export const collections = { catalogue, registers, specifications, roles };
+/**
+ * The sequence that ends in a register entry.
+ *
+ * The registers are the destination of this sequence and not a separate subject, so the two are
+ * presented on one page. Component references are checked against the catalogue at build time.
+ */
+const journey = defineCollection({
+  loader: file('./content/journey.yaml'),
+  schema: z.object({
+    id: z.string(),
+    order: z.number().int().positive(),
+    name: z.string(),
+    summary: z.string(),
+
+    // Catalogue entries that serve this step. Empty where the Commons supplies nothing for it,
+    // which is worth showing rather than hiding.
+    components: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { catalogue, registers, specifications, roles, journey };

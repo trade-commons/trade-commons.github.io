@@ -10,6 +10,8 @@ const { roles, catalogue } = Astro.props;
 
 const component = new Map(catalogue.map((entry) => [entry.id, entry.data]));
 const roleName = new Map(roles.map((role) => [role.id, role.data.name]));
+// Tooling lives on the Testing page now, so a link to /components#tooling would be dead.
+const hrefFor = (tier?: string) => (tier === 'tooling' ? '/testing' : `/components#${tier ?? ''}`);
 ---
 
 <ul class="roles">
@@ -27,7 +29,7 @@ const roleName = new Map(roles.map((role) => [role.id, role.data.name]));
                 const c = component.get(ref);
                 return (
                   <li>
-                    <a href={`/components#${c?.tier ?? ''}`}>{c?.name ?? ref}</a>
+                    <a href={hrefFor(c?.tier)}>{c?.name ?? ref}</a>
                     {c?.maturity === 'proposed' && <span class="pending">proposed</span>}
                   </li>
                 );

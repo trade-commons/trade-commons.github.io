@@ -1,0 +1,62 @@
+# From building something to being listed in a UN register.
+#
+# The registers are the destination of this sequence, not a separate subject. An entry in one of them
+# is worth something only because of what had to happen first, and this file records the steps.
+#
+# `components` names catalogue entries that serve a step, validated at build time. A step with none
+# is one the Commons supplies nothing for, which is itself worth showing.
+
+- id: build
+  order: 1
+  name: Build or buy
+  summary: >-
+    Deploy the components you need, or buy a product that implements the same protocol. Nothing here
+    requires Commons software, and a register entry does not record whose code you ran. The
+    components exist so that the option costs nothing, not so that it is the only option.
+  components:
+    - easy
+    - verifier
+    - idr
+    - storage
+
+- id: integrate
+  order: 2
+  name: Integrate
+  summary: >-
+    Connect it to the systems that already hold your data, so credentials carry what your business
+    actually knows instead of what somebody typed into a sample. This is the step that takes the
+    longest and the one no protocol can shorten.
+  components:
+    - connectors
+    - connector-sdk
+
+- id: test
+  order: 3
+  name: Test
+  summary: >-
+    Run the open test suites against your implementation. They are free, you run them yourself, and
+    nobody has to know you did. Most of what they catch is found and fixed without anyone else being
+    involved, which is the point of making them open.
+  components:
+    - tests-untp
+
+- id: certify
+  order: 4
+  name: Certify, if you need to
+  summary: >-
+    Ask for an independent conformity assessment and get an attested result. The fee covers the cost
+    of the service and buys nothing the open suites withhold: the same tests, run by someone whose
+    word a third party will take. Some registers accept a self-declaration and this step is optional
+    for them.
+  components:
+    - conformance
+
+- id: register
+  order: 5
+  name: Register
+  summary: >-
+    Add your entry to the register that matches what you are. A software vendor goes in the software
+    implementers register, a sector programme in the community activation register, an identifier
+    scheme or a conformity scheme in theirs, a registration authority in GRID. The register is a
+    UN/CEFACT public good and the entry is yours.
+  components: []

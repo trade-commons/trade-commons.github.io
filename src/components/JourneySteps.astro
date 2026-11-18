@@ -1,0 +1,136 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  steps: CollectionEntry<'journey'>[];
+  catalogue: CollectionEntry<'catalogue'>[];
+}
+
+const { steps, catalogue } = Astro.props;
+const component = new Map(catalogue.map((entry) => [entry.id, entry.data]));
+// Tooling lives on the Testing page now, so a link to /components#tooling would be dead.
+const hrefFor = (tier?: string) => (tier === 'tooling' ? '/testing' : `/components#${tier ?? ''}`);
+---
+
+<ol class="steps">
+  {
+    steps.map(({ id, data }, index) => (
+      <li class="step" id={id}>
+        <div class="step_marker" aria-hidden="true">
+          {index + 1}
+        </div>
+        <div class="step_body">
+          <h3>{data.name}</h3>
+          <p>{data.summary}</p>
+          {data.components.length > 0 && (
+            <ul class="uses">
+              {data.components.map((ref) => {
+                const c = component.get(ref);
+                return (
+                  <li>
+                    <a href={hrefFor(c?.tier)}>{c?.name ?? ref}</a>
+                    {c?.maturity === 'proposed' && <span class="pending">proposed</span>}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style lang="scss">
+  .steps {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    list-style: none;
+    gap: var(--spacing-md);
+    counter-reset: step;
+  }
+
+  .step {
+    margin: 0;
+    gap: var(--spacing-sm);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+
+    &_marker {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--color-white);
+      background: var(--color-petrol-600);
+      font-family: var(--font-serif, var(--font-fallback-serif));
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    &_body {
+      max-width: var(--measure);
+
+      h3 {
+        margin: 0.25em 0 0 0;
+        font-size: var(--font-size-h5);
+      }
+
+      p {
+        margin: 0.6em 0 0 0;
+        color: var(--color-gray-800);
+      }
+    }
+
+    // A rule down the left, so the sequence reads as one run rather than five cards.
+    &:not(:last-child) &_marker {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 2.6rem;
+        bottom: calc(-1 * var(--spacing-md) - 0.35rem);
+        left: 50%;
+        width: 1px;
+        background: var(--color-gray-300);
+      }
+    }
+  }
+
+  .uses {
+    gap: 0.4em;
+    margin: 0.9em 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+
+    li {
+      margin: 0;
+      gap: 0.4em;
+      display: inline-flex;
+      align-items: baseline;
+      padding: 0.15em 0.5em;
+      font-size: var(--font-size-sm);
+      border-radius: var(--border-radius-xs);
+      background: var(--color-gray-100);
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .pending {
+    color: var(--color-gray-500);
+    font-size: var(--font-size-xs);
+  }
+</style>

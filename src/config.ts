@@ -48,11 +48,11 @@ const config = {
         'Who runs what, and who it serves. The component catalogue organised by the job an ' +
         'organisation has rather than by what each component is.',
     },
-    registers: {
-      title: 'Registers',
+    testing: {
+      title: 'Testing',
       description:
-        'The registers the ecosystem relies on. What each one registers, where it resides, and why '
-        + 'none of them belong to the Global Trade Commons.',
+        'How an implementation gets from built to listed: deploy, integrate, test, certify where '
+        + 'it is asked for, and register. The UN registers are the destination.',
     },
     getInvolved: {
       title: 'Get involved',

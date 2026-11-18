@@ -18,7 +18,6 @@ const TIER_ORDER = [
   'library',
   'service',
   'application',
-  'tooling',
   'template',
   'operations',
   'organisation',
@@ -36,10 +35,6 @@ const TIER_LABELS: Record<string, { title: string; note: string }> = {
   application: {
     title: 'Applications',
     note: 'Everything a role needs to do a job. It assembles services and libraries, or stands alone where it needs nothing over the network, and it implements no protocol of its own. The test: could an organisation deploy this alone and have the capability it set out to get?',
-  },
-  tooling: {
-    title: 'Tooling',
-    note: 'Test suites, reference implementations and the harnesses an implementer runs against.',
   },
   template: {
     title: 'Templates',

@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+
+import { Content } from '../../content/blocks/testing.md';
+
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Heading from '@/components/Heading.astro';
+import JourneySteps from '@/components/JourneySteps.astro';
+import RegisterList from '@/components/RegisterList.astro';
+
+import config from '@/config';
+
+const { title, description } = config.pages.testing;
+
+const steps = (await getCollection('journey')).sort((a, b) => a.data.order - b.data.order);
+const catalogue = await getCollection('catalogue');
+const registers = await getCollection('registers');
+
+// A step pointing at a component that does not exist is a broken page, so fail the build rather
+// than render a dead link.
+const componentIds = new Set(catalogue.map((entry) => entry.id));
+for (const step of steps) {
+  for (const ref of step.data.components) {
+    if (!componentIds.has(ref)) {
+      throw new Error(`journey: step "${step.id}" uses "${ref}", which is not a catalogue entry.`);
+    }
+  }
+}
+
+const operational = registers.filter((entry) => entry.data.status === 'operational').length;
+const proposed = registers.length - operational;
+---
+
+<Layout title={title} description={description}>
+  <Hero title={title} description={description} />
+
+  <Section>
+    <div class="prose">
+      <Content />
+    </div>
+  </Section>
+
+  <Section variant="gray">
+    <Heading title="From built to listed" />
+    <p class="lead">
+      Five steps, of which the Commons supplies components for four. You can stop at any of them, and
+      plenty of implementers never go past the third.
+    </p>
+    <JourneySteps steps={steps} catalogue={catalogue} />
+  </Section>
+
+  <Section>
+    <Heading title="The registers" />
+    <p class="lead">
+      The destination. <strong>{operational}</strong> operational and <strong>{proposed}</strong>
+      proposed, grouped by the UNECE site each one resides on. Which register you are aiming at
+      depends on what you are, so the <a href="/roles">roles</a> page is the quicker route if you are
+      not sure.
+    </p>
+    <RegisterList entries={registers} />
+  </Section>
+</Layout>
+
+<style lang="scss">
+  .prose {
+    max-width: var(--measure);
+
+    :global(p) {
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  .lead {
+    max-width: var(--measure);
+    color: var(--color-gray-700);
+  }
+</style>
