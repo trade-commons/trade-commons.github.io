@@ -38,6 +38,13 @@ A community, meaning a sector or jurisdiction programme, owns its own content. T
 the format, the template and the validator. Consultants can help produce the artefacts and the
 programme owns them.
 
+Convening a community is a different job and is documented elsewhere. The activation methodology is
+maintained by UN/CEFACT, and the sectoral forums for
+[agriculture and food](https://agrifood.untp.unece.org),
+[minerals and metals](https://metals.untp.unece.org) and
+[textiles](https://textiles.untp.unece.org) support their member communities directly. What follows
+is what a community publishes once it has decided to act.
+
 | Artefact | Where it lives | What reads it |
 |---|---|---|
 | Extension schema and JSON-LD context | The programme's own infrastructure | The issuing application, validators |

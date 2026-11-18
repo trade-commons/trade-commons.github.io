@@ -139,6 +139,9 @@
   note: >-
     A community publishes declarations and does not build software. The extension, the overlay shape
     graph and the profile live on the community's own infrastructure, and every engine reads them.
+    Convening the community in the first place is a different job, documented by UN/CEFACT and
+    supported by the sectoral forums; the Commons supplies the format, the template and the
+    validator, and does not run the programme.
   value:
     - untp-cap
 
