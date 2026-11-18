@@ -4,6 +4,11 @@
  * Three bugs in this repository have been a link or an entry pointing at something that was not
  * there, each surviving a clean build and a clean type check. The schemas catch a bad reference in
  * the data; this catches a bad reference in the markup, which is the other half.
+ *
+ * It also catches an inline element glued to the word beside it. Astro follows the JSX rule that
+ * trailing whitespace on a line is trimmed along with the newline, so prose ending one line and a
+ * tag opening the next render with no space between them. Eight of those were live before anyone
+ * noticed, across <a> and <strong>, reading "are onGovernance" and "2proposed".
  */
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -47,6 +52,32 @@ for (const [route, { html }] of pages) {
       continue;
     }
     if (anchor && !page.ids.has(anchor)) problems.push(`${route} -> ${m[1]} (no such anchor)`);
+  }
+}
+
+// Only letters count on either side. Punctuation hugs a tag legitimately all the time, and a tag
+// that carries its own spacing, or wraps a whole block, is not in this list.
+const INLINE = 'a|strong|em|b|i|code|abbr|small';
+// The attributes are optional: <strong> has no space before its '>', and an earlier version of
+// this that required one silently never fired for it. Digits count as word characters, because
+// {operational} renders as a number and "and2 operational" is the same defect.
+const WORD = '[A-Za-z0-9]';
+const GLUED = [
+  new RegExp(`${WORD}<(?:${INLINE})(?:\\s[^>]*)?>\\s*${WORD}`, 'g'),
+  new RegExp(`</(?:${INLINE})>${WORD}`, 'g'),
+];
+
+for (const [route, { html }] of pages) {
+  const body = html.slice(html.indexOf('<body'));
+  for (const re of GLUED) {
+    for (const m of body.matchAll(re)) {
+      const text = body
+        .slice(Math.max(0, m.index - 40), m.index + m[0].length + 25)
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      problems.push(`${route} -> no space beside an inline tag: "...${text}..."`);
+    }
   }
 }
 
