@@ -19,8 +19,9 @@
 - id: vckit
   name: VCkit
   summary: >-
-    Credential issuance and verification. The toolkit the issuing and verifying applications call,
-    and not something a person runs directly.
+    Credential issuance and verification at the level of a single credential: signing, issuer
+    resolution, revocation and schema validity. The bottom layer of the verification stack, imported
+    by the things above it.
   tier: library
   maturity: production
   home:
@@ -52,6 +53,8 @@
   standards:
     - UNTP
     - W3C Verifiable Credentials
+  interfaces:
+    - api
   licence: Apache-2.0
   maintainer: UN/CEFACT UNTP project team
   operated: false
@@ -70,6 +73,8 @@
   standards:
     - UNTP
     - ISO 18975
+  interfaces:
+    - api
   licence: Apache-2.0
   maintainer: Pyx Industries
   operated: false
@@ -111,6 +116,8 @@
     org: trade-commons
     url: https://github.com/trade-commons/trade-commons.github.io
   standards: []
+  interfaces:
+    - ui
   licence: GPL-3.0
   maintainer: Global Trade Commons
   operated: true
@@ -146,9 +153,9 @@
 - id: graph-validation
   name: Graph validation
   summary: >-
-    Assembles the graph from a credential and the links it carries, then evaluates SHACL against a
-    resolved profile and its overlays. The mechanism that lets a community add rules without anyone
-    changing software.
+    Verification across many credentials, where vckit handles one. Assembles the graph from a
+    credential and the links it carries, then evaluates SHACL against a resolved profile and its
+    overlays. The mechanism that lets a community add rules without anyone changing software.
   tier: library
   maturity: proposed
   standards:
@@ -185,6 +192,8 @@
   standards:
     - UNTP
     - UNVTD
+  interfaces:
+    - api
   disposition: >-
     New work. Nothing comparable exists to move in or adopt.
 
@@ -198,6 +207,9 @@
   standards:
     - UNTP
     - UNVTD
+  interfaces:
+    - api
+    - ui
   disposition: >-
     Would build on conformity-schemes-as-code work already done for an industry scheme owner, which
     is not yet public. Scheme criteria belong to the scheme owner, so this manages a catalogue the
@@ -212,11 +224,34 @@
   maturity: proposed
   standards:
     - UNTP
+  interfaces:
+    - api
+    - ui
   disposition: >-
     Charter section 2 places cost-recovery conformity testing in scope, and establishing whether a
     credential is genuine is the most load-bearing thing the Commons could operate. It depends on the
     test suites moving first, which also makes it the test of whether adoption from the existing
     organisation works at all.
+
+- id: did-manager
+  name: Decentralised identifier management
+  summary: >-
+    Maintains decentralised identifier documents on behalf of the parties a registry serves: hosting
+    them at a resolvable address, rotating keys, and keeping the witnessed log that lets a verifier
+    confirm the document was not changed behind its back.
+  tier: service
+  maturity: proposed
+  interfaces:
+    - api
+  standards:
+    - W3C Decentralised Identifiers
+    - did:webvh
+    - UNTP
+  disposition: >-
+    A gap the catalogue did not previously record. Resolving an identifier to the credentials
+    published against it is the identity resolver's job and this is a different one, because a
+    registrant that cannot run its own key infrastructure still needs a document that resolves and a
+    history a verifier can check. Required by the registry node.
 
 # --- Applications ------------------------------------------------------------------------------
 
@@ -231,6 +266,11 @@
   standards:
     - UNTP
     - UNVTD
+  composedOf:
+    - vckit
+  interfaces:
+    - api
+    - ui
   disposition: >-
     One application, not one per credential type. Identity setup, key handling, form rendering,
     validation, signing, publishing and revocation are most of the code and all of it is shared.
@@ -241,13 +281,20 @@
 - id: verifier
   name: Verifier
   summary: >-
-    Verification beyond the single credential: assembles the graph, resolves the applicable overlays
-    and reports against both core and community rules.
+    Checking a credential, as a job somebody does. Assembles the graph through graph-validation,
+    checks each credential through vckit, resolves the applicable overlays, and reports against both
+    core and community rules. The layer a buyer or a regulator actually uses.
   tier: application
   maturity: proposed
   standards:
     - UNTP
     - W3C Verifiable Credentials
+  composedOf:
+    - graph-validation
+    - vckit
+  interfaces:
+    - api
+    - ui
   disposition: >-
     An application over the graph validation library, and a test of the rule that an application
     contains no protocol code. The day it reimplements what the library does, the rule has failed.
@@ -263,6 +310,16 @@
     - UNTP
     - GRID
     - W3C Decentralised Identifiers
+  composedOf:
+    - vckit
+    - did-manager
+    - idr
+    - storage
+    - blind-witness
+    - verifier
+  interfaces:
+    - api
+    - ui
   disposition: >-
     Named for what it does, because an application named after its operator dates badly once the
     role is ordinary. Assembles capabilities currently spread across several places.
@@ -278,6 +335,13 @@
     - UNVTD
     - WCO Data Model
     - UNTP
+  composedOf:
+    - verifier
+    - graph-validation
+    - connectors
+  interfaces:
+    - api
+    - ui
   disposition: >-
     Depends on artefacts governed by UN/CEFACT and by the World Customs Organization and authored by
     neither, which is why customs administrations, the WCO and UN/CEFACT are all constituencies of
@@ -291,12 +355,15 @@
   name: Source-system connectors
   summary: >-
     Community-maintained connectors to source systems, one package per system, with independent
-    package versions.
-  tier: application
+    package versions. A connector runs, pulls from the source system and emits credentials. Nobody
+    opens it.
+  tier: service
   maturity: proposed
   standards:
     - UNTP
     - UNVTD
+  interfaces:
+    - api
   disposition: >-
     One repository, not one per vendor or per specification. A finance-system connector emits trade
     documents and may also emit passports for the goods on them, so splitting by specification would
@@ -319,6 +386,12 @@
     - W3C Verifiable Credentials
     - W3C Decentralised Identifiers
     - Certificate Transparency
+  composedOf:
+    - blind-witness
+    - vckit
+  interfaces:
+    - api
+    - ui
   disposition: >-
     No shared ledger, no operator and no party with a view across the chain. Each register is a
     Merkle transparency log in the Certificate Transparency lineage, which keeps inclusion and

@@ -15,6 +15,17 @@ const entries = (await getCollection('catalogue')).sort((a, b) =>
 
 const standards = [...new Set(entries.flatMap((entry) => entry.data.standards))].sort();
 
+// A composition reference that points nowhere is a broken catalogue, so fail the build rather than
+// render a dangling name. The per-entry schema cannot see across entries, so the check lives here.
+const ids = new Set(entries.map((entry) => entry.id));
+for (const entry of entries) {
+  for (const ref of entry.data.composedOf) {
+    if (!ids.has(ref)) {
+      throw new Error(`catalogue: "${entry.id}" is composed of "${ref}", which is not an entry.`);
+    }
+  }
+}
+
 const proposed = entries.filter((entry) => entry.data.maturity === 'proposed');
 const existing = entries.length - proposed.length;
 ---

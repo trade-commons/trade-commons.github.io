@@ -25,6 +25,7 @@ content/
   catalogue.yaml          one entry per component, wherever it lives
   registers.yaml          one entry per register; none of them are ours
   specifications.yaml     the normative specifications this work supports
+  roles.yaml              who runs what, and who it serves
   blocks/*.md             page prose, kept as Markdown so translation stays prose
 src/
   content.config.ts       both schemas; the governance gate
@@ -81,6 +82,17 @@ Append an entry to `content/catalogue.yaml` and open a pull request.
   disposition: >-               # optional: a pending move, donation or graduation
     Offered as a contribution, not yet completed.
 ```
+
+The three tiers classify by what you do with a component, and the axis is scope. A **library** you
+import; it runs in your process with nothing to deploy. A **service** is one capability: you deploy
+and operate it, it exposes a network API, and it composes into something larger. An **application**
+is everything a role needs to do a job; it assembles services and libraries through `composedOf`, or
+stands alone where it needs nothing over the network, and it implements no protocol of its own.
+
+The test for the service and application boundary is whether an organisation could deploy the thing
+alone and have the capability it set out to get. An identifier resolver alone is not a job. Being a
+registrar is. A user interface is recorded in `interfaces` and is never a separate component, since
+anything a person can do through it should also be reachable over the API.
 
 Two conventions worth keeping. `home` records where a component is today, because a catalogue that
 records intentions is a roadmap and a roadmap is a commitment somebody has to honour. And a

@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+
+import { Content } from '../../content/blocks/roles.md';
+
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Heading from '@/components/Heading.astro';
+import RoleList from '@/components/RoleList.astro';
+
+import config from '@/config';
+
+const { title, description } = config.pages.roles;
+
+const roles = (await getCollection('roles')).sort((a, b) => a.data.order - b.data.order);
+const catalogue = await getCollection('catalogue');
+
+// A role pointing at a component or a role that does not exist is a broken page, so fail the build
+// rather than render a dead link. Per-entry schemas cannot see across collections.
+const componentIds = new Set(catalogue.map((entry) => entry.id));
+const roleIds = new Set(roles.map((role) => role.id));
+for (const role of roles) {
+  for (const ref of role.data.operates) {
+    if (!componentIds.has(ref)) {
+      throw new Error(`roles: "${role.id}" operates "${ref}", which is not a catalogue entry.`);
+    }
+  }
+  for (const ref of role.data.serves) {
+    if (!roleIds.has(ref)) {
+      throw new Error(`roles: "${role.id}" serves "${ref}", which is not a role.`);
+    }
+  }
+}
+---
+
+<Layout title={title} description={description}>
+  <Hero title={title} description={description} />
+
+  <Section>
+    <div class="prose">
+      <Content />
+    </div>
+  </Section>
+
+  <Section variant="gray">
+    <Heading title="Who runs what" />
+    <RoleList roles={roles} catalogue={catalogue} />
+  </Section>
+</Layout>
+
+<style lang="scss">
+  .prose {
+    max-width: var(--measure);
+
+    :global(p) {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>

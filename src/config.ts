@@ -42,6 +42,12 @@ const config = {
         'The component catalogue. What exists, where it lives, how mature it is, which standards ' +
         'it serves and who maintains it.',
     },
+    roles: {
+      title: 'Roles',
+      description:
+        'Who runs what, and who it serves. The component catalogue organised by the job an ' +
+        'organisation has rather than by what each component is.',
+    },
     registers: {
       title: 'Registers',
       description:

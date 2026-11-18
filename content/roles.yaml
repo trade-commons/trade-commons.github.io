@@ -1,0 +1,180 @@
+# Who runs what, and who it serves.
+#
+# The component catalogue is organised by what a thing is. This is the same material organised by
+# the job somebody has, because an organisation arriving here knows its own role long before it
+# knows which component it needs.
+#
+# `operates` names catalogue entries the role deploys or uses. `serves` names the roles that consume
+# what it publishes or operates. Both are validated against the catalogue at build time, so a role
+# cannot point at a component that does not exist.
+
+- id: producer
+  order: 1
+  name: Producer or supplier
+  summary: >-
+    Makes or supplies something and needs to say what it is, where it came from and what it complies
+    with, in a form a buyer can check without asking.
+  operates:
+    - easy
+    - storage
+    - idr
+    - connectors
+  serves:
+    - buyer
+    - customs-administration
+    - regulator
+  note: >-
+    The smallest producers run none of this themselves and publish through a community programme or
+    a vendor. The capability is the same and the hosting is somebody else's.
+
+- id: conformity-assessment-body
+  order: 2
+  name: Conformity assessment body
+  summary: >-
+    Audits, inspects or certifies against a published scheme, and issues the result as a credential
+    that names the criterion it tested.
+  operates:
+    - easy
+    - storage
+  serves:
+    - producer
+    - buyer
+    - regulator
+
+- id: scheme-owner
+  order: 3
+  name: Conformity scheme owner
+  summary: >-
+    Owns the criteria that conformity assessment bodies test against, and publishes them as
+    machine-readable artefacts so a credential can cite a criterion by identifier.
+  operates:
+    - cvc
+  serves:
+    - conformity-assessment-body
+    - buyer
+    - verifier-operator
+
+- id: registrar
+  order: 4
+  name: Registration authority
+  summary: >-
+    A business register, land register, asset register or trademark office. Already the authoritative
+    source for who or what exists, and issues identity anchors that let a verifier establish that an
+    identifier belongs to the party claiming it.
+  operates:
+    - grid-node
+  serves:
+    - producer
+    - buyer
+    - customs-administration
+    - verifier-operator
+
+- id: customs-administration
+  order: 5
+  name: Customs administration
+  summary: >-
+    Receives trade documents and consignment claims at a border, and needs to verify them and turn
+    them into declaration data for the systems it already runs.
+  operates:
+    - customs
+  serves:
+    - producer
+    - regulator
+
+- id: facility-operator
+  order: 6
+  name: Facility operator
+  summary: >-
+    Holds material at a named facility, accounts for what it takes in and allocates out, and must
+    prove nothing leaves beyond what was assessed without revealing quantities or counterparties.
+  operates:
+    - facility-coc
+    - storage
+  serves:
+    - buyer
+    - conformity-assessment-body
+
+- id: buyer
+  order: 7
+  name: Buyer, brand owner or OEM
+  summary: >-
+    Buys from a supply base and has to establish whether the claims attached to what it bought
+    survive scrutiny, across many suppliers and many schemes.
+  operates:
+    - verifier
+  serves:
+    - regulator
+
+- id: community
+  order: 8
+  name: Community or sector programme
+  summary: >-
+    A sector or jurisdiction programme that defines how the protocol applies in its domain. Publishes
+    an extension, overlay rules and a profile, and registers them so engines can find them.
+  operates:
+    - cap-template
+  serves:
+    - producer
+    - conformity-assessment-body
+    - buyer
+  note: >-
+    A community publishes declarations and does not build software. The extension, the overlay shape
+    graph and the profile live on the community's own infrastructure, and every engine reads them.
+
+- id: vendor
+  order: 9
+  name: Software vendor
+  summary: >-
+    Builds products that issue, verify or move credentials, for customers who will not build their
+    own.
+  operates:
+    - vckit
+    - graph-validation
+    - connector-sdk
+    - connector-template
+    - tests-untp
+  serves:
+    - producer
+    - conformity-assessment-body
+    - buyer
+    - registrar
+
+- id: verifier-operator
+  order: 10
+  name: Verification service operator
+  summary: >-
+    Runs verification for others, whether as a commercial service, a market platform check or a
+    public good.
+  operates:
+    - verifier
+    - graph-validation
+  serves:
+    - buyer
+    - customs-administration
+    - regulator
+
+- id: regulator
+  order: 11
+  name: Regulator
+  summary: >-
+    Sets or enforces a disclosure obligation, and needs to establish whether a claim made to satisfy
+    it can be checked rather than merely asserted.
+  operates:
+    - verifier
+  serves: []
+
+- id: commons
+  order: 12
+  name: The Commons itself
+  summary: >-
+    Operates the shared infrastructure that nobody else can run neutrally, and publishes the tooling
+    everyone else deploys.
+  operates:
+    - conformance
+    - infra
+    - site
+  serves:
+    - vendor
+    - producer
+    - community
+    - registrar

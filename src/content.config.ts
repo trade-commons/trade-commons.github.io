@@ -20,8 +20,15 @@ const catalogue = defineCollection({
     name: z.string(),
     summary: z.string(),
 
-    // The three tiers, plus the kinds that are not components a person runs.
-    // An application contains no protocol code; it calls a library or a service.
+    // The three tiers classify by what you do with the component, and the axis is scope.
+    // A library is imported and runs in your process. A service is one capability, deployed and
+    // operated, exposing a network API, and it composes into something larger. An application is
+    // everything a role needs to do a job: it assembles services and libraries, or stands alone if
+    // it needs nothing over the network, and it implements no protocol of its own.
+    //
+    // The test for the service and application boundary: could an organisation deploy this alone
+    // and have the capability it set out to get? An identifier resolver alone is not a job. Being a
+    // registrar is.
     tier: z.enum([
       'library',
       'service',
@@ -50,6 +57,15 @@ const catalogue = defineCollection({
     // Lets the site be read by standard: what exists for the WCO Data Model, what exists for UNTP,
     // and what exists whatever the standard.
     standards: z.array(z.string()).default([]),
+
+    // How the capability is reached. A UI is a presentation of a component and never a separate
+    // component, since anything a person can do through it should also be reachable over the API.
+    interfaces: z.array(z.enum(['api', 'ui'])).default([]),
+
+    // For an application, the catalogue entries it assembles. Empty where an application composes
+    // nothing over the network, which is the offline-first case. This is also what makes the
+    // no-protocol-code rule checkable: an application assembles, it does not implement.
+    composedOf: z.array(z.string()).default([]),
 
     licence: z.string().optional(),
 
@@ -84,6 +100,16 @@ const catalogue = defineCollection({
         code: 'custom',
         path: ['maintainer'],
         message: `"${entry.id}" is not proposed, so it must name a maintainer.`,
+      });
+    }
+  })
+  .superRefine((entry, ctx) => {
+    // Only an application assembles other entries. A service is one capability by definition.
+    if (entry.composedOf.length > 0 && entry.tier !== 'application') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['composedOf'],
+        message: `"${entry.id}" is a ${entry.tier}, so it cannot be composed of other components.`,
       });
     }
   }),
@@ -172,4 +198,30 @@ const specifications = defineCollection({
   }),
 });
 
-export const collections = { catalogue, registers, specifications };
+/**
+ * Who runs what, and who it serves.
+ *
+ * The catalogue is organised by what a component is. This collection is the same material organised
+ * by the job somebody has, because an organisation arriving at the site knows its own role long
+ * before it knows which component it needs. References into the catalogue and across roles are
+ * checked at build time on the page, since a per-entry schema cannot see other entries.
+ */
+const roles = defineCollection({
+  loader: file('./content/roles.yaml'),
+  schema: z.object({
+    id: z.string(),
+    order: z.number().int().positive(),
+    name: z.string(),
+    summary: z.string(),
+
+    // Catalogue entries this role deploys or uses.
+    operates: z.array(z.string()).default([]),
+
+    // Roles that consume what this one publishes or operates.
+    serves: z.array(z.string()).default([]),
+
+    note: z.string().optional(),
+  }),
+});
+
+export const collections = { catalogue, registers, specifications, roles };

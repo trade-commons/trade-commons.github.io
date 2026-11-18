@@ -7,6 +7,11 @@ interface Props {
 
 const { entries } = Astro.props;
 
+// Resolve composition references to names so a reader sees what an application assembles.
+const nameById = new Map(entries.map((entry) => [entry.id, entry.data.name]));
+
+const INTERFACE_LABELS: Record<string, string> = { api: 'API', ui: 'UI' };
+
 // Tier order follows the dependency direction. An application calls a service or a library and never
 // the other way round, so reading the page top to bottom reads the stack bottom to top.
 const TIER_ORDER = [
@@ -22,15 +27,15 @@ const TIER_ORDER = [
 const TIER_LABELS: Record<string, { title: string; note: string }> = {
   library: {
     title: 'Libraries',
-    note: 'Imported by other components. Never deployed on their own.',
+    note: 'You import it. Runs inside your process, with no network boundary and nothing to deploy.',
   },
   service: {
     title: 'Services',
-    note: 'Deployed and operated. A third party must be able to deploy each one from its own repository.',
+    note: 'One capability. You deploy and operate it, it exposes a network API, and it composes into something larger. A third party must be able to deploy it from its own repository.',
   },
   application: {
     title: 'Applications',
-    note: 'Used directly by a person. An application contains no protocol code. It calls a library or a service.',
+    note: 'Everything a role needs to do a job. It assembles services and libraries, or stands alone where it needs nothing over the network, and it implements no protocol of its own. The test: could an organisation deploy this alone and have the capability it set out to get?',
   },
   tooling: {
     title: 'Tooling',
@@ -84,8 +89,17 @@ const groups = TIER_ORDER.map((tier) => ({
                     <h3>{data.name}</h3>
                     <span class:list={['badge', `maturity-${data.maturity}`]}>{data.maturity}</span>
                     {data.operated && <span class="badge operated">operated by the Commons</span>}
+                    {data.interfaces.map((iface) => (
+                      <span class="badge iface">{INTERFACE_LABELS[iface]}</span>
+                    ))}
                   </div>
                   <p class="component_summary">{data.summary}</p>
+                  {data.composedOf.length > 0 && (
+                    <p class="component_composed">
+                      <span>Assembles</span>
+                      {data.composedOf.map((ref) => nameById.get(ref) ?? ref).join(' · ')}
+                    </p>
+                  )}
                   {data.standards.length > 0 && (
                     <ul class="standards">
                       {data.standards.map((standard) => (
@@ -208,6 +222,22 @@ const groups = TIER_ORDER.map((tier) => ({
       color: var(--color-gray-800);
     }
 
+    &_composed {
+      margin: 0.9em 0 0 0;
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-sm);
+      color: var(--color-gray-700);
+
+      span {
+        display: block;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--color-gray-500);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
     &_disposition {
       margin: 1em 0 0 0;
       padding-left: 0.9em;
@@ -246,6 +276,14 @@ const groups = TIER_ORDER.map((tier) => ({
     color: var(--color-petrol-600);
     background: rgb(from var(--color-petrol-400) r g b / 8%);
     border-color: rgb(from var(--color-petrol-400) r g b / 28%);
+  }
+
+  .iface {
+    color: var(--color-gray-600);
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-300);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .maturity-proposed {
